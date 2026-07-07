@@ -7,50 +7,47 @@
 <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
+<div id="readingBar"></div>
+<button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">&#9776; Menu</button>
 <a class="skip" href="#main">Skip to content</a>
-<div class="shell">
-<aside class="sidebar">
-<div class="brand">
-  <a href="index.html" aria-label="The XSLT Course home"><span class="mark">&lt;<span class="in">x</span>&#8202;&#8594;&#8202;<span class="out">/</span>&gt;</span></a>
-  <a href="index.html" class="name">The&nbsp;XSLT&nbsp;Course</a>
-</div>
-<button class="menu-btn" aria-expanded="false" aria-controls="nav">Menu</button>
-<nav class="nav-wrap" id="nav" aria-label="Course syllabus">
-  <p class="nav-track">Transformation</p>
-  <ul class="nav-list">
-    <li><a href="l01-what-is-xslt.html"><span class="n">01</span><span>What XSLT is</span></a></li>
-    <li><a href="l02-first-stylesheet.html"><span class="n">02</span><span>Your first stylesheet</span></a></li>
-    <li><a href="l03-xpath.html"><span class="n">03</span><span>XPath essentials</span></a></li>
-    <li><a href="l04-templates.html"><span class="n">04</span><span>Template rules</span></a></li>
-    <li><a href="l05-shape-data.html"><span class="n">05</span><span>Shaping data</span></a></li>
-    <li><a href="l06-keys-grouping.html"><span class="n">06</span><span>Keys & grouping</span></a></li>
-    <li><a href="l07-recursion.html"><span class="n">07</span><span>Recursion</span></a></li>
-    <li><a href="l08-versions.html" class="active" aria-current="page"><span class="n">08</span><span>1.0 → 2.0 → 3.0</span></a></li>
-  </ul>
-  <p class="nav-track">Encryption</p>
-  <ul class="nav-list">
-    <li><a href="l09-honest-framing.html"><span class="n">01</span><span>The honest framing</span></a></li>
-    <li><a href="l10-teaching-ciphers.html"><span class="n">02</span><span>Teaching ciphers</span></a></li>
-    <li><a href="l11-xml-encryption.html"><span class="n">03</span><span>W3C XML Encryption</span></a></li>
-    <li><a href="l12-extension-crypto.html"><span class="n">04</span><span>Extension functions</span></a></li>
-  </ul>
-  <p class="nav-track">Practice</p>
-  <ul class="nav-list">
-    <li><a href="capstone.html"><span class="n">01</span><span>Capstone project</span></a></li>
-    <li><a href="reference.html"><span class="n">02</span><span>Reference & cheat-sheet</span></a></li>
-  </ul>
+<div class="layout">
+<nav class="sidebar" aria-label="Course syllabus">
+<a class="brand" href="index.html"><span class="mark">&lt;<span class="in">x</span>&#8202;&#8594;&#8202;<span class="out">/</span>&gt;</span>The&nbsp;XSLT&nbsp;Course</a>
+<div class="nav-progress"><div class="nav-progress-bar"><span id="navProgressFill"></span></div><span class="nav-progress-text" id="navProgressText">0 / 14 complete</span></div>
+<div class="nav-week">Transformation</div>
+<ul>
+  <li data-idx="1"><a href="l01-what-is-xslt.html"><span class="daynum">01</span><span>What XSLT is</span><span class="done-check">&#10003;</span></a></li>
+  <li data-idx="2"><a href="l02-first-stylesheet.html"><span class="daynum">02</span><span>Your first stylesheet</span><span class="done-check">&#10003;</span></a></li>
+  <li data-idx="3"><a href="l03-xpath.html"><span class="daynum">03</span><span>XPath essentials</span><span class="done-check">&#10003;</span></a></li>
+  <li data-idx="4"><a href="l04-templates.html"><span class="daynum">04</span><span>Template rules</span><span class="done-check">&#10003;</span></a></li>
+  <li data-idx="5"><a href="l05-shape-data.html"><span class="daynum">05</span><span>Shaping data</span><span class="done-check">&#10003;</span></a></li>
+  <li data-idx="6"><a href="l06-keys-grouping.html"><span class="daynum">06</span><span>Keys & grouping</span><span class="done-check">&#10003;</span></a></li>
+  <li data-idx="7"><a href="l07-recursion.html"><span class="daynum">07</span><span>Recursion</span><span class="done-check">&#10003;</span></a></li>
+  <li data-idx="8" class="active"><a href="l08-versions.html"><span class="daynum">08</span><span>1.0 → 2.0 → 3.0</span><span class="done-check">&#10003;</span></a></li>
+</ul>
+<div class="nav-week">Encryption</div>
+<ul>
+  <li data-idx="9"><a href="l09-honest-framing.html"><span class="daynum">09</span><span>The honest framing</span><span class="done-check">&#10003;</span></a></li>
+  <li data-idx="10"><a href="l10-teaching-ciphers.html"><span class="daynum">10</span><span>Teaching ciphers</span><span class="done-check">&#10003;</span></a></li>
+  <li data-idx="11"><a href="l11-xml-encryption.html"><span class="daynum">11</span><span>W3C XML Encryption</span><span class="done-check">&#10003;</span></a></li>
+  <li data-idx="12"><a href="l12-extension-crypto.html"><span class="daynum">12</span><span>Extension functions</span><span class="done-check">&#10003;</span></a></li>
+</ul>
+<div class="nav-week">Practice</div>
+<ul>
+  <li data-idx="13"><a href="capstone.html"><span class="daynum">13</span><span>Capstone project</span><span class="done-check">&#10003;</span></a></li>
+  <li data-idx="14"><a href="reference.html"><span class="daynum">14</span><span>Reference & cheat-sheet</span><span class="done-check">&#10003;</span></a></li>
+</ul>
 </nav>
-</aside>
-<main class="main" id="main">
-<div class="wrap">
-<header class="pagehead"><p class="eyebrow">TRANSFORMATION <span class="tick">·</span> LESSON 08</p><h1>1.0 → 2.0 → 3.0: what each version adds</h1><p class="lede">Sequences, real functions, regex, maps, and JSON — and when the jump is worth it.</p></header>
-<div class="prose">
+<main class="content" id="main" data-idx="8">
+<div class="crumbs">TRANSFORMATION <span class="tick">·</span> LESSON 08</div>
+<h1>1.0 → 2.0 → 3.0: what each version adds</h1>
+<p class="lead">Sequences, real functions, regex, maps, and JSON — and when the jump is worth it.</p>
 <p>You now know 1.0 well enough to feel its edges: no real functions, clumsy grouping,
 string-only types, painful byte work. XSLT 2.0 (2007) and 3.0 (2017) fix all of that.
 This lesson maps what each version adds — and when the jump pays off. Folder:
 <code>examples/07-versions</code>.</p>
 
-<h2>What each version adds</h2>
+<h2 id="what-each-version-adds">What each version adds</h2>
 <div class="tbl-wrap">
 <table class="data">
   <tr><th>Capability</th><th>1.0</th><th>2.0</th><th>3.0</th></tr>
@@ -67,7 +64,7 @@ This lesson maps what each version adds — and when the jump pays off. Folder:
 </table>
 </div>
 
-<h2>One stylesheet that needs 3.0</h2>
+<h2 id="one-stylesheet-that-needs-3-0">One stylesheet that needs 3.0</h2>
 <p>Turning the catalogue into JSON uses four things 1.0 simply doesn't have: a typed
 <code>xsl:function</code>, regex via <code>replace</code>, maps/arrays, and JSON
 serialization.</p>
@@ -115,15 +112,15 @@ serialization.</p>
   than a template engine.</p>
 </div>
 
-<h2>Which version should you target?</h2>
+<h2 id="which-version-should-you-target">Which version should you target?</h2>
 <div class="cards">
-  <div class="card2"><div class="k">Choose 1.0</div><h3>Reach everywhere</h3>
+  <div class="card2"><div class="k">Choose 1.0</div><h3 id="reach-everywhere">Reach everywhere</h3>
   <p>Only if you must run in a browser or a locked-down legacy stack. Accept the
   ceremony.</p></div>
-  <div class="card2"><div class="k">Choose 2.0</div><h3>The sane baseline</h3>
+  <div class="card2"><div class="k">Choose 2.0</div><h3 id="the-sane-baseline">The sane baseline</h3>
   <p>Functions, regex, real grouping and types. A huge step up for little cost — a
   common integration/ESB default.</p></div>
-  <div class="card2"><div class="k">Choose 3.0</div><h3>Modern default</h3>
+  <div class="card2"><div class="k">Choose 3.0</div><h3 id="modern-default">Modern default</h3>
   <p>Maps, JSON, streaming, higher-order functions. Pick this for new work if your
   processor (Saxon) supports it.</p></div>
 </div>
@@ -147,18 +144,28 @@ serialization.</p>
   upgrade is worth it.</p></details>
 </div>
 
-</div>
+<div class="day-complete"><button class="mark-btn" id="markComplete" type="button"><span class="mark-box">&#10003;</span> Mark lesson complete</button><span class="mark-hint">Saved in your browser</span></div>
 <nav class="lessonnav" aria-label="Lesson navigation">
 <a href="l07-recursion.html" rel="prev"><span class="dir">&#8592; Previous</span><span class="ttl">Named templates, parameters & recursion</span></a>
 <a class="next" href="l09-honest-framing.html" rel="next"><span class="dir">Next &#8594;</span><span class="ttl">Encryption with XSLT — the honest framing</span></a>
 </nav>
 <footer class="foot">
-The XSLT Course · a hands-on, honestly-scoped introduction. Every example in this
-course is executed, not imagined. Ciphers marked “teaching” are not for protecting real data.
+The XSLT Course · every example is executed, not imagined. Ciphers marked
+“teaching” are not for protecting real data.
 <br><a href="../">↩ Back to the Apigee Courses hub</a>
 </footer>
-</div>
 </main>
+<aside class="toc-rail" aria-label="On this page">
+  <div class="toc-title">On this page</div>
+  <nav class="toc"><ul>
+    <li><a href="#what-each-version-adds">What each version adds</a></li>
+    <li><a href="#one-stylesheet-that-needs-3-0">One stylesheet that needs 3.0</a></li>
+    <li><a href="#which-version-should-you-target">Which version should you target?</a></li>
+    <li class="lvl3"><a href="#reach-everywhere">Reach everywhere</a></li>
+    <li class="lvl3"><a href="#the-sane-baseline">The sane baseline</a></li>
+    <li class="lvl3"><a href="#modern-default">Modern default</a></li>
+  </ul></nav>
+</aside>
 </div>
 <script src="assets/app.js"></script>
 </body>

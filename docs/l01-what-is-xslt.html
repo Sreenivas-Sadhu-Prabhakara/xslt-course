@@ -7,51 +7,48 @@
 <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
+<div id="readingBar"></div>
+<button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">&#9776; Menu</button>
 <a class="skip" href="#main">Skip to content</a>
-<div class="shell">
-<aside class="sidebar">
-<div class="brand">
-  <a href="index.html" aria-label="The XSLT Course home"><span class="mark">&lt;<span class="in">x</span>&#8202;&#8594;&#8202;<span class="out">/</span>&gt;</span></a>
-  <a href="index.html" class="name">The&nbsp;XSLT&nbsp;Course</a>
-</div>
-<button class="menu-btn" aria-expanded="false" aria-controls="nav">Menu</button>
-<nav class="nav-wrap" id="nav" aria-label="Course syllabus">
-  <p class="nav-track">Transformation</p>
-  <ul class="nav-list">
-    <li><a href="l01-what-is-xslt.html" class="active" aria-current="page"><span class="n">01</span><span>What XSLT is</span></a></li>
-    <li><a href="l02-first-stylesheet.html"><span class="n">02</span><span>Your first stylesheet</span></a></li>
-    <li><a href="l03-xpath.html"><span class="n">03</span><span>XPath essentials</span></a></li>
-    <li><a href="l04-templates.html"><span class="n">04</span><span>Template rules</span></a></li>
-    <li><a href="l05-shape-data.html"><span class="n">05</span><span>Shaping data</span></a></li>
-    <li><a href="l06-keys-grouping.html"><span class="n">06</span><span>Keys & grouping</span></a></li>
-    <li><a href="l07-recursion.html"><span class="n">07</span><span>Recursion</span></a></li>
-    <li><a href="l08-versions.html"><span class="n">08</span><span>1.0 → 2.0 → 3.0</span></a></li>
-  </ul>
-  <p class="nav-track">Encryption</p>
-  <ul class="nav-list">
-    <li><a href="l09-honest-framing.html"><span class="n">01</span><span>The honest framing</span></a></li>
-    <li><a href="l10-teaching-ciphers.html"><span class="n">02</span><span>Teaching ciphers</span></a></li>
-    <li><a href="l11-xml-encryption.html"><span class="n">03</span><span>W3C XML Encryption</span></a></li>
-    <li><a href="l12-extension-crypto.html"><span class="n">04</span><span>Extension functions</span></a></li>
-  </ul>
-  <p class="nav-track">Practice</p>
-  <ul class="nav-list">
-    <li><a href="capstone.html"><span class="n">01</span><span>Capstone project</span></a></li>
-    <li><a href="reference.html"><span class="n">02</span><span>Reference & cheat-sheet</span></a></li>
-  </ul>
+<div class="layout">
+<nav class="sidebar" aria-label="Course syllabus">
+<a class="brand" href="index.html"><span class="mark">&lt;<span class="in">x</span>&#8202;&#8594;&#8202;<span class="out">/</span>&gt;</span>The&nbsp;XSLT&nbsp;Course</a>
+<div class="nav-progress"><div class="nav-progress-bar"><span id="navProgressFill"></span></div><span class="nav-progress-text" id="navProgressText">0 / 14 complete</span></div>
+<div class="nav-week">Transformation</div>
+<ul>
+  <li data-idx="1" class="active"><a href="l01-what-is-xslt.html"><span class="daynum">01</span><span>What XSLT is</span><span class="done-check">&#10003;</span></a></li>
+  <li data-idx="2"><a href="l02-first-stylesheet.html"><span class="daynum">02</span><span>Your first stylesheet</span><span class="done-check">&#10003;</span></a></li>
+  <li data-idx="3"><a href="l03-xpath.html"><span class="daynum">03</span><span>XPath essentials</span><span class="done-check">&#10003;</span></a></li>
+  <li data-idx="4"><a href="l04-templates.html"><span class="daynum">04</span><span>Template rules</span><span class="done-check">&#10003;</span></a></li>
+  <li data-idx="5"><a href="l05-shape-data.html"><span class="daynum">05</span><span>Shaping data</span><span class="done-check">&#10003;</span></a></li>
+  <li data-idx="6"><a href="l06-keys-grouping.html"><span class="daynum">06</span><span>Keys & grouping</span><span class="done-check">&#10003;</span></a></li>
+  <li data-idx="7"><a href="l07-recursion.html"><span class="daynum">07</span><span>Recursion</span><span class="done-check">&#10003;</span></a></li>
+  <li data-idx="8"><a href="l08-versions.html"><span class="daynum">08</span><span>1.0 → 2.0 → 3.0</span><span class="done-check">&#10003;</span></a></li>
+</ul>
+<div class="nav-week">Encryption</div>
+<ul>
+  <li data-idx="9"><a href="l09-honest-framing.html"><span class="daynum">09</span><span>The honest framing</span><span class="done-check">&#10003;</span></a></li>
+  <li data-idx="10"><a href="l10-teaching-ciphers.html"><span class="daynum">10</span><span>Teaching ciphers</span><span class="done-check">&#10003;</span></a></li>
+  <li data-idx="11"><a href="l11-xml-encryption.html"><span class="daynum">11</span><span>W3C XML Encryption</span><span class="done-check">&#10003;</span></a></li>
+  <li data-idx="12"><a href="l12-extension-crypto.html"><span class="daynum">12</span><span>Extension functions</span><span class="done-check">&#10003;</span></a></li>
+</ul>
+<div class="nav-week">Practice</div>
+<ul>
+  <li data-idx="13"><a href="capstone.html"><span class="daynum">13</span><span>Capstone project</span><span class="done-check">&#10003;</span></a></li>
+  <li data-idx="14"><a href="reference.html"><span class="daynum">14</span><span>Reference & cheat-sheet</span><span class="done-check">&#10003;</span></a></li>
+</ul>
 </nav>
-</aside>
-<main class="main" id="main">
-<div class="wrap">
-<header class="pagehead"><p class="eyebrow">TRANSFORMATION <span class="tick">·</span> LESSON 01</p><h1>What XSLT is & how it runs</h1><p class="lede">A stylesheet is a program that turns one tree into another. Meet the processor, the source tree, and the result tree.</p></header>
-<div class="prose">
+<main class="content" id="main" data-idx="1">
+<div class="crumbs">TRANSFORMATION <span class="tick">·</span> LESSON 01</div>
+<h1>What XSLT is & how it runs</h1>
+<p class="lead">A stylesheet is a program that turns one tree into another. Meet the processor, the source tree, and the result tree.</p>
 <p><strong>XSLT</strong> — eXtensible Stylesheet Language Transformations — is a
 language whose only job is to turn one XML document into something else: an HTML
 page, a text file, JSON, or a differently-shaped XML document. You write a
 <em>stylesheet</em> full of rules; a <em>processor</em> applies those rules to your
 <em>source</em> document and produces a <em>result</em>.</p>
 
-<h2>The mental model: two trees and a processor</h2>
+<h2 id="the-mental-model-two-trees-and-a-processor">The mental model: two trees and a processor</h2>
 <p>An XML document isn't really text to XSLT — it's a <strong>tree</strong> of nodes
 (elements, attributes, text). XSLT reads the source tree and builds a brand-new
 result tree. Your stylesheet never modifies the source; it <em>describes</em> the
@@ -82,7 +79,7 @@ to every node</pre>
   </div>
 </div>
 
-<h2>Declarative, not step-by-step</h2>
+<h2 id="declarative-not-step-by-step">Declarative, not step-by-step</h2>
 <p>Most languages you know are <em>imperative</em>: do this, then this, then that.
 XSLT is mostly <strong>declarative</strong> and rule-based. Instead of writing a loop
 that walks the document, you write rules that say <em>“whenever you see a node that
@@ -98,7 +95,7 @@ looks like this, produce that.”</em> The processor handles the walking.</p>
 to visit nodes for you, and just writing good rules — you'll meet these rules
 properly in <a href="l04-templates.html">Lesson 4</a>.</p>
 
-<h2>XSLT and XPath are a pair</h2>
+<h2 id="xslt-and-xpath-are-a-pair">XSLT and XPath are a pair</h2>
 <p>XSLT leans on a second little language, <strong>XPath</strong>, to point at nodes.
 Every <code>match="book"</code> and <code>select="title"</code> you'll write is XPath.
 Think of it this way:</p>
@@ -109,7 +106,7 @@ Think of it this way:</p>
 <p>We give XPath its own lesson (<a href="l03-xpath.html">Lesson 3</a>) because it does
 so much of the work.</p>
 
-<h2>Where XSLT runs</h2>
+<h2 id="where-xslt-runs">Where XSLT runs</h2>
 <div class="tbl-wrap">
 <table class="data">
   <tr><th>Setting</th><th>Processor</th><th>Typical use</th></tr>
@@ -152,17 +149,25 @@ uses <code>xsltproc</code> for 1.0, <strong>Saxon-HE</strong> for 2.0/3.0, and
   result tree from the same source.</p></details>
 </div>
 
-</div>
+<div class="day-complete"><button class="mark-btn" id="markComplete" type="button"><span class="mark-box">&#10003;</span> Mark lesson complete</button><span class="mark-hint">Saved in your browser</span></div>
 <nav class="lessonnav" aria-label="Lesson navigation">
 <a class="next" href="l02-first-stylesheet.html" rel="next"><span class="dir">Next &#8594;</span><span class="ttl">Your first stylesheet</span></a>
 </nav>
 <footer class="foot">
-The XSLT Course · a hands-on, honestly-scoped introduction. Every example in this
-course is executed, not imagined. Ciphers marked “teaching” are not for protecting real data.
+The XSLT Course · every example is executed, not imagined. Ciphers marked
+“teaching” are not for protecting real data.
 <br><a href="../">↩ Back to the Apigee Courses hub</a>
 </footer>
-</div>
 </main>
+<aside class="toc-rail" aria-label="On this page">
+  <div class="toc-title">On this page</div>
+  <nav class="toc"><ul>
+    <li><a href="#the-mental-model-two-trees-and-a-processor">The mental model: two trees and a processor</a></li>
+    <li><a href="#declarative-not-step-by-step">Declarative, not step-by-step</a></li>
+    <li><a href="#xslt-and-xpath-are-a-pair">XSLT and XPath are a pair</a></li>
+    <li><a href="#where-xslt-runs">Where XSLT runs</a></li>
+  </ul></nav>
+</aside>
 </div>
 <script src="assets/app.js"></script>
 </body>
