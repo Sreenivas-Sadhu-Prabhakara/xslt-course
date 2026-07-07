@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Shared sample data used across the transformation lessons.
+     A tiny bookshop catalogue: enough structure for XPath, sorting,
+     grouping and reporting without being overwhelming. -->
+<catalog updated="2026-07-07">
+  <book id="b1" category="tech" inStock="true">
+    <title>Learning XSLT</title>
+    <author>Michael Fitzgerald</author>
+    <year>2003</year>
+    <price currency="USD">39.95</price>
+    <tags><tag>xml</tag><tag>xslt</tag></tags>
+  </book>
+  <book id="b2" category="tech" inStock="false">
+    <title>XSLT 2.0 and XPath 2.0</title>
+    <author>Michael Kay</author>
+    <year>2008</year>
+    <price currency="USD">59.99</price>
+    <tags><tag>xslt</tag><tag>xpath</tag><tag>reference</tag></tags>
+  </book>
+  <book id="b3" category="tech" inStock="true">
+    <title>XML in a Nutshell</title>
+    <author>Elliotte Rusty Harold</author>
+    <year>2004</year>
+    <price currency="USD">44.95</price>
+    <tags><tag>xml</tag><tag>reference</tag></tags>
+  </book>
+  <book id="b4" category="security" inStock="true">
+    <title>Serious Cryptography</title>
+    <author>Jean-Philippe Aumasson</author>
+    <year>2017</year>
+    <price currency="USD">49.95</price>
+    <tags><tag>crypto</tag><tag>security</tag></tags>
+  </book>
+  <book id="b5" category="security" inStock="true">
+    <title>Real-World Cryptography</title>
+    <author>David Wong</author>
+    <year>2021</year>
+    <price currency="USD">59.99</price>
+    <tags><tag>crypto</tag><tag>security</tag><tag>tls</tag></tags>
+  </book>
+  <book id="b6" category="fiction" inStock="false">
+    <title>Cryptonomicon</title>
+    <author>Neal Stephenson</author>
+    <year>1999</year>
+    <price currency="USD">17.99</price>
+    <tags><tag>novel</tag><tag>crypto</tag></tags>
+  </book>
+</catalog>

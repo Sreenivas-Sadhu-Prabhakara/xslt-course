@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Sender side: a raw batch of orders straight from the shop.
+     Contains sensitive fields (email, pan, cvv) that must be protected in transit,
+     and ordinary fields (ids, items, prices) that must stay readable for routing. -->
+<orders batch="2026-07-07">
+  <order id="SO-1001">
+    <customer><name>Ada Lovelace</name><email>ada@example.com</email></customer>
+    <payment><pan>4111111111111111</pan><cvv>123</cvv></payment>
+    <items>
+      <item sku="XSLT-101" qty="1" unitPrice="39.95">Learning XSLT</item>
+      <item sku="SEC-201"  qty="2" unitPrice="49.95">Serious Cryptography</item>
+    </items>
+  </order>
+  <order id="SO-1002">
+    <customer><name>Alan Turing</name><email>alan@example.com</email></customer>
+    <payment><pan>5555444433331111</pan><cvv>456</cvv></payment>
+    <items>
+      <item sku="XML-301" qty="1" unitPrice="44.95">XML in a Nutshell</item>
+      <item sku="RWC-401" qty="1" unitPrice="59.99">Real-World Cryptography</item>
+    </items>
+  </order>
+</orders>

@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Teaching ciphers in pure XSLT · The XSLT Course</title>
+<meta name="description" content="Caesar, Base64, and XOR — built by hand to learn recursion and byte math. Great teachers, terrible security.">
+<link rel="canonical" href="https://sreenivas-sadhu-prabhakara.github.io/xslt-course/l10-teaching-ciphers.html">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="Sreenivas Sadhu Prabhakara">
+<meta name="theme-color" content="#16191f">
+<meta name="color-scheme" content="light">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png">
+<link rel="apple-touch-icon" href="assets/icon-180.png">
+<link rel="manifest" href="site.webmanifest">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="The XSLT Course">
+<meta property="og:title" content="Teaching ciphers in pure XSLT">
+<meta property="og:description" content="Caesar, Base64, and XOR — built by hand to learn recursion and byte math. Great teachers, terrible security.">
+<meta property="og:url" content="https://sreenivas-sadhu-prabhakara.github.io/xslt-course/l10-teaching-ciphers.html">
+<meta property="og:image" content="https://sreenivas-sadhu-prabhakara.github.io/xslt-course/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The XSLT Course">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Teaching ciphers in pure XSLT">
+<meta name="twitter:description" content="Caesar, Base64, and XOR — built by hand to learn recursion and byte math. Great teachers, terrible security.">
+<meta name="twitter:image" content="https://sreenivas-sadhu-prabhakara.github.io/xslt-course/assets/og-image.png">
+<link rel="sitemap" type="application/xml" href="sitemap.xml">
+<link rel="stylesheet" href="assets/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Encryption",
+          "item": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/#syllabus"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Teaching ciphers in pure XSLT",
+          "item": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/l10-teaching-ciphers.html"
+        }
+      ]
+    },
+    {
+      "@type": "LearningResource",
+      "name": "Teaching ciphers in pure XSLT",
+      "description": "Caesar, Base64, and XOR — built by hand to learn recursion and byte math. Great teachers, terrible security.",
+      "url": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/l10-teaching-ciphers.html",
+      "inLanguage": "en",
+      "learningResourceType": "lesson",
+      "educationalLevel": "Beginner",
+      "isPartOf": {
+        "@type": "Course",
+        "name": "The XSLT Course",
+        "url": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Sreenivas Sadhu Prabhakara"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "The XSLT Course",
+        "url": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/assets/icon-512.png"
+        }
+      },
+      "isAccessibleForFree": true,
+      "position": 2
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="shell">
+<aside class="sidebar">
+<div class="brand">
+  <a href="index.html" aria-label="The XSLT Course home"><span class="mark">&lt;<span class="in">x</span>&#8202;&#8594;&#8202;<span class="out">/</span>&gt;</span></a>
+  <a href="index.html" class="name">The&nbsp;XSLT&nbsp;Course</a>
+</div>
+<button class="menu-btn" aria-expanded="false" aria-controls="nav">Menu</button>
+<nav class="nav-wrap" id="nav" aria-label="Course syllabus">
+  <p class="nav-track">Transformation</p>
+  <ul class="nav-list">
+    <li><a href="l01-what-is-xslt.html"><span class="n">01</span><span>What XSLT is</span></a></li>
+    <li><a href="l02-first-stylesheet.html"><span class="n">02</span><span>Your first stylesheet</span></a></li>
+    <li><a href="l03-xpath.html"><span class="n">03</span><span>XPath essentials</span></a></li>
+    <li><a href="l04-templates.html"><span class="n">04</span><span>Template rules</span></a></li>
+    <li><a href="l05-shape-data.html"><span class="n">05</span><span>Shaping data</span></a></li>
+    <li><a href="l06-keys-grouping.html"><span class="n">06</span><span>Keys & grouping</span></a></li>
+    <li><a href="l07-recursion.html"><span class="n">07</span><span>Recursion</span></a></li>
+    <li><a href="l08-versions.html"><span class="n">08</span><span>1.0 → 2.0 → 3.0</span></a></li>
+  </ul>
+  <p class="nav-track">Encryption</p>
+  <ul class="nav-list">
+    <li><a href="l09-honest-framing.html"><span class="n">01</span><span>The honest framing</span></a></li>
+    <li><a href="l10-teaching-ciphers.html" class="active" aria-current="page"><span class="n">02</span><span>Teaching ciphers</span></a></li>
+    <li><a href="l11-xml-encryption.html"><span class="n">03</span><span>W3C XML Encryption</span></a></li>
+    <li><a href="l12-extension-crypto.html"><span class="n">04</span><span>Extension functions</span></a></li>
+  </ul>
+  <p class="nav-track">Practice</p>
+  <ul class="nav-list">
+    <li><a href="capstone.html"><span class="n">01</span><span>Capstone project</span></a></li>
+    <li><a href="reference.html"><span class="n">02</span><span>Reference & cheat-sheet</span></a></li>
+  </ul>
+</nav>
+</aside>
+<main class="main" id="main">
+<div class="wrap">
+<header class="pagehead"><p class="eyebrow">ENCRYPTION <span class="tick">·</span> LESSON 02</p><h1>Teaching ciphers in pure XSLT</h1><p class="lede">Caesar, Base64, and XOR — built by hand to learn recursion and byte math. Great teachers, terrible security.</p></header>
+<div class="prose">
+<p>Time to build ciphers — in pure XSLT, with the recursion and byte math from the
+transformation track. Three of them: a Caesar shift, Base64, and repeating-key XOR.
+They're superb for learning and <strong>useless for security</strong>; the point is to
+<em>understand</em> how these operations work, not to hide data. Folders:
+<code>examples/08-cipher-caesar</code>, <code>09-cipher-base64</code>,
+<code>10-cipher-xor</code>.</p>
+
+<div class="callout callout--warn">
+  <p class="h">&#9888; Read before running</p>
+  <p>Everything on this page is a <strong>teaching cipher</strong>. A Caesar shift is
+  broken by hand; fixed-key XOR falls to basic frequency analysis; Base64 hides nothing
+  at all. Do not protect real data with any of them. (See
+  <a href="l09-honest-framing.html">Lesson 9</a>.)</p>
+</div>
+
+<h2>1 · Caesar / ROT13 — recursion over characters</h2>
+<p>Shift each letter forward by <em>n</em> places, wrapping Z→A, and pass everything else
+through. It's the string-reverse pattern from <a href="l07-recursion.html">Lesson 7</a>,
+one character at a time. Decryption is the same walk with <code>26 − n</code> — so ROT13
+(n = 13) is its own inverse.</p>
+<div class="panel panel--xsl">
+  <div class="panel__bar"><span class="role xsl">caesar.xsl · the core shift (XSLT 1.0)</span><button class="copy" type="button">copy</button></div>
+<pre><code>&lt;xsl:variable name="UP2"&gt;ABC…XYZABC…XYZ&lt;/xsl:variable&gt;  &lt;!-- doubled = free wrap --&gt;
+
+&lt;xsl:template name="shift-char"&gt;
+  &lt;xsl:param name="ch"/&gt; &lt;xsl:param name="n"/&gt;
+  &lt;xsl:choose&gt;
+    &lt;xsl:when test="contains($UP, $ch)"&gt;
+      &lt;xsl:value-of select="substring($UP2,
+          string-length(substring-before($UP, $ch)) + 1 + $n, 1)"/&gt;
+    &lt;/xsl:when&gt;
+    &lt;!-- lowercase branch, then: --&gt;
+    &lt;xsl:otherwise&gt;&lt;xsl:value-of select="$ch"/&gt;&lt;/xsl:otherwise&gt;
+  &lt;/xsl:choose&gt;
+&lt;/xsl:template&gt;</code></pre>
+</div>
+<div class="run">
+  <div class="run__cmd"><span class="dollar">$ </span>xsltproc --stringparam shift 3 08-cipher-caesar/caesar.xsl 08-cipher-caesar/message.xml</div>
+  <div class="run__out"><span class="lbl"># plaintext:</span>  HELLO, XSLT World! Attack at DAWN.
+<span class="lbl"># shift 3:</span>    KHOOR, AVOW Zruog! Dwwdfn dw GDZQ.
+<span class="lbl"># ROT13:</span>      URYYB, KFYG Jbeyq! Nggnpx ng QNJA.
+<span class="lbl"># decrypt (shift 3, decrypt=yes):</span>  HELLO, XSLT World! Attack at DAWN.</div>
+</div>
+
+<h2>2 · Base64 — encoding, built by hand</h2>
+<p>Base64 maps every 3 bytes to 4 printable characters. Building it teaches the byte math
+that 1.0 can't do — so this one is XSLT 3.0, using <code>string-to-codepoints()</code>.
+Remember: this is <strong>encoding</strong>, freely reversible by anyone.</p>
+<div class="panel panel--xsl">
+  <div class="panel__bar"><span class="role xsl">base64.xsl · 3 bytes → 4 chars (XSLT 3.0)</span></div>
+<pre><code>&lt;xsl:variable name="i0" select="$b0 idiv 4"/&gt;
+&lt;xsl:variable name="i1" select="($b0 mod 4)*16 + $b1 idiv 16"/&gt;
+&lt;xsl:variable name="i2" select="($b1 mod 16)*4 + $b2 idiv 64"/&gt;
+&lt;xsl:variable name="i3" select="$b2 mod 64"/&gt;
+&lt;!-- look each index up in the 64-char alphabet; pad short groups with '=' --&gt;</code></pre>
+</div>
+<div class="run">
+  <div class="run__cmd"><span class="dollar">$ </span>java -jar lib/Saxon-HE-10.9.jar -xsl:09-cipher-base64/base64.xsl -s:09-cipher-base64/message.xml</div>
+  <div class="run__out"><span class="lbl"># encode "Hello, XSLT!":</span>  SGVsbG8sIFhTTFQh
+<span class="lbl"># matches the system tool:</span>  $ printf 'Hello, XSLT!' | base64  →  SGVsbG8sIFhTTFQh
+<span class="lbl"># decode (decode=yes) round-trips back to:</span>  Hello, XSLT!</div>
+</div>
+
+<h2>3 · XOR — where real ciphers begin</h2>
+<p>XOR each byte of the message with a repeating key. It's the atom inside every stream
+cipher — and <strong>encrypt and decrypt are the identical operation</strong> (XOR twice
+with the same key returns the original). XPath has no bitwise operators, so we compute XOR
+one bit at a time, which is a fine way to <em>see</em> what XOR actually is.</p>
+<div class="panel panel--xsl">
+  <div class="panel__bar"><span class="role xsl">xor.xsl · bitwise XOR without bit operators</span></div>
+<pre><code>&lt;xsl:function name="c:xor" as="xs:integer"&gt;
+  &lt;xsl:param name="a"/&gt; &lt;xsl:param name="b"/&gt;
+  &lt;!-- result bit i is 1 exactly when a and b differ at bit i --&gt;
+  &lt;xsl:sequence select="sum(
+     for $i in 1 to 8 return
+       if ((($a idiv $POW[$i]) mod 2) ne (($b idiv $POW[$i]) mod 2))
+       then $POW[$i] else 0)"/&gt;
+&lt;/xsl:function&gt;</code></pre>
+</div>
+<div class="run">
+  <div class="run__cmd"><span class="dollar">$ </span>java -jar lib/Saxon-HE-10.9.jar -xsl:10-cipher-xor/xor.xsl -s:10-cipher-xor/message.xml key=SECRET</div>
+  <div class="run__out"><span class="lbl"># "Meet at midnight." XOR "SECRET" → hex:</span>
+1e202626653527652e3b213a3a222b266b
+<span class="lbl"># feed the hex back with decrypt=yes → </span> Meet at midnight.</div>
+</div>
+
+<div class="callout callout--key">
+  <p class="h">&#9873; Why these break (and real ones don't)</p>
+  <p>Caesar has only 25 keys — try them all. Fixed-key XOR reuses the keystream, so the
+  key leaks to frequency analysis and known-plaintext. Real stream ciphers fix this with a
+  <em>never-repeating</em> keystream from a strong generator and a one-time nonce — exactly
+  what a library like <code>cryptography</code> gives you in Lessons 11–12.</p>
+</div>
+
+<div class="callout callout--use">
+  <p class="h">&#9733; Practical use case — the legitimate cousins</p>
+  <p>The <em>mechanics</em> here are used for real, just not for secrecy. Base64 wraps
+  binary attachments in email and embeds images in data-URIs. ROT13 hides spoilers.
+  Simple character maps power transliteration and leetspeak. When you need to move or
+  reshape bytes safely — not hide them — these are the right tools.</p>
+</div>
+
+<div class="exercise">
+  <p class="h">Your turn</p>
+  <p>Someone hands you <code>VGhlIHF1aWNrIGJyb3du</code> and says it's “encrypted.” What is
+  it really, and how do you read it?</p>
+  <details><summary>Show answer</summary>
+  <p>It's Base64 <em>encoding</em>, not encryption — the trailing pattern and character set
+  give it away. Decode it (<code>printf 'VGhlIHF1aWNrIGJyb3du' | base64 -D</code>, or run
+  <code>base64.xsl</code> with <code>decode=yes</code>) to get “The quick brown”. No key,
+  no secret, no security.</p></details>
+</div>
+
+</div>
+<nav class="lessonnav" aria-label="Lesson navigation">
+<a href="l09-honest-framing.html" rel="prev"><span class="dir">&#8592; Previous</span><span class="ttl">Encryption with XSLT — the honest framing</span></a>
+<a class="next" href="l11-xml-encryption.html" rel="next"><span class="dir">Next &#8594;</span><span class="ttl">W3C XML Encryption — and XSLT's real role</span></a>
+</nav>
+<footer class="foot">
+The XSLT Course · a hands-on, honestly-scoped introduction. Every example in this
+course is executed, not imagined. Built for learning; ciphers marked “teaching” are
+not for protecting real data.
+</footer>
+</div>
+</main>
+</div>
+<script src="assets/app.js"></script>
+</body>
+</html>

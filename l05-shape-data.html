@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shaping data: sort, choose, attributes · The XSLT Course</title>
+<meta name="description" content="Reorder, branch, compute values, and build attributes at run time.">
+<link rel="canonical" href="https://sreenivas-sadhu-prabhakara.github.io/xslt-course/l05-shape-data.html">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="Sreenivas Sadhu Prabhakara">
+<meta name="theme-color" content="#16191f">
+<meta name="color-scheme" content="light">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png">
+<link rel="apple-touch-icon" href="assets/icon-180.png">
+<link rel="manifest" href="site.webmanifest">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="The XSLT Course">
+<meta property="og:title" content="Shaping data: sort, choose, attributes">
+<meta property="og:description" content="Reorder, branch, compute values, and build attributes at run time.">
+<meta property="og:url" content="https://sreenivas-sadhu-prabhakara.github.io/xslt-course/l05-shape-data.html">
+<meta property="og:image" content="https://sreenivas-sadhu-prabhakara.github.io/xslt-course/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The XSLT Course">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Shaping data: sort, choose, attributes">
+<meta name="twitter:description" content="Reorder, branch, compute values, and build attributes at run time.">
+<meta name="twitter:image" content="https://sreenivas-sadhu-prabhakara.github.io/xslt-course/assets/og-image.png">
+<link rel="sitemap" type="application/xml" href="sitemap.xml">
+<link rel="stylesheet" href="assets/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Transformation",
+          "item": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/#syllabus"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Shaping data: sort, choose, attributes",
+          "item": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/l05-shape-data.html"
+        }
+      ]
+    },
+    {
+      "@type": "LearningResource",
+      "name": "Shaping data: sort, choose, attributes",
+      "description": "Reorder, branch, compute values, and build attributes at run time.",
+      "url": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/l05-shape-data.html",
+      "inLanguage": "en",
+      "learningResourceType": "lesson",
+      "educationalLevel": "Beginner",
+      "isPartOf": {
+        "@type": "Course",
+        "name": "The XSLT Course",
+        "url": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Sreenivas Sadhu Prabhakara"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "The XSLT Course",
+        "url": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/assets/icon-512.png"
+        }
+      },
+      "isAccessibleForFree": true,
+      "position": 5
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="shell">
+<aside class="sidebar">
+<div class="brand">
+  <a href="index.html" aria-label="The XSLT Course home"><span class="mark">&lt;<span class="in">x</span>&#8202;&#8594;&#8202;<span class="out">/</span>&gt;</span></a>
+  <a href="index.html" class="name">The&nbsp;XSLT&nbsp;Course</a>
+</div>
+<button class="menu-btn" aria-expanded="false" aria-controls="nav">Menu</button>
+<nav class="nav-wrap" id="nav" aria-label="Course syllabus">
+  <p class="nav-track">Transformation</p>
+  <ul class="nav-list">
+    <li><a href="l01-what-is-xslt.html"><span class="n">01</span><span>What XSLT is</span></a></li>
+    <li><a href="l02-first-stylesheet.html"><span class="n">02</span><span>Your first stylesheet</span></a></li>
+    <li><a href="l03-xpath.html"><span class="n">03</span><span>XPath essentials</span></a></li>
+    <li><a href="l04-templates.html"><span class="n">04</span><span>Template rules</span></a></li>
+    <li><a href="l05-shape-data.html" class="active" aria-current="page"><span class="n">05</span><span>Shaping data</span></a></li>
+    <li><a href="l06-keys-grouping.html"><span class="n">06</span><span>Keys & grouping</span></a></li>
+    <li><a href="l07-recursion.html"><span class="n">07</span><span>Recursion</span></a></li>
+    <li><a href="l08-versions.html"><span class="n">08</span><span>1.0 → 2.0 → 3.0</span></a></li>
+  </ul>
+  <p class="nav-track">Encryption</p>
+  <ul class="nav-list">
+    <li><a href="l09-honest-framing.html"><span class="n">01</span><span>The honest framing</span></a></li>
+    <li><a href="l10-teaching-ciphers.html"><span class="n">02</span><span>Teaching ciphers</span></a></li>
+    <li><a href="l11-xml-encryption.html"><span class="n">03</span><span>W3C XML Encryption</span></a></li>
+    <li><a href="l12-extension-crypto.html"><span class="n">04</span><span>Extension functions</span></a></li>
+  </ul>
+  <p class="nav-track">Practice</p>
+  <ul class="nav-list">
+    <li><a href="capstone.html"><span class="n">01</span><span>Capstone project</span></a></li>
+    <li><a href="reference.html"><span class="n">02</span><span>Reference & cheat-sheet</span></a></li>
+  </ul>
+</nav>
+</aside>
+<main class="main" id="main">
+<div class="wrap">
+<header class="pagehead"><p class="eyebrow">TRANSFORMATION <span class="tick">·</span> LESSON 05</p><h1>Shaping data: sort, choose, attributes</h1><p class="lede">Reorder, branch, compute values, and build attributes at run time.</p></header>
+<div class="prose">
+<p>Copying data across is only half the job. Real transforms <em>reshape</em> it:
+reorder rows, branch on conditions, and compute attribute values on the fly. Folder:
+<code>examples/04-shape-data</code>.</p>
+
+<h2>Sorting with xsl:sort</h2>
+<p>Drop an <code>xsl:sort</code> inside a <code>for-each</code> (or
+<code>apply-templates</code>) and the selected nodes are reordered before processing.</p>
+<div class="panel panel--xsl">
+  <div class="panel__bar"><span class="role xsl">report.xsl · key parts</span><button class="copy" type="button">copy</button></div>
+<pre><code>&lt;xsl:for-each select="book"&gt;
+  &lt;xsl:sort select="price" data-type="number" order="descending"/&gt;
+
+  &lt;tr class="{@category}"&gt;                       &lt;!-- attribute value template --&gt;
+    &lt;td&gt;&lt;xsl:value-of select="title"/&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;xsl:value-of select="concat(price/@currency, ' ', price)"/&gt;&lt;/td&gt;
+    &lt;td&gt;
+      &lt;xsl:choose&gt;
+        &lt;xsl:when test="@inStock='true'"&gt;in stock&lt;/xsl:when&gt;
+        &lt;xsl:otherwise&gt;backorder&lt;/xsl:otherwise&gt;
+      &lt;/xsl:choose&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/xsl:for-each&gt;</code></pre>
+</div>
+<p>Without <code>data-type="number"</code>, <code>xsl:sort</code> compares as text and
+<code>17.99</code> sorts <em>after</em> <code>149.85</code> — a classic bug.</p>
+
+<h2>Branching: if and choose</h2>
+<ul>
+  <li><code>xsl:if</code> — a single yes/no test, no else.</li>
+  <li><code>xsl:choose</code> / <code>xsl:when</code> / <code>xsl:otherwise</code> — multi-way, like switch/case.</li>
+</ul>
+
+<h2>Attribute Value Templates (AVTs)</h2>
+<p>Inside an attribute, curly braces <code>{ }</code> switch on XPath. <code>class="{@category}"</code>
+evaluates <code>@category</code> and drops the result in — so a
+<code>&lt;book category="tech"&gt;</code> becomes <code>&lt;tr class="tech"&gt;</code>.
+AVTs work in <em>any</em> literal attribute.</p>
+
+<div class="run">
+  <div class="run__cmd"><span class="dollar">$ </span>xsltproc 04-shape-data/report.xsl data/catalog.xml</div>
+  <div class="run__out">&lt;table border="1"&gt;
+&lt;tr&gt;&lt;th&gt;Title&lt;/th&gt;&lt;th&gt;Author&lt;/th&gt;&lt;th&gt;Price&lt;/th&gt;&lt;th&gt;Status&lt;/th&gt;&lt;/tr&gt;
+&lt;tr class="tech"&gt;
+  &lt;td&gt;XSLT 2.0 and XPath 2.0&lt;/td&gt;&lt;td&gt;Michael Kay&lt;/td&gt;
+  &lt;td&gt;USD 59.99&lt;/td&gt;&lt;td&gt;backorder&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class="security"&gt;
+  &lt;td&gt;Real-World Cryptography&lt;/td&gt;&lt;td&gt;David Wong&lt;/td&gt;
+  &lt;td&gt;USD 59.99&lt;/td&gt;&lt;td&gt;in stock&lt;/td&gt;
+&lt;/tr&gt;
+&#8230; (rows continue, most-expensive first) &#8230;
+&lt;tr class="fiction"&gt;
+  &lt;td&gt;Cryptonomicon&lt;/td&gt;&lt;td&gt;Neal Stephenson&lt;/td&gt;
+  &lt;td&gt;USD 17.99&lt;/td&gt;&lt;td&gt;backorder&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;</div>
+</div>
+
+<div class="callout callout--use">
+  <p class="h">&#9733; Practical use case — the invoice/report generator</p>
+  <p>This is the everyday XSLT job: turn a data feed into a styled document. Sort line
+  items by amount, colour overdue rows red with an AVT
+  (<code>class="{if(daysLate&gt;0,'late','ok')}"</code> in 2.0), print “PAID” vs “DUE”
+  with a <code>choose</code>. The capstone builds exactly this for a batch of orders.</p>
+</div>
+
+<div class="exercise">
+  <p class="h">Your turn</p>
+  <p>Add a <code>&lt;td&gt;</code> that shows <em>“bargain”</em> when a book costs under
+  $30 and <em>“premium”</em> otherwise.</p>
+  <details><summary>Show a solution</summary>
+  <pre><code>&lt;td&gt;
+  &lt;xsl:choose&gt;
+    &lt;xsl:when test="price &lt; 30"&gt;bargain&lt;/xsl:when&gt;
+    &lt;xsl:otherwise&gt;premium&lt;/xsl:otherwise&gt;
+  &lt;/xsl:choose&gt;
+&lt;/td&gt;</code></pre></details>
+</div>
+
+</div>
+<nav class="lessonnav" aria-label="Lesson navigation">
+<a href="l04-templates.html" rel="prev"><span class="dir">&#8592; Previous</span><span class="ttl">Template rules & apply-templates</span></a>
+<a class="next" href="l06-keys-grouping.html" rel="next"><span class="dir">Next &#8594;</span><span class="ttl">Keys & grouping</span></a>
+</nav>
+<footer class="foot">
+The XSLT Course · a hands-on, honestly-scoped introduction. Every example in this
+course is executed, not imagined. Built for learning; ciphers marked “teaching” are
+not for protecting real data.
+</footer>
+</div>
+</main>
+</div>
+<script src="assets/app.js"></script>
+</body>
+</html>

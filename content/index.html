@@ -1,0 +1,110 @@
+<section class="hero" data-hero>
+  <p class="eyebrow">A hands-on course <span class="tick">·</span> XSLT 1.0 → 3.0</p>
+  <h1>Turn one tree<br>into <span class="grad">another</span>.</h1>
+  <p class="lede">XSLT is the language for reshaping XML into anything — HTML, JSON,
+  text, or a different XML. This course teaches transformation from first
+  principles, then tackles the question everyone asks and few answer honestly:
+  <em>can you encrypt with XSLT?</em></p>
+  <div class="cta">
+    <a class="btn btn--primary" href="l01-what-is-xslt.html">Start lesson 1 &#8594;</a>
+    <a class="btn btn--ghost" href="l09-honest-framing.html">Jump to the crypto track</a>
+    <a class="btn btn--ghost" href="capstone.html">See the capstone</a>
+  </div>
+</section>
+
+<h2>The whole language, in one picture</h2>
+<p>Every XSLT program is the same shape: a <strong>source tree</strong> goes in, a
+<strong>stylesheet</strong> of rules is applied, and a <strong>result tree</strong>
+comes out. Hold on to these three colours — you'll see them on every code block in
+the course.</p>
+
+<div class="xform" aria-label="source XML, transformed by a stylesheet, into result HTML">
+  <div class="cell in">
+    <span class="tag">Source · XML</span>
+<pre>&lt;book&gt;
+  &lt;title&gt;Learning XSLT&lt;/title&gt;
+  &lt;author&gt;M. Fitzgerald&lt;/author&gt;
+&lt;/book&gt;</pre>
+  </div>
+  <div class="arrow" aria-hidden="true">&#9656;</div>
+  <div class="cell eng">
+    <span class="tag">Stylesheet · XSL</span>
+<pre>&lt;xsl:template match="book"&gt;
+  &lt;li&gt;
+    &lt;xsl:value-of select="title"/&gt;
+  &lt;/li&gt;
+&lt;/xsl:template&gt;</pre>
+  </div>
+  <div class="arrow" aria-hidden="true">&#9656;</div>
+  <div class="cell out">
+    <span class="tag">Result · HTML</span>
+<pre>&lt;li&gt;Learning XSLT&lt;/li&gt;</pre>
+  </div>
+</div>
+
+<h2>What you'll be able to do</h2>
+<div class="cards">
+  <div class="card2"><div class="k">Transform</div><h3>Reshape any XML</h3>
+    <p>Query with XPath, drive output with template rules, sort, group, and emit HTML, text, or JSON.</p></div>
+  <div class="card2"><div class="k">Judge</div><h3>Pick the right version</h3>
+    <p>Know exactly what 2.0 and 3.0 add, and when the upgrade earns its keep.</p></div>
+  <div class="card2"><div class="k">Protect</div><h3>Encrypt the right way</h3>
+    <p>Understand teaching ciphers, the W3C XML Encryption standard, and calling real crypto from a transform.</p></div>
+  <div class="card2"><div class="k">Ship</div><h3>Build a real pipeline</h3>
+    <p>Combine it all in a capstone that transforms and selectively encrypts a live order feed.</p></div>
+</div>
+
+<h2 id="syllabus">The syllabus</h2>
+<div class="tracklist">
+  <div class="col transform">
+    <span class="badge">Track 1 · Transformation</span>
+    <ol>
+      <li><a href="l01-what-is-xslt.html">What XSLT is &amp; how it runs</a></li>
+      <li><a href="l02-first-stylesheet.html">Your first stylesheet</a></li>
+      <li><a href="l03-xpath.html">XPath essentials</a></li>
+      <li><a href="l04-templates.html">Template rules &amp; apply-templates</a></li>
+      <li><a href="l05-shape-data.html">Shaping data: sort, choose, attributes</a></li>
+      <li><a href="l06-keys-grouping.html">Keys &amp; grouping</a></li>
+      <li><a href="l07-recursion.html">Named templates, params &amp; recursion</a></li>
+      <li><a href="l08-versions.html">1.0 → 2.0 → 3.0</a></li>
+    </ol>
+  </div>
+  <div class="col encryption">
+    <span class="badge">Track 2 · Encryption</span>
+    <ol>
+      <li><a href="l09-honest-framing.html">The honest framing (+ security)</a></li>
+      <li><a href="l10-teaching-ciphers.html">Teaching ciphers in pure XSLT</a></li>
+      <li><a href="l11-xml-encryption.html">W3C XML Encryption</a></li>
+      <li><a href="l12-extension-crypto.html">Real crypto via extension functions</a></li>
+    </ol>
+  </div>
+  <div class="col practice">
+    <span class="badge">Track 3 · Practice</span>
+    <ol>
+      <li><a href="capstone.html">Capstone: Secure Invoice Exchange</a></li>
+      <li><a href="reference.html">Reference &amp; cheat-sheet</a></li>
+    </ol>
+  </div>
+</div>
+
+<h2>Run everything yourself</h2>
+<p>The lessons aren't just to read. A sibling <code>examples/</code> folder holds a
+runnable file for (almost) every lesson, each one executed and verified.</p>
+<div class="panel panel--xsl">
+  <div class="panel__bar"><span class="role xsl">terminal</span><button class="copy" type="button">copy</button></div>
+<pre><code>cd examples
+./fetch-saxon.sh      # once, for the 2.0/3.0 examples (needs Java)
+./run.sh 02           # run any single lesson's example
+./run.sh all          # run them all, printing each command</code></pre>
+</div>
+<p>You need <code>xsltproc</code> (ships with macOS/Linux) for the 1.0 examples,
+Java for Saxon-HE, and <code>python3</code> with <code>lxml</code> + <code>cryptography</code>
+for the two real-crypto lessons.</p>
+
+<div class="callout callout--warn">
+  <p class="h">&#9888; The one rule that matters most</p>
+  <p>XSLT does not do cryptography. Lessons 10's ciphers are for <em>learning</em>,
+  not for protecting anything real. When data must actually be safe, XSLT's job is
+  to decide <strong>what</strong> and <strong>where</strong> — a vetted crypto
+  library does the <strong>how</strong> (lessons 11–12). This course keeps that line bright.</p>
+</div>

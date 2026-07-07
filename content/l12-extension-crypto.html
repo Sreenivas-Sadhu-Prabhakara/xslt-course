@@ -1,0 +1,103 @@
+<p>The final path is the one production systems reach for most: call a real crypto
+library <em>from inside</em> the transform, through an <strong>extension function</strong>.
+The stylesheet stays declarative and readable; the cryptography lives in vetted code. Every
+serious XSLT stack supports this. Folder: <code>examples/12-extension-crypto</code>.</p>
+
+<h2>The idea</h2>
+<p>You register a function under your own namespace, then call it from XPath like any
+built-in. Here <code>c:aesEncrypt</code>, <code>c:sha256</code>, and <code>c:hmac</code> are
+Python functions (backed by the <code>cryptography</code> library) exposed to the
+stylesheet.</p>
+<div class="panel panel--xsl">
+  <div class="panel__bar"><span class="role xsl">ext-crypto.xsl · crypto called from XPath</span><button class="copy" type="button">copy</button></div>
+<pre><code>&lt;xsl:stylesheet version="1.0"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:c="urn:course:crypto"&gt;    &lt;!-- our extension namespace --&gt;
+
+  &lt;xsl:template match="/"&gt;
+    &lt;xsl:variable name="ct" select="c:aesEncrypt(string(/note/body))"/&gt;
+    &lt;envelope alg="AES-256-GCM"&gt;
+      &lt;ciphertext&gt;&lt;xsl:value-of select="$ct"/&gt;&lt;/ciphertext&gt;
+      &lt;sha256&gt;&lt;xsl:value-of select="c:sha256(string(/note/body))"/&gt;&lt;/sha256&gt;
+      &lt;hmac&gt;&lt;xsl:value-of select="c:hmac($ct)"/&gt;&lt;/hmac&gt;
+    &lt;/envelope&gt;
+  &lt;/xsl:template&gt;
+&lt;/xsl:stylesheet&gt;</code></pre>
+</div>
+<div class="panel panel--in">
+  <div class="panel__bar"><span class="role in">run.py · registering the functions (Python/lxml)</span></div>
+<pre><code>ns = etree.FunctionNamespace("urn:course:crypto")
+ns.prefix = "c"
+ns.update({"aesEncrypt": aes_encrypt, "aesDecrypt": aes_decrypt,
+           "sha256": sha256, "hmac": hmac})   # backed by `cryptography`</code></pre>
+</div>
+
+<h2>Run it: encrypt, hash, authenticate</h2>
+<div class="run">
+  <div class="run__cmd"><span class="dollar">$ </span>python3 run.py encrypt note.xml</div>
+  <div class="run__out">&lt;envelope alg="AES-256-GCM"&gt;
+  &lt;ciphertext&gt;GDXyNC9gWYESiZiH6l3hNAE0Th0kOcMAgD4Fb47QbO4…&lt;/ciphertext&gt;
+  &lt;sha256&gt;4b8abd5f35d80c07711f1ebcc261c5d291cbab57fac4fa40dd15a74f16996baf&lt;/sha256&gt;
+  &lt;hmac&gt;ca533bd33a806d5940875e4399e139edf86851a6eb236b5904886bf099c4e669&lt;/hmac&gt;
+&lt;/envelope&gt;
+
+<span class="lbl"># the digest matches an independent tool:</span>
+$ echo -n "Launch codes rotate at 0300 UTC. Ack on channel 7." | shasum -a 256
+4b8abd5f35d80c07711f1ebcc261c5d291cbab57fac4fa40dd15a74f16996baf</div>
+</div>
+<div class="run">
+  <div class="run__cmd"><span class="dollar">$ </span>python3 run.py decrypt envelope.xml</div>
+  <div class="run__out">&lt;note&gt;
+  &lt;verified&gt;true&lt;/verified&gt;                <span class="lbl">&#8592; HMAC checked before decrypting</span>
+  &lt;body&gt;Launch codes rotate at 0300 UTC. Ack on channel 7.&lt;/body&gt;
+&lt;/note&gt;</div>
+</div>
+<p>Notice the envelope carries an <strong>HMAC</strong>: the receiver verifies integrity
+<em>before</em> trusting the ciphertext. Authenticated encryption (AES-GCM) does this
+inherently; the extra HMAC shown here demonstrates the pattern explicitly.</p>
+
+<h2>The same pattern in every stack</h2>
+<div class="tbl-wrap">
+<table class="data">
+  <tr><th>Platform</th><th>How you register an extension function</th></tr>
+  <tr><td>Python / lxml</td><td><code>etree.FunctionNamespace("uri")</code> → assign callables <em>(this example)</em></td></tr>
+  <tr><td>Java / Saxon-PE&amp;EE</td><td>an <code>ExtensionFunctionDefinition</code> class, or reflexive <code>java:</code> calls</td></tr>
+  <tr><td>.NET</td><td><code>XsltArgumentList.AddExtensionObject(uri, obj)</code></td></tr>
+  <tr><td>Integration (Apigee, camel, Mule)</td><td>platform-provided crypto/hash functions callable from the XSLT policy</td></tr>
+</table>
+</div>
+
+<div class="callout callout--warn">
+  <p class="h">&#9888; Processor caveat</p>
+  <p><strong>Saxon-HE</strong> (the free edition used elsewhere in this course) does
+  <em>not</em> allow arbitrary Java extension functions — that's a Saxon-PE/EE feature.
+  For a runnable, free path we use Python/lxml here. The concept is identical across stacks;
+  only the registration API differs.</p>
+</div>
+
+<div class="callout callout--key">
+  <p class="h">&#9873; Path 2 vs Path 3 — which to use</p>
+  <p>Use <strong>XML Encryption</strong> (Lesson 11) when you need an interoperable,
+  standardised document that another party will decrypt with their own toolkit. Use
+  <strong>extension functions</strong> (this lesson) when the crypto is internal to your
+  pipeline and you want it inline, flexible, and close to the transform. Both keep the
+  cryptography in a vetted library.</p>
+</div>
+
+<div class="callout callout--use">
+  <p class="h">&#9733; Practical use case — tokenising a data feed on the way through</p>
+  <p>An ETL job transforms a customer export and, in the same pass, replaces each email
+  with <code>c:hmac(email)</code> — a stable pseudonym that lets analysts join records
+  without ever seeing the real address. One stylesheet transforms <em>and</em> de-identifies,
+  with the hashing done by a library, not hand-rolled.</p>
+</div>
+
+<div class="exercise">
+  <p class="h">Your turn (thinking)</p>
+  <p>Why does the example verify the HMAC <em>before</em> decrypting, rather than after?</p>
+  <details><summary>Show answer</summary>
+  <p>To avoid acting on attacker-controlled data. Checking integrity first (“encrypt-then-MAC”)
+  means you reject tampered ciphertext before feeding it to the decryptor, sidestepping a
+  class of padding/parser attacks. It's the same reason AES-GCM authenticates as part of
+  decryption.</p></details>
+</div>

@@ -1,0 +1,9 @@
+# Downloaded processor (fetch with ./fetch-saxon.sh)
+lib/*.jar
+
+# Generated during runs
+*.enc.xml
+*.dec.xml
+envelope.xml
+round-trip.xml
+capstone/out/

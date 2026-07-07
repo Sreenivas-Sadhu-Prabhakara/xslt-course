@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your first stylesheet · The XSLT Course</title>
+<meta name="description" content="Write, run, and understand a complete transform from XML to HTML in a dozen lines.">
+<link rel="canonical" href="https://sreenivas-sadhu-prabhakara.github.io/xslt-course/l02-first-stylesheet.html">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="Sreenivas Sadhu Prabhakara">
+<meta name="theme-color" content="#16191f">
+<meta name="color-scheme" content="light">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png">
+<link rel="apple-touch-icon" href="assets/icon-180.png">
+<link rel="manifest" href="site.webmanifest">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="The XSLT Course">
+<meta property="og:title" content="Your first stylesheet">
+<meta property="og:description" content="Write, run, and understand a complete transform from XML to HTML in a dozen lines.">
+<meta property="og:url" content="https://sreenivas-sadhu-prabhakara.github.io/xslt-course/l02-first-stylesheet.html">
+<meta property="og:image" content="https://sreenivas-sadhu-prabhakara.github.io/xslt-course/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The XSLT Course">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Your first stylesheet">
+<meta name="twitter:description" content="Write, run, and understand a complete transform from XML to HTML in a dozen lines.">
+<meta name="twitter:image" content="https://sreenivas-sadhu-prabhakara.github.io/xslt-course/assets/og-image.png">
+<link rel="sitemap" type="application/xml" href="sitemap.xml">
+<link rel="stylesheet" href="assets/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Transformation",
+          "item": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/#syllabus"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Your first stylesheet",
+          "item": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/l02-first-stylesheet.html"
+        }
+      ]
+    },
+    {
+      "@type": "LearningResource",
+      "name": "Your first stylesheet",
+      "description": "Write, run, and understand a complete transform from XML to HTML in a dozen lines.",
+      "url": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/l02-first-stylesheet.html",
+      "inLanguage": "en",
+      "learningResourceType": "lesson",
+      "educationalLevel": "Beginner",
+      "isPartOf": {
+        "@type": "Course",
+        "name": "The XSLT Course",
+        "url": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Sreenivas Sadhu Prabhakara"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "The XSLT Course",
+        "url": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/assets/icon-512.png"
+        }
+      },
+      "isAccessibleForFree": true,
+      "position": 2
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="shell">
+<aside class="sidebar">
+<div class="brand">
+  <a href="index.html" aria-label="The XSLT Course home"><span class="mark">&lt;<span class="in">x</span>&#8202;&#8594;&#8202;<span class="out">/</span>&gt;</span></a>
+  <a href="index.html" class="name">The&nbsp;XSLT&nbsp;Course</a>
+</div>
+<button class="menu-btn" aria-expanded="false" aria-controls="nav">Menu</button>
+<nav class="nav-wrap" id="nav" aria-label="Course syllabus">
+  <p class="nav-track">Transformation</p>
+  <ul class="nav-list">
+    <li><a href="l01-what-is-xslt.html"><span class="n">01</span><span>What XSLT is</span></a></li>
+    <li><a href="l02-first-stylesheet.html" class="active" aria-current="page"><span class="n">02</span><span>Your first stylesheet</span></a></li>
+    <li><a href="l03-xpath.html"><span class="n">03</span><span>XPath essentials</span></a></li>
+    <li><a href="l04-templates.html"><span class="n">04</span><span>Template rules</span></a></li>
+    <li><a href="l05-shape-data.html"><span class="n">05</span><span>Shaping data</span></a></li>
+    <li><a href="l06-keys-grouping.html"><span class="n">06</span><span>Keys & grouping</span></a></li>
+    <li><a href="l07-recursion.html"><span class="n">07</span><span>Recursion</span></a></li>
+    <li><a href="l08-versions.html"><span class="n">08</span><span>1.0 → 2.0 → 3.0</span></a></li>
+  </ul>
+  <p class="nav-track">Encryption</p>
+  <ul class="nav-list">
+    <li><a href="l09-honest-framing.html"><span class="n">01</span><span>The honest framing</span></a></li>
+    <li><a href="l10-teaching-ciphers.html"><span class="n">02</span><span>Teaching ciphers</span></a></li>
+    <li><a href="l11-xml-encryption.html"><span class="n">03</span><span>W3C XML Encryption</span></a></li>
+    <li><a href="l12-extension-crypto.html"><span class="n">04</span><span>Extension functions</span></a></li>
+  </ul>
+  <p class="nav-track">Practice</p>
+  <ul class="nav-list">
+    <li><a href="capstone.html"><span class="n">01</span><span>Capstone project</span></a></li>
+    <li><a href="reference.html"><span class="n">02</span><span>Reference & cheat-sheet</span></a></li>
+  </ul>
+</nav>
+</aside>
+<main class="main" id="main">
+<div class="wrap">
+<header class="pagehead"><p class="eyebrow">TRANSFORMATION <span class="tick">·</span> LESSON 02</p><h1>Your first stylesheet</h1><p class="lede">Write, run, and understand a complete transform from XML to HTML in a dozen lines.</p></header>
+<div class="prose">
+<p>Enough theory — let's transform something. We'll turn the course's sample
+catalogue into an HTML page, then read the stylesheet line by line. Everything
+here runs; the folder is <code>examples/01-first-transform</code>.</p>
+
+<h2>The input</h2>
+<p>A trimmed version of <code>examples/data/catalog.xml</code>:</p>
+<div class="panel panel--in">
+  <div class="panel__bar"><span class="role in">catalog.xml · source</span></div>
+<pre><code>&lt;catalog&gt;
+  &lt;book id="b1" category="tech"&gt;
+    &lt;title&gt;Learning XSLT&lt;/title&gt;
+    &lt;author&gt;Michael Fitzgerald&lt;/author&gt;
+  &lt;/book&gt;
+  &lt;!-- ...five more books... --&gt;
+&lt;/catalog&gt;</code></pre>
+</div>
+
+<h2>The stylesheet</h2>
+<div class="panel panel--xsl">
+  <div class="panel__bar"><span class="role xsl">to-html.xsl · stylesheet</span><button class="copy" type="button">copy</button></div>
+<pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;xsl:stylesheet version="1.0"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"&gt;
+
+  &lt;xsl:output method="html" indent="yes"/&gt;
+
+  &lt;xsl:template match="/"&gt;
+    &lt;html&gt;
+      &lt;body&gt;
+        &lt;h1&gt;Bookshop catalogue&lt;/h1&gt;
+        &lt;p&gt;We have &lt;xsl:value-of select="count(catalog/book)"/&gt; titles.&lt;/p&gt;
+        &lt;ul&gt;
+          &lt;xsl:for-each select="catalog/book"&gt;
+            &lt;li&gt;
+              &lt;xsl:value-of select="title"/&gt; &#8212; &lt;xsl:value-of select="author"/&gt;
+            &lt;/li&gt;
+          &lt;/xsl:for-each&gt;
+        &lt;/ul&gt;
+      &lt;/body&gt;
+    &lt;/html&gt;
+  &lt;/xsl:template&gt;
+
+&lt;/xsl:stylesheet&gt;</code></pre>
+</div>
+
+<h2>Line by line</h2>
+<div class="tbl-wrap">
+<table class="data">
+  <tr><th>Part</th><th>What it does</th></tr>
+  <tr><td><code>xsl:stylesheet</code></td><td>The root. <code>version</code> and the <code>xsl:</code> namespace URI are mandatory — that exact URI is how a processor recognises XSLT.</td></tr>
+  <tr><td><code>xsl:output</code></td><td>Declares the result kind (<code>html</code>, <code>xml</code>, or <code>text</code>) and formatting. Optional but polite.</td></tr>
+  <tr><td><code>xsl:template match="/"</code></td><td>A rule for the document root <code>/</code>. Its body describes the whole output.</td></tr>
+  <tr><td>literal <code>&lt;html&gt;</code>, <code>&lt;li&gt;</code>…</td><td><strong>Literal result elements</strong>: any element <em>not</em> in the <code>xsl:</code> namespace is copied straight to the output.</td></tr>
+  <tr><td><code>xsl:value-of</code></td><td>Evaluates an XPath and inserts the resulting <em>text</em>.</td></tr>
+  <tr><td><code>xsl:for-each</code></td><td>Processes each selected node in turn. (A loop — handy, though you'll often prefer template rules; see <a href="l04-templates.html">Lesson 4</a>.)</td></tr>
+</table>
+</div>
+
+<p>The key idea: your stylesheet is a <em>skeleton of the output</em> (the literal
+elements) with <code>xsl:</code> instructions sprinkled in wherever data must be
+pulled from the source.</p>
+
+<h2>Run it</h2>
+<div class="run">
+  <div class="run__cmd"><span class="dollar">$ </span>xsltproc 01-first-transform/to-html.xsl data/catalog.xml</div>
+  <div class="run__out">&lt;html&gt;
+&lt;body&gt;
+&lt;h1&gt;Bookshop catalogue&lt;/h1&gt;
+&lt;p&gt;We have 6 titles.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Learning XSLT &#8212; Michael Fitzgerald&lt;/li&gt;
+&lt;li&gt;XSLT 2.0 and XPath 2.0 &#8212; Michael Kay&lt;/li&gt;
+&lt;li&gt;XML in a Nutshell &#8212; Elliotte Rusty Harold&lt;/li&gt;
+&lt;li&gt;Serious Cryptography &#8212; Jean-Philippe Aumasson&lt;/li&gt;
+&lt;li&gt;Real-World Cryptography &#8212; David Wong&lt;/li&gt;
+&lt;li&gt;Cryptonomicon &#8212; Neal Stephenson&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/body&gt;
+&lt;/html&gt;</div>
+</div>
+
+<div class="callout callout--note">
+  <p class="h">&#9432; whitespace &amp; xsl:text</p>
+  <p>XSLT collapses insignificant whitespace between elements but keeps text you emit.
+  When spacing matters, use <code>&lt;xsl:text&gt; &#8212; &lt;/xsl:text&gt;</code> to
+  say exactly what you mean — you'll see this throughout the course's text outputs.</p>
+</div>
+
+<div class="callout callout--use">
+  <p class="h">&#9733; Practical use case — nightly catalogue export</p>
+  <p>An online shop keeps its inventory as XML. A cron job runs this stylesheet each
+  night to regenerate a static HTML price list for the warehouse — no database, no app
+  server, just <code>xsltproc feed.xml</code> in a shell script. Swap the stylesheet and
+  the same feed becomes a supplier CSV or a sitemap.</p>
+</div>
+
+<div class="exercise">
+  <p class="h">Your turn</p>
+  <p>Change the stylesheet so each <code>&lt;li&gt;</code> also shows the price, like
+  <em>“Learning XSLT — Michael Fitzgerald ($39.95)”</em>.</p>
+  <details><summary>Show a solution</summary>
+  <p>Add another <code>value-of</code> inside the <code>&lt;li&gt;</code>:</p>
+  <pre><code>&lt;li&gt;
+  &lt;xsl:value-of select="title"/&gt; &#8212; &lt;xsl:value-of select="author"/&gt;
+  (&lt;xsl:value-of select="price"/&gt;)
+&lt;/li&gt;</code></pre>
+  <p>Because <code>price</code> is a child of the current <code>book</code>, the plain
+  relative path <code>price</code> just works.</p></details>
+</div>
+
+</div>
+<nav class="lessonnav" aria-label="Lesson navigation">
+<a href="l01-what-is-xslt.html" rel="prev"><span class="dir">&#8592; Previous</span><span class="ttl">What XSLT is & how it runs</span></a>
+<a class="next" href="l03-xpath.html" rel="next"><span class="dir">Next &#8594;</span><span class="ttl">XPath — the addressing language</span></a>
+</nav>
+<footer class="foot">
+The XSLT Course · a hands-on, honestly-scoped introduction. Every example in this
+course is executed, not imagined. Built for learning; ciphers marked “teaching” are
+not for protecting real data.
+</footer>
+</div>
+</main>
+</div>
+<script src="assets/app.js"></script>
+</body>
+</html>

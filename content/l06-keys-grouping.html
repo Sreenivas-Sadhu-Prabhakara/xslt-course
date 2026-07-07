@@ -1,0 +1,87 @@
+<p>Two related jobs come up constantly: <strong>looking things up fast</strong>, and
+<strong>grouping</strong> a flat list into buckets. XSLT 1.0 does both with
+<code>xsl:key</code> — grouping via a famous trick — and 2.0 adds a dedicated
+instruction that makes grouping trivial. Folder: <code>examples/05-keys-grouping</code>.</p>
+
+<h2>Keys: an index for your document</h2>
+<p><code>xsl:key</code> builds a lookup table once, so <code>key('name', value)</code>
+retrieves matching nodes instantly instead of re-scanning the tree.</p>
+<div class="panel panel--xsl">
+  <div class="panel__bar"><span class="role xsl">declare + use a key</span></div>
+<pre><code>&lt;xsl:key name="byCategory" match="book" use="@category"/&gt;
+...
+&lt;xsl:value-of select="count(key('byCategory', 'security'))"/&gt;   &#8594; 2</code></pre>
+</div>
+
+<h2>Grouping in 1.0: the Muenchian method</h2>
+<p>XSLT 1.0 has no “group by”, so we use a key to find, for each category, the
+<em>first</em> book — and treat that representative as the group header.</p>
+<div class="panel panel--xsl">
+  <div class="panel__bar"><span class="role xsl">muenchian-1.0.xsl</span><button class="copy" type="button">copy</button></div>
+<pre><code>&lt;xsl:for-each select="book[generate-id() =
+                           generate-id(key('byCategory', @category)[1])]"&gt;
+  &lt;xsl:sort select="@category"/&gt;
+  &lt;xsl:value-of select="@category"/&gt; (&lt;xsl:value-of
+      select="count(key('byCategory', @category))"/&gt;)
+  &lt;xsl:for-each select="key('byCategory', @category)"&gt;
+    &lt;xsl:sort select="title"/&gt;
+    ...one line per book...
+  &lt;/xsl:for-each&gt;
+&lt;/xsl:for-each&gt;</code></pre>
+</div>
+<p>It works — and it's notoriously hard to love. <code>generate-id()</code> gives each
+node a unique id; a book is the group's representative when its id equals the id of the
+first node the key returns for that category.</p>
+
+<h2>Grouping in 2.0: xsl:for-each-group</h2>
+<p>The same result, without the ceremony:</p>
+<div class="panel panel--xsl">
+  <div class="panel__bar"><span class="role xsl">grouping-2.0.xsl</span><button class="copy" type="button">copy</button></div>
+<pre><code>&lt;xsl:for-each-group select="book" group-by="@category"&gt;
+  &lt;xsl:sort select="current-grouping-key()"/&gt;
+  &lt;xsl:value-of select="current-grouping-key()"/&gt;
+  (&lt;xsl:value-of select="count(current-group())"/&gt;)
+  &lt;xsl:for-each select="current-group()"&gt; ... &lt;/xsl:for-each&gt;
+&lt;/xsl:for-each-group&gt;</code></pre>
+</div>
+
+<p>Both stylesheets produce identical output:</p>
+<div class="run">
+  <div class="run__cmd"><span class="dollar">$ </span>xsltproc 05-keys-grouping/muenchian-1.0.xsl data/catalog.xml</div>
+  <div class="run__out">Books grouped by category
+fiction (1):
+  - Cryptonomicon
+security (2):
+  - Real-World Cryptography
+  - Serious Cryptography
+tech (3):
+  - Learning XSLT
+  - XML in a Nutshell
+  - XSLT 2.0 and XPath 2.0</div>
+</div>
+
+<div class="callout callout--key">
+  <p class="h">&#9873; The takeaway</p>
+  <p>If you're on a 2.0+ processor, always reach for <code>xsl:for-each-group</code>
+  (it also does grouping by adjacency and by starting/ending markers). Learn the
+  Muenchian method only because you <em>will</em> meet it in legacy 1.0 stylesheets and
+  need to read it.</p>
+</div>
+
+<div class="callout callout--use">
+  <p class="h">&#9733; Practical use case — summaries &amp; deduplication</p>
+  <p>Grouping powers every “group by” report: sales by region, log lines by error code,
+  orders by customer. The same representative-node trick also <strong>deduplicates</strong> —
+  keep only the first node per key value — which is how people collapse repeated records
+  in a 1.0 pipeline that can't be upgraded.</p>
+</div>
+
+<div class="exercise">
+  <p class="h">Your turn</p>
+  <p>Using the 2.0 stylesheet, group the books by <code>inStock</code> instead of
+  category. What's the one change?</p>
+  <details><summary>Show a solution</summary>
+  <p>Change the grouping expression to the attribute you want:
+  <code>group-by="@inStock"</code>. You'd get a <em>true</em> group of 4 and a
+  <em>false</em> group of 2.</p></details>
+</div>

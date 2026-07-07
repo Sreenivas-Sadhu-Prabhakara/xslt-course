@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Named templates, parameters &amp; recursion · The XSLT Course</title>
+<meta name="description" content="Reusable subroutines and the recursion pattern you&#x27;ll reuse to build ciphers.">
+<link rel="canonical" href="https://sreenivas-sadhu-prabhakara.github.io/xslt-course/l07-recursion.html">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="Sreenivas Sadhu Prabhakara">
+<meta name="theme-color" content="#16191f">
+<meta name="color-scheme" content="light">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png">
+<link rel="apple-touch-icon" href="assets/icon-180.png">
+<link rel="manifest" href="site.webmanifest">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="The XSLT Course">
+<meta property="og:title" content="Named templates, parameters &amp; recursion">
+<meta property="og:description" content="Reusable subroutines and the recursion pattern you&#x27;ll reuse to build ciphers.">
+<meta property="og:url" content="https://sreenivas-sadhu-prabhakara.github.io/xslt-course/l07-recursion.html">
+<meta property="og:image" content="https://sreenivas-sadhu-prabhakara.github.io/xslt-course/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The XSLT Course">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Named templates, parameters &amp; recursion">
+<meta name="twitter:description" content="Reusable subroutines and the recursion pattern you&#x27;ll reuse to build ciphers.">
+<meta name="twitter:image" content="https://sreenivas-sadhu-prabhakara.github.io/xslt-course/assets/og-image.png">
+<link rel="sitemap" type="application/xml" href="sitemap.xml">
+<link rel="stylesheet" href="assets/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Transformation",
+          "item": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/#syllabus"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Named templates, parameters & recursion",
+          "item": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/l07-recursion.html"
+        }
+      ]
+    },
+    {
+      "@type": "LearningResource",
+      "name": "Named templates, parameters & recursion",
+      "description": "Reusable subroutines and the recursion pattern you'll reuse to build ciphers.",
+      "url": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/l07-recursion.html",
+      "inLanguage": "en",
+      "learningResourceType": "lesson",
+      "educationalLevel": "Beginner",
+      "isPartOf": {
+        "@type": "Course",
+        "name": "The XSLT Course",
+        "url": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Sreenivas Sadhu Prabhakara"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "The XSLT Course",
+        "url": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/assets/icon-512.png"
+        }
+      },
+      "isAccessibleForFree": true,
+      "position": 7
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="shell">
+<aside class="sidebar">
+<div class="brand">
+  <a href="index.html" aria-label="The XSLT Course home"><span class="mark">&lt;<span class="in">x</span>&#8202;&#8594;&#8202;<span class="out">/</span>&gt;</span></a>
+  <a href="index.html" class="name">The&nbsp;XSLT&nbsp;Course</a>
+</div>
+<button class="menu-btn" aria-expanded="false" aria-controls="nav">Menu</button>
+<nav class="nav-wrap" id="nav" aria-label="Course syllabus">
+  <p class="nav-track">Transformation</p>
+  <ul class="nav-list">
+    <li><a href="l01-what-is-xslt.html"><span class="n">01</span><span>What XSLT is</span></a></li>
+    <li><a href="l02-first-stylesheet.html"><span class="n">02</span><span>Your first stylesheet</span></a></li>
+    <li><a href="l03-xpath.html"><span class="n">03</span><span>XPath essentials</span></a></li>
+    <li><a href="l04-templates.html"><span class="n">04</span><span>Template rules</span></a></li>
+    <li><a href="l05-shape-data.html"><span class="n">05</span><span>Shaping data</span></a></li>
+    <li><a href="l06-keys-grouping.html"><span class="n">06</span><span>Keys & grouping</span></a></li>
+    <li><a href="l07-recursion.html" class="active" aria-current="page"><span class="n">07</span><span>Recursion</span></a></li>
+    <li><a href="l08-versions.html"><span class="n">08</span><span>1.0 → 2.0 → 3.0</span></a></li>
+  </ul>
+  <p class="nav-track">Encryption</p>
+  <ul class="nav-list">
+    <li><a href="l09-honest-framing.html"><span class="n">01</span><span>The honest framing</span></a></li>
+    <li><a href="l10-teaching-ciphers.html"><span class="n">02</span><span>Teaching ciphers</span></a></li>
+    <li><a href="l11-xml-encryption.html"><span class="n">03</span><span>W3C XML Encryption</span></a></li>
+    <li><a href="l12-extension-crypto.html"><span class="n">04</span><span>Extension functions</span></a></li>
+  </ul>
+  <p class="nav-track">Practice</p>
+  <ul class="nav-list">
+    <li><a href="capstone.html"><span class="n">01</span><span>Capstone project</span></a></li>
+    <li><a href="reference.html"><span class="n">02</span><span>Reference & cheat-sheet</span></a></li>
+  </ul>
+</nav>
+</aside>
+<main class="main" id="main">
+<div class="wrap">
+<header class="pagehead"><p class="eyebrow">TRANSFORMATION <span class="tick">·</span> LESSON 07</p><h1>Named templates, parameters & recursion</h1><p class="lede">Reusable subroutines and the recursion pattern you'll reuse to build ciphers.</p></header>
+<div class="prose">
+<p>So far every rule matched a node. But you also need reusable <em>subroutines</em> —
+a block of logic you can call with arguments and reuse. That's the
+<strong>named template</strong>. And because XSLT 1.0 has no counting loops, repeating
+work means a template that <strong>calls itself</strong>. Master this here — the ciphers
+in <a href="l10-teaching-ciphers.html">Lesson 10</a> are the same pattern. Folder:
+<code>examples/06-recursion</code>.</p>
+
+<h2>Named templates &amp; parameters</h2>
+<p>A named template is called explicitly with <code>call-template</code>, passing
+arguments with <code>with-param</code>:</p>
+<div class="panel panel--xsl">
+  <div class="panel__bar"><span class="role xsl">shape of a named template</span></div>
+<pre><code>&lt;xsl:template name="greet"&gt;
+  &lt;xsl:param name="who"/&gt;
+  &lt;xsl:text&gt;Hello, &lt;/xsl:text&gt;&lt;xsl:value-of select="$who"/&gt;
+&lt;/xsl:template&gt;
+
+&lt;xsl:call-template name="greet"&gt;
+  &lt;xsl:with-param name="who" select="'world'"/&gt;
+&lt;/xsl:call-template&gt;</code></pre>
+</div>
+
+<h2>Recursion: doing a thing N times</h2>
+<p>In 1.0 there is no <code>for i = 1 to n</code>. To process each character of a string
+you write a template that handles the <em>first</em> character and then calls itself on
+the <em>rest</em> — stopping at a base case. Here's a string reverser:</p>
+<div class="panel panel--xsl">
+  <div class="panel__bar"><span class="role xsl">string-tools.xsl</span><button class="copy" type="button">copy</button></div>
+<pre><code>&lt;xsl:template name="reverse-string"&gt;
+  &lt;xsl:param name="s"/&gt;
+  &lt;xsl:if test="string-length($s) &gt; 0"&gt;
+    &lt;!-- emit the LAST character... --&gt;
+    &lt;xsl:value-of select="substring($s, string-length($s), 1)"/&gt;
+    &lt;!-- ...then reverse everything before it --&gt;
+    &lt;xsl:call-template name="reverse-string"&gt;
+      &lt;xsl:with-param name="s" select="substring($s, 1, string-length($s) - 1)"/&gt;
+    &lt;/xsl:call-template&gt;
+  &lt;/xsl:if&gt;    &lt;!-- empty string = base case, recursion stops --&gt;
+&lt;/xsl:template&gt;</code></pre>
+</div>
+
+<div class="run">
+  <div class="run__cmd"><span class="dollar">$ </span>xsltproc 06-recursion/string-tools.xsl data/catalog.xml</div>
+  <div class="run__out">Learning XSLT  -&gt;  TLSX gninraeL
+XSLT 2.0 and XPath 2.0  -&gt;  0.2 htaPX dna 0.2 TLSX
+XML in a Nutshell  -&gt;  llehstuN a ni LMX
+Serious Cryptography  -&gt;  yhpargotpyrC suoireS
+Real-World Cryptography  -&gt;  yhpargotpyrC dlroW-laeR
+Cryptonomicon  -&gt;  nocimonotpyrC</div>
+</div>
+
+<div class="callout callout--key">
+  <p class="h">&#9873; The two-part recipe for any recursion</p>
+  <p><strong>1. Base case</strong> — when do you stop? (Here: the string is empty.)
+  <strong>2. Reduce &amp; recurse</strong> — do a bit of the work, then call yourself
+  with a <em>smaller</em> input that moves toward the base case. Get these two right and
+  the recursion terminates. Miss the base case and you get an infinite loop.</p>
+</div>
+
+<div class="callout callout--note">
+  <p class="h">&#9432; 2.0 makes most of this unnecessary</p>
+  <p>With sequences and <code>xsl:function</code> you can often write a plain
+  <code>for</code>-expression instead of hand-rolled recursion. But recursion is still
+  the clearest way to express character-by-character algorithms — which is precisely why
+  it's the backbone of the pure-XSLT ciphers ahead.</p>
+</div>
+
+<div class="callout callout--use">
+  <p class="h">&#9733; Practical use case — building strings the data doesn't give you</p>
+  <p>Recursion generates content that isn't in the source: repeat a character to draw a
+  progress bar, indent nested items, split a comma-list into elements, pad a number to a
+  fixed width for a fixed-format export. Any “do this until…” over text is a named
+  recursive template.</p>
+</div>
+
+<div class="exercise">
+  <p class="h">Your turn</p>
+  <p>Sketch a named template <code>repeat</code> that outputs a string
+  <code>$s</code> exactly <code>$n</code> times. What are its base case and its reduction?</p>
+  <details><summary>Show a solution</summary>
+  <pre><code>&lt;xsl:template name="repeat"&gt;
+  &lt;xsl:param name="s"/&gt;
+  &lt;xsl:param name="n"/&gt;
+  &lt;xsl:if test="$n &gt; 0"&gt;
+    &lt;xsl:value-of select="$s"/&gt;
+    &lt;xsl:call-template name="repeat"&gt;
+      &lt;xsl:with-param name="s" select="$s"/&gt;
+      &lt;xsl:with-param name="n" select="$n - 1"/&gt;
+    &lt;/xsl:call-template&gt;
+  &lt;/xsl:if&gt;
+&lt;/xsl:template&gt;</code></pre>
+  <p>Base case: <code>$n = 0</code>. Reduction: emit once, recurse with <code>$n - 1</code>.</p></details>
+</div>
+
+</div>
+<nav class="lessonnav" aria-label="Lesson navigation">
+<a href="l06-keys-grouping.html" rel="prev"><span class="dir">&#8592; Previous</span><span class="ttl">Keys & grouping</span></a>
+<a class="next" href="l08-versions.html" rel="next"><span class="dir">Next &#8594;</span><span class="ttl">1.0 → 2.0 → 3.0: what each version adds</span></a>
+</nav>
+<footer class="foot">
+The XSLT Course · a hands-on, honestly-scoped introduction. Every example in this
+course is executed, not imagined. Built for learning; ciphers marked “teaching” are
+not for protecting real data.
+</footer>
+</div>
+</main>
+</div>
+<script src="assets/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>W3C XML Encryption — and XSLT's real role · The XSLT Course</title>
+<meta name="description" content="Encrypt only the sensitive elements of a document. XSLT decides what and where; a vetted library does the how.">
+<link rel="canonical" href="https://sreenivas-sadhu-prabhakara.github.io/xslt-course/l11-xml-encryption.html">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="Sreenivas Sadhu Prabhakara">
+<meta name="theme-color" content="#16191f">
+<meta name="color-scheme" content="light">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png">
+<link rel="apple-touch-icon" href="assets/icon-180.png">
+<link rel="manifest" href="site.webmanifest">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="The XSLT Course">
+<meta property="og:title" content="W3C XML Encryption — and XSLT&#x27;s real role">
+<meta property="og:description" content="Encrypt only the sensitive elements of a document. XSLT decides what and where; a vetted library does the how.">
+<meta property="og:url" content="https://sreenivas-sadhu-prabhakara.github.io/xslt-course/l11-xml-encryption.html">
+<meta property="og:image" content="https://sreenivas-sadhu-prabhakara.github.io/xslt-course/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The XSLT Course">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="W3C XML Encryption — and XSLT&#x27;s real role">
+<meta name="twitter:description" content="Encrypt only the sensitive elements of a document. XSLT decides what and where; a vetted library does the how.">
+<meta name="twitter:image" content="https://sreenivas-sadhu-prabhakara.github.io/xslt-course/assets/og-image.png">
+<link rel="sitemap" type="application/xml" href="sitemap.xml">
+<link rel="stylesheet" href="assets/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Encryption",
+          "item": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/#syllabus"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "W3C XML Encryption — and XSLT's real role",
+          "item": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/l11-xml-encryption.html"
+        }
+      ]
+    },
+    {
+      "@type": "LearningResource",
+      "name": "W3C XML Encryption — and XSLT's real role",
+      "description": "Encrypt only the sensitive elements of a document. XSLT decides what and where; a vetted library does the how.",
+      "url": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/l11-xml-encryption.html",
+      "inLanguage": "en",
+      "learningResourceType": "lesson",
+      "educationalLevel": "Beginner",
+      "isPartOf": {
+        "@type": "Course",
+        "name": "The XSLT Course",
+        "url": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Sreenivas Sadhu Prabhakara"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "The XSLT Course",
+        "url": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/assets/icon-512.png"
+        }
+      },
+      "isAccessibleForFree": true,
+      "position": 3
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="shell">
+<aside class="sidebar">
+<div class="brand">
+  <a href="index.html" aria-label="The XSLT Course home"><span class="mark">&lt;<span class="in">x</span>&#8202;&#8594;&#8202;<span class="out">/</span>&gt;</span></a>
+  <a href="index.html" class="name">The&nbsp;XSLT&nbsp;Course</a>
+</div>
+<button class="menu-btn" aria-expanded="false" aria-controls="nav">Menu</button>
+<nav class="nav-wrap" id="nav" aria-label="Course syllabus">
+  <p class="nav-track">Transformation</p>
+  <ul class="nav-list">
+    <li><a href="l01-what-is-xslt.html"><span class="n">01</span><span>What XSLT is</span></a></li>
+    <li><a href="l02-first-stylesheet.html"><span class="n">02</span><span>Your first stylesheet</span></a></li>
+    <li><a href="l03-xpath.html"><span class="n">03</span><span>XPath essentials</span></a></li>
+    <li><a href="l04-templates.html"><span class="n">04</span><span>Template rules</span></a></li>
+    <li><a href="l05-shape-data.html"><span class="n">05</span><span>Shaping data</span></a></li>
+    <li><a href="l06-keys-grouping.html"><span class="n">06</span><span>Keys & grouping</span></a></li>
+    <li><a href="l07-recursion.html"><span class="n">07</span><span>Recursion</span></a></li>
+    <li><a href="l08-versions.html"><span class="n">08</span><span>1.0 → 2.0 → 3.0</span></a></li>
+  </ul>
+  <p class="nav-track">Encryption</p>
+  <ul class="nav-list">
+    <li><a href="l09-honest-framing.html"><span class="n">01</span><span>The honest framing</span></a></li>
+    <li><a href="l10-teaching-ciphers.html"><span class="n">02</span><span>Teaching ciphers</span></a></li>
+    <li><a href="l11-xml-encryption.html" class="active" aria-current="page"><span class="n">03</span><span>W3C XML Encryption</span></a></li>
+    <li><a href="l12-extension-crypto.html"><span class="n">04</span><span>Extension functions</span></a></li>
+  </ul>
+  <p class="nav-track">Practice</p>
+  <ul class="nav-list">
+    <li><a href="capstone.html"><span class="n">01</span><span>Capstone project</span></a></li>
+    <li><a href="reference.html"><span class="n">02</span><span>Reference & cheat-sheet</span></a></li>
+  </ul>
+</nav>
+</aside>
+<main class="main" id="main">
+<div class="wrap">
+<header class="pagehead"><p class="eyebrow">ENCRYPTION <span class="tick">·</span> LESSON 03</p><h1>W3C XML Encryption — and XSLT's real role</h1><p class="lede">Encrypt only the sensitive elements of a document. XSLT decides what and where; a vetted library does the how.</p></header>
+<div class="prose">
+<p>This is real encryption done the standard way. <strong>W3C XML Encryption</strong>
+(the <code>xmlenc</code> standard) lets you encrypt <em>selected parts</em> of an XML
+document while the rest stays plain and routable. XSLT plays its honest role: it decides
+<em>which</em> elements are sensitive and reassembles the result. A vetted crypto library
+does the actual AES. Folder: <code>examples/11-xml-encryption</code>.</p>
+
+<h2>Why element-level, not whole-file</h2>
+<p>Encrypting the entire document would blind the middleware that needs to route it. So
+the standard encrypts individual elements in place: an order id and totals stay readable;
+the card number and CVV become ciphertext.</p>
+
+<h2>What an encrypted element looks like</h2>
+<p>The standard replaces a sensitive element with an <code>&lt;EncryptedData&gt;</code>
+element in the <code>xmlenc</code> namespace:</p>
+<div class="panel panel--out">
+  <div class="panel__bar"><span class="role out">the W3C EncryptedData structure</span></div>
+<pre><code>&lt;xenc:EncryptedData xmlns:xenc="http://www.w3.org/2001/04/xmlenc#"
+                    Type=".../xmlenc#Element"&gt;
+  &lt;xenc:EncryptionMethod Algorithm=".../xmlenc11#aes256-gcm"/&gt;
+  &lt;xenc:CipherData&gt;
+    &lt;xenc:CipherValue&gt;svwBpoESsmsBsHat…Base64(nonce+ciphertext+tag)…&lt;/xenc:CipherValue&gt;
+  &lt;/xenc:CipherData&gt;
+&lt;/xenc:EncryptedData&gt;</code></pre>
+</div>
+<p>In a full deployment the symmetric key is itself wrapped with the recipient's public
+key and travels alongside as an <code>&lt;EncryptedKey&gt;</code> — so only the intended
+reader can unwrap it. Our example uses a shared demo key to keep the focus on structure.</p>
+
+<h2>XSLT's job: declarative policy</h2>
+<p><code>protect-policy.xsl</code> is an <strong>identity transform</strong> (copy
+everything unchanged) with one addition: it flags the sensitive element types. The policy
+is one auditable place that says what counts as sensitive.</p>
+<div class="panel panel--xsl">
+  <div class="panel__bar"><span class="role xsl">protect-policy.xsl</span><button class="copy" type="button">copy</button></div>
+<pre><code>&lt;!-- identity: copy every node and attribute as-is --&gt;
+&lt;xsl:template match="@*|node()"&gt;
+  &lt;xsl:copy&gt;&lt;xsl:apply-templates select="@*|node()"/&gt;&lt;/xsl:copy&gt;
+&lt;/xsl:template&gt;
+
+&lt;!-- policy: these element types hold sensitive data → flag them --&gt;
+&lt;xsl:template match="pan | cvv | email"&gt;
+  &lt;xsl:copy&gt;
+    &lt;xsl:attribute name="sec:protect"&gt;true&lt;/xsl:attribute&gt;
+    &lt;xsl:apply-templates select="@*|node()"/&gt;
+  &lt;/xsl:copy&gt;
+&lt;/xsl:template&gt;</code></pre>
+</div>
+<p>The crypto step (<code>xmlenc.py</code>, using AES-256-GCM from Python's
+<code>cryptography</code>) then acts only on flagged elements — encrypting each one and
+swapping in its <code>EncryptedData</code>.</p>
+
+<h2>The pipeline, end to end</h2>
+<div class="run">
+  <div class="run__cmd"><span class="dollar">$ </span>python3 11-xml-encryption/xmlenc.py encrypt secret-order.xml</div>
+  <div class="run__out">&lt;order id="SO-2026-0042"&gt;
+  &lt;customer&gt;
+    &lt;name&gt;Ada Lovelace&lt;/name&gt;                    <span class="lbl">&#8592; still readable</span>
+    &lt;xenc:EncryptedData …&gt;…&lt;/xenc:EncryptedData&gt;  <span class="lbl">&#8592; was &lt;email&gt;</span>
+  &lt;/customer&gt;
+  &lt;payment&gt;
+    &lt;method&gt;card&lt;/method&gt;                        <span class="lbl">&#8592; still readable</span>
+    &lt;xenc:EncryptedData …&gt;…&lt;/xenc:EncryptedData&gt;  <span class="lbl">&#8592; was &lt;pan&gt;</span>
+    &lt;xenc:EncryptedData …&gt;…&lt;/xenc:EncryptedData&gt;  <span class="lbl">&#8592; was &lt;cvv&gt;</span>
+    &lt;expiry&gt;2029-04&lt;/expiry&gt;
+  &lt;/payment&gt;
+  &lt;total currency="USD"&gt;149.85&lt;/total&gt;           <span class="lbl">&#8592; still readable</span>
+&lt;/order&gt;</div>
+</div>
+<div class="run">
+  <div class="run__cmd"><span class="dollar">$ </span>python3 11-xml-encryption/xmlenc.py decrypt order.enc.xml | diff - secret-order.xml</div>
+  <div class="run__out"><span class="lbl"># (no differences) — decrypt restores the original exactly. ROUND-TRIP OK</span></div>
+</div>
+
+<div class="callout callout--key">
+  <p class="h">&#9873; The division of labour, made concrete</p>
+  <p><strong>XSLT</strong>: identity transform + policy (what/where), and reassembly.
+  <strong>Library</strong>: key handling, nonce generation, AES-GCM, authentication tag.
+  Neither could safely do the other's job — and that's the whole point.</p>
+</div>
+
+<div class="callout callout--warn">
+  <p class="h">&#9888; Production notes</p>
+  <p>Use <code>EncryptedKey</code> with recipient public keys instead of a shared secret;
+  derive/manage keys via a KMS; keep the authenticated-encryption tag (GCM) so tampering
+  is caught; and disable DTD/external-entity loading on your parser to prevent XXE. Libraries
+  like Apache Santuario (Java) and <code>xmlsec</code> implement the full standard including
+  signatures.</p>
+</div>
+
+<div class="callout callout--use">
+  <p class="h">&#9733; Practical use case — partner data exchange &amp; compliance</p>
+  <p>B2B and healthcare/finance exchanges routinely send documents where a few fields are
+  regulated (PCI card data, PII, PHI) but most fields must stay visible for routing,
+  billing, and audit. Element-level XML Encryption is the standard answer, and a policy
+  stylesheet is the cleanest way to keep the “what is sensitive” decision in one reviewable
+  place. The capstone puts this to work on an order feed.</p>
+</div>
+
+<div class="exercise">
+  <p class="h">Your turn</p>
+  <p>The bank now also wants the customer's <code>&lt;name&gt;</code> encrypted. What's the
+  smallest change, and why is it low-risk?</p>
+  <details><summary>Show answer</summary>
+  <p>Add <code>name</code> to the policy's match pattern:
+  <code>match="pan | cvv | email | name"</code>. It's low-risk because the policy is one
+  declarative rule — you change <em>what</em> is protected without touching the crypto code
+  at all.</p></details>
+</div>
+
+</div>
+<nav class="lessonnav" aria-label="Lesson navigation">
+<a href="l10-teaching-ciphers.html" rel="prev"><span class="dir">&#8592; Previous</span><span class="ttl">Teaching ciphers in pure XSLT</span></a>
+<a class="next" href="l12-extension-crypto.html" rel="next"><span class="dir">Next &#8594;</span><span class="ttl">Real crypto via extension functions</span></a>
+</nav>
+<footer class="foot">
+The XSLT Course · a hands-on, honestly-scoped introduction. Every example in this
+course is executed, not imagined. Built for learning; ciphers marked “teaching” are
+not for protecting real data.
+</footer>
+</div>
+</main>
+</div>
+<script src="assets/app.js"></script>
+</body>
+</html>

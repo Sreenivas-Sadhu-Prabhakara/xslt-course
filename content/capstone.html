@@ -1,0 +1,108 @@
+<p>Everything you've learned, in one pipeline. A shop sends a batch of orders to a
+billing partner. On the way, the orders must be <strong>transformed</strong> into the
+partner's invoice format, and the sensitive fields must be <strong>encrypted</strong> —
+while ids and totals stay readable so middleware can route and reconcile. The partner
+then decrypts and renders a report. Folder: <code>examples/capstone</code>.</p>
+
+<h2>The architecture</h2>
+<p>Five stages. Each one is a technique from the course; the colour tells you whose job
+it is — <span style="color:var(--source);font-weight:700">transform</span>,
+<span style="color:var(--engine);font-weight:700">policy/crypto steering</span>,
+<span style="color:var(--result);font-weight:700">protected output</span>.</p>
+
+<div class="panel panel--xsl">
+  <div class="panel__bar"><span class="role xsl">the pipeline</span></div>
+<pre><code>SENDER                                             RECEIVER
+orders.xml
+   │  1  TRANSFORM   01-to-invoice.xsl   (Lessons 4–7: rules, AVTs, recursion)
+   ▼
+invoices
+   │  2  POLICY      02-policy.xsl       (Lesson 11: identity transform + flags)
+   ▼
+marked
+   │  3  ENCRYPT     AES-256-GCM         (Lessons 11–12: library does the crypto)
+   ▼
+ wire.xml  ───────────── transmitted ─────────────►  4  DECRYPT   AES-256-GCM
+                                                          │
+                                                          ▼
+                                                      5  RENDER   03-render.xsl
+                                                          │        (Lessons 2, 5)
+                                                          ▼
+                                                      report.html</code></pre>
+</div>
+
+<h2>Stage by stage</h2>
+<div class="tbl-wrap">
+<table class="data">
+  <tr><th>#</th><th>Stage</th><th>Does</th><th>Draws on</th></tr>
+  <tr><td>1</td><td><strong>Transform</strong></td><td>orders → invoice batch; line amounts via AVTs, invoice total via a <em>recursive</em> template</td><td><a href="l04-templates.html">L4</a>, <a href="l05-shape-data.html">L5</a>, <a href="l07-recursion.html">L7</a></td></tr>
+  <tr><td>2</td><td><strong>Policy</strong></td><td>identity transform flags <code>email</code>, <code>pan</code>, <code>cvv</code> as sensitive</td><td><a href="l11-xml-encryption.html">L11</a></td></tr>
+  <tr><td>3</td><td><strong>Encrypt</strong></td><td>each flagged field → W3C <code>EncryptedData</code> (AES-256-GCM, vetted library)</td><td><a href="l11-xml-encryption.html">L11</a>, <a href="l12-extension-crypto.html">L12</a></td></tr>
+  <tr><td>4</td><td><strong>Decrypt</strong></td><td>receiver restores the sensitive fields with the key</td><td><a href="l12-extension-crypto.html">L12</a></td></tr>
+  <tr><td>5</td><td><strong>Render</strong></td><td>invoice batch → HTML report; card masked to last 4 digits</td><td><a href="l02-first-stylesheet.html">L2</a>, <a href="l05-shape-data.html">L5</a></td></tr>
+</table>
+</div>
+
+<h2>Run the whole thing</h2>
+<div class="run">
+  <div class="run__cmd"><span class="dollar">$ </span>cd examples/capstone &amp;&amp; python3 pipeline.py</div>
+  <div class="run__out">1 TRANSFORM  -&gt; 2 invoices, batch total USD 244.79
+2 POLICY     -&gt; flagged 6 sensitive fields (email/pan/cvv)
+3 ENCRYPT    -&gt; 6 EncryptedData blocks; ids/totals still readable: True
+4 DECRYPT    -&gt; fields recovered on the far side: True
+5 RENDER     -&gt; out/5-report.html written</div>
+</div>
+
+<p>On the wire, the sensitive fields are ciphertext but the invoice stays routable:</p>
+<div class="panel panel--out">
+  <div class="panel__bar"><span class="role out">out/3-wire.xml (excerpt)</span></div>
+<pre><code>&lt;invoice no="INV-SO-1001"&gt;
+  &lt;billTo&gt;
+    &lt;name&gt;Ada Lovelace&lt;/name&gt;                    &lt;!-- readable: not sensitive --&gt;
+    &lt;xenc:EncryptedData …&gt;…&lt;/xenc:EncryptedData&gt;  &lt;!-- was &lt;email&gt; --&gt;
+  &lt;/billTo&gt;
+  &lt;payment&gt;
+    &lt;xenc:EncryptedData …&gt;…&lt;/xenc:EncryptedData&gt;  &lt;!-- was &lt;pan&gt; --&gt;
+    &lt;xenc:EncryptedData …&gt;…&lt;/xenc:EncryptedData&gt;  &lt;!-- was &lt;cvv&gt; --&gt;
+  &lt;/payment&gt;
+  &lt;total currency="USD"&gt;139.85&lt;/total&gt;           &lt;!-- readable: reconciliation --&gt;
+&lt;/invoice&gt;</code></pre>
+</div>
+
+<h2>Success criteria</h2>
+<ul>
+  <li>Invoice totals are correct and computed by the stylesheet, not hard-coded.</li>
+  <li>On the wire, <code>email</code>, <code>pan</code> and <code>cvv</code> are
+  unreadable; <code>invoice</code> ids and <code>total</code> are readable.</li>
+  <li>The receiver reproduces the original sensitive values exactly after decryption.</li>
+  <li>The rendered report never shows a full card number.</li>
+  <li>All cryptography is done by a library — no hand-rolled cipher anywhere.</li>
+</ul>
+
+<h2>Make it your own</h2>
+<div class="cards">
+  <div class="card2"><div class="k">Extend · easy</div><h3>Add a field</h3>
+  <p>Encrypt the billing address too. How many files must change? (One — the policy.)</p></div>
+  <div class="card2"><div class="k">Extend · medium</div><h3>Per-recipient keys</h3>
+  <p>Wrap the AES key with the partner's public key and ship it as <code>EncryptedKey</code>.</p></div>
+  <div class="card2"><div class="k">Extend · medium</div><h3>Second output</h3>
+  <p>Add a stylesheet that emits the invoices as JSON (XSLT 3.0) for a modern API.</p></div>
+  <div class="card2"><div class="k">Extend · hard</div><h3>Integrity</h3>
+  <p>Attach an HMAC over each invoice and verify it before rendering (Lesson 12).</p></div>
+</div>
+
+<div class="callout callout--warn">
+  <p class="h">&#9888; What makes this “secure” and what doesn't</p>
+  <p>The design is sound — encrypt only what's sensitive, use authenticated AES-GCM from a
+  library, keep routing data in the clear. The <em>demo</em> is not production: it uses a
+  shared <code>SHA-256(passphrase)</code> key. To ship, replace that with per-recipient key
+  wrapping or a KMS, rotate keys, and disable external-entity loading. The XSLT stays exactly
+  the same — which is the lesson.</p>
+</div>
+
+<div class="callout callout--use">
+  <p class="h">&#9733; Why this shape shows up everywhere</p>
+  <p>“Transform to a partner format, protect the regulated fields, stay routable” is the
+  daily reality of B2B EDI, healthcare messaging, and payment processing. If you can build
+  this pipeline, you can read and extend the real ones.</p>
+</div>

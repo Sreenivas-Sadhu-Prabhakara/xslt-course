@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>1.0 → 2.0 → 3.0: what each version adds · The XSLT Course</title>
+<meta name="description" content="Sequences, real functions, regex, maps, and JSON — and when the jump is worth it.">
+<link rel="canonical" href="https://sreenivas-sadhu-prabhakara.github.io/xslt-course/l08-versions.html">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="Sreenivas Sadhu Prabhakara">
+<meta name="theme-color" content="#16191f">
+<meta name="color-scheme" content="light">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png">
+<link rel="apple-touch-icon" href="assets/icon-180.png">
+<link rel="manifest" href="site.webmanifest">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="The XSLT Course">
+<meta property="og:title" content="1.0 → 2.0 → 3.0: what each version adds">
+<meta property="og:description" content="Sequences, real functions, regex, maps, and JSON — and when the jump is worth it.">
+<meta property="og:url" content="https://sreenivas-sadhu-prabhakara.github.io/xslt-course/l08-versions.html">
+<meta property="og:image" content="https://sreenivas-sadhu-prabhakara.github.io/xslt-course/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The XSLT Course">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="1.0 → 2.0 → 3.0: what each version adds">
+<meta name="twitter:description" content="Sequences, real functions, regex, maps, and JSON — and when the jump is worth it.">
+<meta name="twitter:image" content="https://sreenivas-sadhu-prabhakara.github.io/xslt-course/assets/og-image.png">
+<link rel="sitemap" type="application/xml" href="sitemap.xml">
+<link rel="stylesheet" href="assets/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Transformation",
+          "item": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/#syllabus"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "1.0 → 2.0 → 3.0: what each version adds",
+          "item": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/l08-versions.html"
+        }
+      ]
+    },
+    {
+      "@type": "LearningResource",
+      "name": "1.0 → 2.0 → 3.0: what each version adds",
+      "description": "Sequences, real functions, regex, maps, and JSON — and when the jump is worth it.",
+      "url": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/l08-versions.html",
+      "inLanguage": "en",
+      "learningResourceType": "lesson",
+      "educationalLevel": "Beginner",
+      "isPartOf": {
+        "@type": "Course",
+        "name": "The XSLT Course",
+        "url": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Sreenivas Sadhu Prabhakara"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "The XSLT Course",
+        "url": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/assets/icon-512.png"
+        }
+      },
+      "isAccessibleForFree": true,
+      "position": 8
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="shell">
+<aside class="sidebar">
+<div class="brand">
+  <a href="index.html" aria-label="The XSLT Course home"><span class="mark">&lt;<span class="in">x</span>&#8202;&#8594;&#8202;<span class="out">/</span>&gt;</span></a>
+  <a href="index.html" class="name">The&nbsp;XSLT&nbsp;Course</a>
+</div>
+<button class="menu-btn" aria-expanded="false" aria-controls="nav">Menu</button>
+<nav class="nav-wrap" id="nav" aria-label="Course syllabus">
+  <p class="nav-track">Transformation</p>
+  <ul class="nav-list">
+    <li><a href="l01-what-is-xslt.html"><span class="n">01</span><span>What XSLT is</span></a></li>
+    <li><a href="l02-first-stylesheet.html"><span class="n">02</span><span>Your first stylesheet</span></a></li>
+    <li><a href="l03-xpath.html"><span class="n">03</span><span>XPath essentials</span></a></li>
+    <li><a href="l04-templates.html"><span class="n">04</span><span>Template rules</span></a></li>
+    <li><a href="l05-shape-data.html"><span class="n">05</span><span>Shaping data</span></a></li>
+    <li><a href="l06-keys-grouping.html"><span class="n">06</span><span>Keys & grouping</span></a></li>
+    <li><a href="l07-recursion.html"><span class="n">07</span><span>Recursion</span></a></li>
+    <li><a href="l08-versions.html" class="active" aria-current="page"><span class="n">08</span><span>1.0 → 2.0 → 3.0</span></a></li>
+  </ul>
+  <p class="nav-track">Encryption</p>
+  <ul class="nav-list">
+    <li><a href="l09-honest-framing.html"><span class="n">01</span><span>The honest framing</span></a></li>
+    <li><a href="l10-teaching-ciphers.html"><span class="n">02</span><span>Teaching ciphers</span></a></li>
+    <li><a href="l11-xml-encryption.html"><span class="n">03</span><span>W3C XML Encryption</span></a></li>
+    <li><a href="l12-extension-crypto.html"><span class="n">04</span><span>Extension functions</span></a></li>
+  </ul>
+  <p class="nav-track">Practice</p>
+  <ul class="nav-list">
+    <li><a href="capstone.html"><span class="n">01</span><span>Capstone project</span></a></li>
+    <li><a href="reference.html"><span class="n">02</span><span>Reference & cheat-sheet</span></a></li>
+  </ul>
+</nav>
+</aside>
+<main class="main" id="main">
+<div class="wrap">
+<header class="pagehead"><p class="eyebrow">TRANSFORMATION <span class="tick">·</span> LESSON 08</p><h1>1.0 → 2.0 → 3.0: what each version adds</h1><p class="lede">Sequences, real functions, regex, maps, and JSON — and when the jump is worth it.</p></header>
+<div class="prose">
+<p>You now know 1.0 well enough to feel its edges: no real functions, clumsy grouping,
+string-only types, painful byte work. XSLT 2.0 (2007) and 3.0 (2017) fix all of that.
+This lesson maps what each version adds — and when the jump pays off. Folder:
+<code>examples/07-versions</code>.</p>
+
+<h2>What each version adds</h2>
+<div class="tbl-wrap">
+<table class="data">
+  <tr><th>Capability</th><th>1.0</th><th>2.0</th><th>3.0</th></tr>
+  <tr><td>Sequences (not just node-sets)</td><td>—</td><td>✓</td><td>✓</td></tr>
+  <tr><td>Data types (numbers, dates, booleans)</td><td>strings-ish</td><td>✓ schema types</td><td>✓</td></tr>
+  <tr><td>User functions <code>xsl:function</code></td><td>—</td><td>✓</td><td>✓</td></tr>
+  <tr><td>Regular expressions</td><td>—</td><td><code>tokenize</code>, <code>replace</code>, <code>matches</code></td><td>✓</td></tr>
+  <tr><td>Grouping</td><td>Muenchian</td><td><code>for-each-group</code></td><td>✓</td></tr>
+  <tr><td><code>string-to-codepoints</code> (byte work)</td><td>—</td><td>✓</td><td>✓</td></tr>
+  <tr><td>Maps &amp; arrays</td><td>—</td><td>—</td><td>✓</td></tr>
+  <tr><td>JSON in &amp; out</td><td>—</td><td>—</td><td><code>parse-json</code>, <code>method="json"</code></td></tr>
+  <tr><td>Streaming (huge inputs)</td><td>—</td><td>—</td><td>✓</td></tr>
+  <tr><td>Higher-order functions</td><td>—</td><td>—</td><td>✓</td></tr>
+</table>
+</div>
+
+<h2>One stylesheet that needs 3.0</h2>
+<p>Turning the catalogue into JSON uses four things 1.0 simply doesn't have: a typed
+<code>xsl:function</code>, regex via <code>replace</code>, maps/arrays, and JSON
+serialization.</p>
+<div class="panel panel--xsl">
+  <div class="panel__bar"><span class="role xsl">catalog-to-json.xsl (XSLT 3.0)</span><button class="copy" type="button">copy</button></div>
+<pre><code>&lt;xsl:output method="json" indent="yes"/&gt;
+
+&lt;xsl:function name="c:slug" as="xs:string"&gt;
+  &lt;xsl:param name="s" as="xs:string"/&gt;
+  &lt;xsl:sequence select="lower-case(replace(normalize-space($s), '\s+', '-'))"/&gt;
+&lt;/xsl:function&gt;
+
+&lt;xsl:template match="/catalog"&gt;
+  &lt;xsl:sequence select="array {
+      for $b in book return map {
+        'id'    : string($b/@id),
+        'slug'  : c:slug($b/title),
+        'title' : string($b/title),
+        'price' : xs:decimal($b/price),
+        'tags'  : array { $b/tags/tag ! string(.) }
+      }
+    }"/&gt;
+&lt;/xsl:template&gt;</code></pre>
+</div>
+
+<div class="run">
+  <div class="run__cmd"><span class="dollar">$ </span>java -jar lib/Saxon-HE-10.9.jar -xsl:07-versions/catalog-to-json.xsl -s:data/catalog.xml</div>
+  <div class="run__out">[
+  {
+    "price": 39.95,
+    "slug": "learning-xslt",
+    "title": "Learning XSLT",
+    "tags": [ "xml","xslt" ],
+    "id": "b1"
+  },
+  &#8230; one object per book &#8230;
+]</div>
+</div>
+
+<div class="callout callout--note">
+  <p class="h">&#9432; the <code>||</code>, <code>!</code> and <code>for</code> you just saw</p>
+  <p><code>||</code> concatenates strings; <code>!</code> is the “simple map” (apply an
+  expression to each item); <code>for $x in … return …</code> loops as an
+  <em>expression</em>. These make 2.0/3.0 feel like a real functional language rather
+  than a template engine.</p>
+</div>
+
+<h2>Which version should you target?</h2>
+<div class="cards">
+  <div class="card2"><div class="k">Choose 1.0</div><h3>Reach everywhere</h3>
+  <p>Only if you must run in a browser or a locked-down legacy stack. Accept the
+  ceremony.</p></div>
+  <div class="card2"><div class="k">Choose 2.0</div><h3>The sane baseline</h3>
+  <p>Functions, regex, real grouping and types. A huge step up for little cost — a
+  common integration/ESB default.</p></div>
+  <div class="card2"><div class="k">Choose 3.0</div><h3>Modern default</h3>
+  <p>Maps, JSON, streaming, higher-order functions. Pick this for new work if your
+  processor (Saxon) supports it.</p></div>
+</div>
+
+<div class="callout callout--use">
+  <p class="h">&#9733; Practical use case — the XML ↔ JSON bridge</p>
+  <p>Legacy systems speak XML; modern APIs speak JSON. XSLT 3.0 sits in the middle:
+  <code>parse-json()</code> to ingest a JSON payload, transform it, and
+  <code>method="json"</code> to emit JSON — or the reverse, as above. One declarative
+  stylesheet replaces a pile of hand-written mapping code, and it's auditable.</p>
+</div>
+
+<div class="exercise">
+  <p class="h">Your turn (thinking)</p>
+  <p>You're handed a 1.0 stylesheet that spends 40 lines on the Muenchian method and a
+  recursive CSV splitter. Roughly how much of it survives a move to 2.0, and why?</p>
+  <details><summary>Show answer</summary>
+  <p>Almost none of that plumbing survives. The grouping collapses to one
+  <code>for-each-group</code>; the CSV splitter becomes a single <code>tokenize($s, ',')</code>.
+  Moving to 2.0 often <em>deletes</em> more code than it adds — the clearest sign the
+  upgrade is worth it.</p></details>
+</div>
+
+</div>
+<nav class="lessonnav" aria-label="Lesson navigation">
+<a href="l07-recursion.html" rel="prev"><span class="dir">&#8592; Previous</span><span class="ttl">Named templates, parameters & recursion</span></a>
+<a class="next" href="l09-honest-framing.html" rel="next"><span class="dir">Next &#8594;</span><span class="ttl">Encryption with XSLT — the honest framing</span></a>
+</nav>
+<footer class="foot">
+The XSLT Course · a hands-on, honestly-scoped introduction. Every example in this
+course is executed, not imagined. Built for learning; ciphers marked “teaching” are
+not for protecting real data.
+</footer>
+</div>
+</main>
+</div>
+<script src="assets/app.js"></script>
+</body>
+</html>

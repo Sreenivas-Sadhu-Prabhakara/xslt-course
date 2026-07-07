@@ -1,0 +1,94 @@
+<p>“Can you do encryption with XSLT?” is the question that brought many people to this
+page. The honest answer has two halves, and you need both:
+<strong>yes, you can build ciphers in XSLT — and no, you must not use them to protect
+anything real.</strong> This lesson draws that line clearly, then lays out the three
+legitimate paths the rest of the track follows.</p>
+
+<h2>XSLT is a transformer, not a cipher engine</h2>
+<p>XSLT was designed to reshape documents. It has no random-number generator, no
+bitwise operators, no timing guarantees, and no access to your OS key store — the very
+things real cryptography depends on. You <em>can</em> express a cipher's arithmetic in
+XSLT, the same way you can express one in a spreadsheet. That makes it a wonderful
+<em>teaching</em> tool and a terrible <em>security</em> tool.</p>
+
+<div class="callout callout--warn">
+  <p class="h">&#9888; The rule, stated once and for all</p>
+  <p>Never protect real data with a cipher you implemented yourself — in XSLT or any
+  other language. Real confidentiality comes from vetted libraries (AES, RSA, ChaCha20)
+  driven by careful key management. XSLT's honest role is to decide <strong>what</strong>
+  to protect and <strong>where</strong> it goes; a real crypto library does the
+  <strong>how</strong>.</p>
+</div>
+
+<h2>First, get the words right</h2>
+<p>Half of all “encryption” confusion is vocabulary. These are <em>not</em> synonyms:</p>
+<div class="tbl-wrap">
+<table class="data">
+  <tr><th>Term</th><th>What it does</th><th>Reversible?</th><th>Secret needed?</th></tr>
+  <tr><td><strong>Encoding</strong> (Base64, URL-encode)</td><td>repackages bytes for safe transport</td><td>yes, by anyone</td><td>no</td></tr>
+  <tr><td><strong>Obfuscation</strong> (Caesar, ROT13)</td><td>hides from a casual glance</td><td>yes, trivially</td><td>barely</td></tr>
+  <tr><td><strong>Hashing</strong> (SHA-256)</td><td>fingerprints data</td><td><strong>no</strong> (one-way)</td><td>no (unless HMAC)</td></tr>
+  <tr><td><strong>Encryption</strong> (AES, RSA)</td><td>makes data unreadable without the key</td><td>yes, <em>with the key</em></td><td><strong>yes</strong></td></tr>
+</table>
+</div>
+<p>Base64 is the one people misfile most often. It is <strong>encoding</strong> — it
+protects nothing. Anyone can decode it in one command. We build it in the next lesson to
+learn byte math, not to hide anything.</p>
+
+<h2>The three honest paths</h2>
+<div class="tracklist">
+  <div class="col encryption">
+    <span class="badge">Path 1 · Learn</span>
+    <p style="font-family:var(--sans);font-size:.95rem">
+    <strong>Teaching ciphers in pure XSLT.</strong> Caesar, Base64, XOR — built by hand
+    to master recursion and byte manipulation. Zero security value.
+    <a href="l10-teaching-ciphers.html">Lesson 10 →</a></p>
+  </div>
+  <div class="col encryption">
+    <span class="badge">Path 2 · Standard</span>
+    <p style="font-family:var(--sans);font-size:.95rem">
+    <strong>W3C XML Encryption.</strong> The real standard for encrypting parts of an XML
+    document. XSLT selects and reassembles; a crypto library encrypts.
+    <a href="l11-xml-encryption.html">Lesson 11 →</a></p>
+  </div>
+  <div class="col encryption">
+    <span class="badge">Path 3 · Production</span>
+    <p style="font-family:var(--sans);font-size:.95rem">
+    <strong>Extension functions.</strong> Call AES/HMAC/hashing from a vetted library
+    <em>inside</em> the transform. The pattern used in Java, .NET, and Python.
+    <a href="l12-extension-crypto.html">Lesson 12 →</a></p>
+  </div>
+</div>
+
+<h2>Security rules that outlive any language</h2>
+<ul>
+  <li><strong>Don't roll your own crypto.</strong> Use AES-GCM / ChaCha20-Poly1305 from a
+  maintained library. Amateur ciphers fail in ways you can't see.</li>
+  <li><strong>Assume the algorithm is public</strong> (Kerckhoffs's principle). Only the
+  <em>key</em> is secret. A cipher that relies on nobody knowing how it works is already
+  broken.</li>
+  <li><strong>Authenticate, don't just encrypt.</strong> Use authenticated encryption
+  (GCM) or add an HMAC, so tampering is detected.</li>
+  <li><strong>Keys are the hard part.</strong> Never hard-code keys in a stylesheet.
+  Derive them with a KDF (HKDF/PBKDF2) or fetch from a KMS; rotate them.</li>
+  <li><strong>Mind XSLT-specific hazards:</strong> disable external entity/DTD loading to
+  avoid XXE, never log plaintext, and remember an XSLT variable holding a secret may end
+  up in memory dumps or error traces.</li>
+</ul>
+
+<div class="callout callout--use">
+  <p class="h">&#9733; Practical use case — field-level protection in a message</p>
+  <p>A hospital sends XML referrals between systems. The routing header, department, and
+  timestamps must stay readable for middleware — but the patient's name and record number
+  must be encrypted end-to-end. You don't encrypt the whole document; you encrypt
+  <em>specific elements</em>. Deciding <em>which</em> elements is a transformation
+  problem (XSLT); encrypting them is a crypto-library problem. Lessons 11–12 build exactly
+  this.</p>
+</div>
+
+<div class="callout callout--key">
+  <p class="h">&#9873; Carry this forward</p>
+  <p>For the rest of the track, watch which half of the job is XSLT's. When you see a
+  cipher written in pure XSLT, it's a <em>lesson</em>. When you see real protection, XSLT
+  is only steering — the cryptography lives in a library that experts maintain.</p>
+</div>

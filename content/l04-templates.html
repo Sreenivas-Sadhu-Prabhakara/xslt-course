@@ -1,0 +1,111 @@
+<p>The <code>for-each</code> from Lesson 2 is fine for small jobs, but real XSLT is
+built on <strong>template rules</strong> — the language's signature idea. You write
+one small rule per kind of node and let the processor walk the tree, choosing the
+right rule for each node it meets. Folder: <code>examples/03-templates</code>.</p>
+
+<h2>Push vs pull</h2>
+<div class="cards">
+  <div class="card2"><div class="k">Pull style</div><h3>You drive</h3>
+  <p><code>for-each</code> reaches out and pulls nodes in a fixed order you dictate.
+  Simple, but the structure lives in one big template.</p></div>
+  <div class="card2"><div class="k">Push style</div><h3>The tree drives</h3>
+  <p><code>apply-templates</code> hands nodes to the processor, which <em>pushes</em> each
+  one to whichever template matches. Rules stay small and composable.</p></div>
+</div>
+
+<h2>apply-templates in action</h2>
+<div class="panel panel--xsl">
+  <div class="panel__bar"><span class="role xsl">apply-templates.xsl</span><button class="copy" type="button">copy</button></div>
+<pre><code>&lt;xsl:template match="/catalog"&gt;
+  &lt;xsl:text&gt;CATALOGUE&amp;#10;&lt;/xsl:text&gt;
+  &lt;xsl:apply-templates select="book"/&gt;   &lt;!-- push each book to its rule --&gt;
+&lt;/xsl:template&gt;
+
+&lt;xsl:template match="book"&gt;
+  &lt;xsl:text&gt;&amp;#10;* &lt;/xsl:text&gt;
+  &lt;xsl:apply-templates select="title"/&gt;
+  &lt;xsl:apply-templates select="author"/&gt;
+&lt;/xsl:template&gt;
+
+&lt;xsl:template match="title"&gt;
+  &lt;xsl:value-of select="."/&gt;&lt;xsl:text&gt;&amp;#10;&lt;/xsl:text&gt;
+&lt;/xsl:template&gt;
+
+&lt;xsl:template match="author"&gt;
+  &lt;xsl:text&gt;    by &lt;/xsl:text&gt;&lt;xsl:value-of select="."/&gt;&lt;xsl:text&gt;&amp;#10;&lt;/xsl:text&gt;
+&lt;/xsl:template&gt;</code></pre>
+</div>
+<p>Each template minds its own node type. Add a new element to the data and you just
+add a new rule — no existing template needs to change. That composability is why push
+style scales to big, messy documents.</p>
+
+<div class="run">
+  <div class="run__cmd"><span class="dollar">$ </span>xsltproc 03-templates/apply-templates.xsl data/catalog.xml</div>
+  <div class="run__out">CATALOGUE
+=========
+
+* Learning XSLT
+    by Michael Fitzgerald
+    tags: xml, xslt
+
+* XSLT 2.0 and XPath 2.0
+    by Michael Kay
+    tags: xslt, xpath, reference
+
+* XML in a Nutshell
+    by Elliotte Rusty Harold
+    tags: xml, reference
+&#8230;</div>
+</div>
+
+<h2>Two things that surprise beginners</h2>
+<h3>Built-in template rules</h3>
+<p>Even an empty stylesheet produces output, because XSLT has <strong>built-in
+rules</strong>: the default rule for elements just applies templates to their children,
+and the default rule for text nodes copies the text. That's why unmatched content
+sometimes “leaks” through as bare text. When it does, add a rule to handle (or suppress)
+it.</p>
+
+<h3>Modes: same node, different jobs</h3>
+<p>Sometimes you need to process the same nodes twice — once for a table of contents,
+once for the body. A <strong>mode</strong> keeps the two sets of rules apart:</p>
+<div class="panel panel--xsl">
+  <div class="panel__bar"><span class="role xsl">modes</span></div>
+<pre><code>&lt;xsl:apply-templates select="tag" mode="inline"/&gt;
+...
+&lt;xsl:template match="tag" mode="inline"&gt;
+  &lt;xsl:if test="position() &gt; 1"&gt;, &lt;/xsl:if&gt;
+  &lt;xsl:value-of select="."/&gt;
+&lt;/xsl:template&gt;</code></pre>
+</div>
+
+<div class="callout callout--note">
+  <p class="h">&#9432; When two rules match</p>
+  <p>If several templates match a node, the more <em>specific</em> pattern wins
+  (<code>book/title</code> beats <code>title</code> beats <code>*</code>). You can set
+  an explicit <code>priority</code> to break ties. Aim to avoid ambiguity rather than
+  rely on the rules.</p>
+</div>
+
+<div class="callout callout--use">
+  <p class="h">&#9733; Practical use case — rendering rich documents</p>
+  <p>DocBook, DITA, TEI and JATS are huge XML vocabularies for books, manuals and
+  research papers. Their publishing toolchains are essentially large sets of template
+  rules: one rule for <code>&lt;section&gt;</code>, one for <code>&lt;figure&gt;</code>,
+  one for <code>&lt;citation&gt;</code>. Push style is the only sane way to render
+  documents whose structure you can't fully predict.</p>
+</div>
+
+<div class="exercise">
+  <p class="h">Your turn</p>
+  <p>The sample data has a <code>&lt;year&gt;</code> in each book that the stylesheet
+  ignores. Add a rule so each book also prints its year. Which template do you add, and
+  where do you push to it?</p>
+  <details><summary>Show a solution</summary>
+  <p>Add <code>&lt;xsl:apply-templates select="year"/&gt;</code> inside the
+  <code>book</code> template, then a new rule:</p>
+  <pre><code>&lt;xsl:template match="year"&gt;
+  &lt;xsl:text&gt;    (&lt;/xsl:text&gt;&lt;xsl:value-of select="."/&gt;&lt;xsl:text&gt;)&amp;#10;&lt;/xsl:text&gt;
+&lt;/xsl:template&gt;</code></pre>
+  <p>Notice you didn't touch any other template — that's the point of push style.</p></details>
+</div>

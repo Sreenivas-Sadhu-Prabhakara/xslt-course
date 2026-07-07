@@ -1,0 +1,93 @@
+<p>So far every rule matched a node. But you also need reusable <em>subroutines</em> —
+a block of logic you can call with arguments and reuse. That's the
+<strong>named template</strong>. And because XSLT 1.0 has no counting loops, repeating
+work means a template that <strong>calls itself</strong>. Master this here — the ciphers
+in <a href="l10-teaching-ciphers.html">Lesson 10</a> are the same pattern. Folder:
+<code>examples/06-recursion</code>.</p>
+
+<h2>Named templates &amp; parameters</h2>
+<p>A named template is called explicitly with <code>call-template</code>, passing
+arguments with <code>with-param</code>:</p>
+<div class="panel panel--xsl">
+  <div class="panel__bar"><span class="role xsl">shape of a named template</span></div>
+<pre><code>&lt;xsl:template name="greet"&gt;
+  &lt;xsl:param name="who"/&gt;
+  &lt;xsl:text&gt;Hello, &lt;/xsl:text&gt;&lt;xsl:value-of select="$who"/&gt;
+&lt;/xsl:template&gt;
+
+&lt;xsl:call-template name="greet"&gt;
+  &lt;xsl:with-param name="who" select="'world'"/&gt;
+&lt;/xsl:call-template&gt;</code></pre>
+</div>
+
+<h2>Recursion: doing a thing N times</h2>
+<p>In 1.0 there is no <code>for i = 1 to n</code>. To process each character of a string
+you write a template that handles the <em>first</em> character and then calls itself on
+the <em>rest</em> — stopping at a base case. Here's a string reverser:</p>
+<div class="panel panel--xsl">
+  <div class="panel__bar"><span class="role xsl">string-tools.xsl</span><button class="copy" type="button">copy</button></div>
+<pre><code>&lt;xsl:template name="reverse-string"&gt;
+  &lt;xsl:param name="s"/&gt;
+  &lt;xsl:if test="string-length($s) &gt; 0"&gt;
+    &lt;!-- emit the LAST character... --&gt;
+    &lt;xsl:value-of select="substring($s, string-length($s), 1)"/&gt;
+    &lt;!-- ...then reverse everything before it --&gt;
+    &lt;xsl:call-template name="reverse-string"&gt;
+      &lt;xsl:with-param name="s" select="substring($s, 1, string-length($s) - 1)"/&gt;
+    &lt;/xsl:call-template&gt;
+  &lt;/xsl:if&gt;    &lt;!-- empty string = base case, recursion stops --&gt;
+&lt;/xsl:template&gt;</code></pre>
+</div>
+
+<div class="run">
+  <div class="run__cmd"><span class="dollar">$ </span>xsltproc 06-recursion/string-tools.xsl data/catalog.xml</div>
+  <div class="run__out">Learning XSLT  -&gt;  TLSX gninraeL
+XSLT 2.0 and XPath 2.0  -&gt;  0.2 htaPX dna 0.2 TLSX
+XML in a Nutshell  -&gt;  llehstuN a ni LMX
+Serious Cryptography  -&gt;  yhpargotpyrC suoireS
+Real-World Cryptography  -&gt;  yhpargotpyrC dlroW-laeR
+Cryptonomicon  -&gt;  nocimonotpyrC</div>
+</div>
+
+<div class="callout callout--key">
+  <p class="h">&#9873; The two-part recipe for any recursion</p>
+  <p><strong>1. Base case</strong> — when do you stop? (Here: the string is empty.)
+  <strong>2. Reduce &amp; recurse</strong> — do a bit of the work, then call yourself
+  with a <em>smaller</em> input that moves toward the base case. Get these two right and
+  the recursion terminates. Miss the base case and you get an infinite loop.</p>
+</div>
+
+<div class="callout callout--note">
+  <p class="h">&#9432; 2.0 makes most of this unnecessary</p>
+  <p>With sequences and <code>xsl:function</code> you can often write a plain
+  <code>for</code>-expression instead of hand-rolled recursion. But recursion is still
+  the clearest way to express character-by-character algorithms — which is precisely why
+  it's the backbone of the pure-XSLT ciphers ahead.</p>
+</div>
+
+<div class="callout callout--use">
+  <p class="h">&#9733; Practical use case — building strings the data doesn't give you</p>
+  <p>Recursion generates content that isn't in the source: repeat a character to draw a
+  progress bar, indent nested items, split a comma-list into elements, pad a number to a
+  fixed width for a fixed-format export. Any “do this until…” over text is a named
+  recursive template.</p>
+</div>
+
+<div class="exercise">
+  <p class="h">Your turn</p>
+  <p>Sketch a named template <code>repeat</code> that outputs a string
+  <code>$s</code> exactly <code>$n</code> times. What are its base case and its reduction?</p>
+  <details><summary>Show a solution</summary>
+  <pre><code>&lt;xsl:template name="repeat"&gt;
+  &lt;xsl:param name="s"/&gt;
+  &lt;xsl:param name="n"/&gt;
+  &lt;xsl:if test="$n &gt; 0"&gt;
+    &lt;xsl:value-of select="$s"/&gt;
+    &lt;xsl:call-template name="repeat"&gt;
+      &lt;xsl:with-param name="s" select="$s"/&gt;
+      &lt;xsl:with-param name="n" select="$n - 1"/&gt;
+    &lt;/xsl:call-template&gt;
+  &lt;/xsl:if&gt;
+&lt;/xsl:template&gt;</code></pre>
+  <p>Base case: <code>$n = 0</code>. Reduction: emit once, recurse with <code>$n - 1</code>.</p></details>
+</div>

@@ -1,0 +1,90 @@
+<p>XPath is the small query language XSLT uses to <em>point at</em> nodes. You've
+already used it — <code>match="/"</code>, <code>select="title"</code>,
+<code>count(catalog/book)</code> are all XPath. This lesson makes it deliberate.
+Folder: <code>examples/02-xpath</code>.</p>
+
+<h2>Paths select nodes</h2>
+<p>A path is read left to right, each step moving down the tree from a
+<strong>context node</strong>.</p>
+<div class="tbl-wrap">
+<table class="data">
+  <tr><th>Expression</th><th>Selects</th></tr>
+  <tr><td><code>catalog/book</code></td><td>every <code>book</code> child of <code>catalog</code></td></tr>
+  <tr><td><code>catalog/book/title</code></td><td>every title, two levels down</td></tr>
+  <tr><td><code>//title</code></td><td>every <code>title</code> anywhere in the document</td></tr>
+  <tr><td><code>@category</code></td><td>the <code>category</code> <em>attribute</em> of the context node (note the <code>@</code>)</td></tr>
+  <tr><td><code>.</code> / <code>..</code></td><td>the context node itself / its parent</td></tr>
+  <tr><td><code>*</code></td><td>any element child</td></tr>
+</table>
+</div>
+
+<h2>Predicates filter</h2>
+<p>Square brackets keep only the nodes that match a condition.</p>
+<div class="panel panel--xsl">
+  <div class="panel__bar"><span class="role xsl">predicates</span></div>
+<pre><code>book[@inStock='true']            &#8592; books whose inStock attribute is true
+book[price &lt; 55]                 &#8592; books cheaper than 55
+book[@category='security'][price &lt; 55]   &#8592; both conditions
+book[1]         &#8592; the first book       book[last()]   &#8592; the last book</code></pre>
+</div>
+
+<h2>Functions do the arithmetic</h2>
+<p>XPath 1.0 ships a compact standard library: <code>count()</code>, <code>sum()</code>,
+<code>string-length()</code>, <code>substring()</code>, <code>contains()</code>,
+<code>concat()</code>, <code>translate()</code>, <code>position()</code>,
+<code>last()</code>, and more. (2.0 and 3.0 add hundreds — <a href="l08-versions.html">Lesson 8</a>.)</p>
+
+<h2>See them run</h2>
+<p><code>queries.xsl</code> prints the result of several expressions as plain text.</p>
+<div class="run">
+  <div class="run__cmd"><span class="dollar">$ </span>xsltproc 02-xpath/queries.xsl data/catalog.xml</div>
+  <div class="run__out">All titles (child axis):
+  - Learning XSLT
+  - XSLT 2.0 and XPath 2.0
+  - XML in a Nutshell
+  - Serious Cryptography
+  - Real-World Cryptography
+  - Cryptonomicon
+
+Books that are in stock (predicate [@inStock='true']):
+  - Learning XSLT
+  - XML in a Nutshell
+  - Serious Cryptography
+  - Real-World Cryptography
+
+Security books under $55 (compound predicate):
+  - Serious Cryptography ($49.95)
+
+Aggregations:
+  total books   = 6
+  sum of prices = 272.82
+  first author  = Michael Fitzgerald
+  last title    = Cryptonomicon</div>
+</div>
+
+<div class="callout callout--key">
+  <p class="h">&#9873; The gotcha that catches everyone</p>
+  <p>Attributes need the <code>@</code>. <code>book[category='security']</code> looks for
+  a <em>child element</em> named <code>category</code> (there isn't one) and quietly
+  matches nothing. You almost certainly meant <code>book[@category='security']</code>.
+  When a selection is mysteriously empty, check your <code>@</code> signs first.</p>
+</div>
+
+<div class="callout callout--use">
+  <p class="h">&#9733; Practical use case — validation &amp; routing rules</p>
+  <p>XPath expressions <em>are</em> the business rules in a lot of software. An
+  integration layer routes a message with
+  <code>order[total &gt; 10000]</code> to the approvals queue; a schema check asserts
+  <code>count(//lineItem) &gt; 0</code>; a config UI shows a field only when
+  <code>//feature[@name='beta']/@enabled = 'true'</code>. Learn XPath once, reuse it in
+  XSLT, XML schemas, and dozens of tools.</p>
+</div>
+
+<div class="exercise">
+  <p class="h">Your turn</p>
+  <p>Write one XPath that selects the <em>titles</em> of all books published after 2010.</p>
+  <details><summary>Show a solution</summary>
+  <p><code>catalog/book[year &gt; 2010]/title</code> — the predicate filters the books,
+  then a final step steps into each match's <code>title</code>. In the sample data that's
+  <em>Serious Cryptography</em> and <em>Real-World Cryptography</em>.</p></details>
+</div>

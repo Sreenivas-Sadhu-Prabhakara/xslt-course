@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Encryption with XSLT — the honest framing · The XSLT Course</title>
+<meta name="description" content="XSLT is a transformer, not a cipher engine. Here are the three real paths, and the rules that keep you safe.">
+<link rel="canonical" href="https://sreenivas-sadhu-prabhakara.github.io/xslt-course/l09-honest-framing.html">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="Sreenivas Sadhu Prabhakara">
+<meta name="theme-color" content="#16191f">
+<meta name="color-scheme" content="light">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png">
+<link rel="apple-touch-icon" href="assets/icon-180.png">
+<link rel="manifest" href="site.webmanifest">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="The XSLT Course">
+<meta property="og:title" content="Encryption with XSLT — the honest framing">
+<meta property="og:description" content="XSLT is a transformer, not a cipher engine. Here are the three real paths, and the rules that keep you safe.">
+<meta property="og:url" content="https://sreenivas-sadhu-prabhakara.github.io/xslt-course/l09-honest-framing.html">
+<meta property="og:image" content="https://sreenivas-sadhu-prabhakara.github.io/xslt-course/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The XSLT Course">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Encryption with XSLT — the honest framing">
+<meta name="twitter:description" content="XSLT is a transformer, not a cipher engine. Here are the three real paths, and the rules that keep you safe.">
+<meta name="twitter:image" content="https://sreenivas-sadhu-prabhakara.github.io/xslt-course/assets/og-image.png">
+<link rel="sitemap" type="application/xml" href="sitemap.xml">
+<link rel="stylesheet" href="assets/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Encryption",
+          "item": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/#syllabus"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Encryption with XSLT — the honest framing",
+          "item": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/l09-honest-framing.html"
+        }
+      ]
+    },
+    {
+      "@type": "LearningResource",
+      "name": "Encryption with XSLT — the honest framing",
+      "description": "XSLT is a transformer, not a cipher engine. Here are the three real paths, and the rules that keep you safe.",
+      "url": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/l09-honest-framing.html",
+      "inLanguage": "en",
+      "learningResourceType": "lesson",
+      "educationalLevel": "Beginner",
+      "isPartOf": {
+        "@type": "Course",
+        "name": "The XSLT Course",
+        "url": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Sreenivas Sadhu Prabhakara"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "The XSLT Course",
+        "url": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/assets/icon-512.png"
+        }
+      },
+      "isAccessibleForFree": true,
+      "position": 1
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="shell">
+<aside class="sidebar">
+<div class="brand">
+  <a href="index.html" aria-label="The XSLT Course home"><span class="mark">&lt;<span class="in">x</span>&#8202;&#8594;&#8202;<span class="out">/</span>&gt;</span></a>
+  <a href="index.html" class="name">The&nbsp;XSLT&nbsp;Course</a>
+</div>
+<button class="menu-btn" aria-expanded="false" aria-controls="nav">Menu</button>
+<nav class="nav-wrap" id="nav" aria-label="Course syllabus">
+  <p class="nav-track">Transformation</p>
+  <ul class="nav-list">
+    <li><a href="l01-what-is-xslt.html"><span class="n">01</span><span>What XSLT is</span></a></li>
+    <li><a href="l02-first-stylesheet.html"><span class="n">02</span><span>Your first stylesheet</span></a></li>
+    <li><a href="l03-xpath.html"><span class="n">03</span><span>XPath essentials</span></a></li>
+    <li><a href="l04-templates.html"><span class="n">04</span><span>Template rules</span></a></li>
+    <li><a href="l05-shape-data.html"><span class="n">05</span><span>Shaping data</span></a></li>
+    <li><a href="l06-keys-grouping.html"><span class="n">06</span><span>Keys & grouping</span></a></li>
+    <li><a href="l07-recursion.html"><span class="n">07</span><span>Recursion</span></a></li>
+    <li><a href="l08-versions.html"><span class="n">08</span><span>1.0 → 2.0 → 3.0</span></a></li>
+  </ul>
+  <p class="nav-track">Encryption</p>
+  <ul class="nav-list">
+    <li><a href="l09-honest-framing.html" class="active" aria-current="page"><span class="n">01</span><span>The honest framing</span></a></li>
+    <li><a href="l10-teaching-ciphers.html"><span class="n">02</span><span>Teaching ciphers</span></a></li>
+    <li><a href="l11-xml-encryption.html"><span class="n">03</span><span>W3C XML Encryption</span></a></li>
+    <li><a href="l12-extension-crypto.html"><span class="n">04</span><span>Extension functions</span></a></li>
+  </ul>
+  <p class="nav-track">Practice</p>
+  <ul class="nav-list">
+    <li><a href="capstone.html"><span class="n">01</span><span>Capstone project</span></a></li>
+    <li><a href="reference.html"><span class="n">02</span><span>Reference & cheat-sheet</span></a></li>
+  </ul>
+</nav>
+</aside>
+<main class="main" id="main">
+<div class="wrap">
+<header class="pagehead"><p class="eyebrow">ENCRYPTION <span class="tick">·</span> LESSON 01</p><h1>Encryption with XSLT — the honest framing</h1><p class="lede">XSLT is a transformer, not a cipher engine. Here are the three real paths, and the rules that keep you safe.</p></header>
+<div class="prose">
+<p>“Can you do encryption with XSLT?” is the question that brought many people to this
+page. The honest answer has two halves, and you need both:
+<strong>yes, you can build ciphers in XSLT — and no, you must not use them to protect
+anything real.</strong> This lesson draws that line clearly, then lays out the three
+legitimate paths the rest of the track follows.</p>
+
+<h2>XSLT is a transformer, not a cipher engine</h2>
+<p>XSLT was designed to reshape documents. It has no random-number generator, no
+bitwise operators, no timing guarantees, and no access to your OS key store — the very
+things real cryptography depends on. You <em>can</em> express a cipher's arithmetic in
+XSLT, the same way you can express one in a spreadsheet. That makes it a wonderful
+<em>teaching</em> tool and a terrible <em>security</em> tool.</p>
+
+<div class="callout callout--warn">
+  <p class="h">&#9888; The rule, stated once and for all</p>
+  <p>Never protect real data with a cipher you implemented yourself — in XSLT or any
+  other language. Real confidentiality comes from vetted libraries (AES, RSA, ChaCha20)
+  driven by careful key management. XSLT's honest role is to decide <strong>what</strong>
+  to protect and <strong>where</strong> it goes; a real crypto library does the
+  <strong>how</strong>.</p>
+</div>
+
+<h2>First, get the words right</h2>
+<p>Half of all “encryption” confusion is vocabulary. These are <em>not</em> synonyms:</p>
+<div class="tbl-wrap">
+<table class="data">
+  <tr><th>Term</th><th>What it does</th><th>Reversible?</th><th>Secret needed?</th></tr>
+  <tr><td><strong>Encoding</strong> (Base64, URL-encode)</td><td>repackages bytes for safe transport</td><td>yes, by anyone</td><td>no</td></tr>
+  <tr><td><strong>Obfuscation</strong> (Caesar, ROT13)</td><td>hides from a casual glance</td><td>yes, trivially</td><td>barely</td></tr>
+  <tr><td><strong>Hashing</strong> (SHA-256)</td><td>fingerprints data</td><td><strong>no</strong> (one-way)</td><td>no (unless HMAC)</td></tr>
+  <tr><td><strong>Encryption</strong> (AES, RSA)</td><td>makes data unreadable without the key</td><td>yes, <em>with the key</em></td><td><strong>yes</strong></td></tr>
+</table>
+</div>
+<p>Base64 is the one people misfile most often. It is <strong>encoding</strong> — it
+protects nothing. Anyone can decode it in one command. We build it in the next lesson to
+learn byte math, not to hide anything.</p>
+
+<h2>The three honest paths</h2>
+<div class="tracklist">
+  <div class="col encryption">
+    <span class="badge">Path 1 · Learn</span>
+    <p style="font-family:var(--sans);font-size:.95rem">
+    <strong>Teaching ciphers in pure XSLT.</strong> Caesar, Base64, XOR — built by hand
+    to master recursion and byte manipulation. Zero security value.
+    <a href="l10-teaching-ciphers.html">Lesson 10 →</a></p>
+  </div>
+  <div class="col encryption">
+    <span class="badge">Path 2 · Standard</span>
+    <p style="font-family:var(--sans);font-size:.95rem">
+    <strong>W3C XML Encryption.</strong> The real standard for encrypting parts of an XML
+    document. XSLT selects and reassembles; a crypto library encrypts.
+    <a href="l11-xml-encryption.html">Lesson 11 →</a></p>
+  </div>
+  <div class="col encryption">
+    <span class="badge">Path 3 · Production</span>
+    <p style="font-family:var(--sans);font-size:.95rem">
+    <strong>Extension functions.</strong> Call AES/HMAC/hashing from a vetted library
+    <em>inside</em> the transform. The pattern used in Java, .NET, and Python.
+    <a href="l12-extension-crypto.html">Lesson 12 →</a></p>
+  </div>
+</div>
+
+<h2>Security rules that outlive any language</h2>
+<ul>
+  <li><strong>Don't roll your own crypto.</strong> Use AES-GCM / ChaCha20-Poly1305 from a
+  maintained library. Amateur ciphers fail in ways you can't see.</li>
+  <li><strong>Assume the algorithm is public</strong> (Kerckhoffs's principle). Only the
+  <em>key</em> is secret. A cipher that relies on nobody knowing how it works is already
+  broken.</li>
+  <li><strong>Authenticate, don't just encrypt.</strong> Use authenticated encryption
+  (GCM) or add an HMAC, so tampering is detected.</li>
+  <li><strong>Keys are the hard part.</strong> Never hard-code keys in a stylesheet.
+  Derive them with a KDF (HKDF/PBKDF2) or fetch from a KMS; rotate them.</li>
+  <li><strong>Mind XSLT-specific hazards:</strong> disable external entity/DTD loading to
+  avoid XXE, never log plaintext, and remember an XSLT variable holding a secret may end
+  up in memory dumps or error traces.</li>
+</ul>
+
+<div class="callout callout--use">
+  <p class="h">&#9733; Practical use case — field-level protection in a message</p>
+  <p>A hospital sends XML referrals between systems. The routing header, department, and
+  timestamps must stay readable for middleware — but the patient's name and record number
+  must be encrypted end-to-end. You don't encrypt the whole document; you encrypt
+  <em>specific elements</em>. Deciding <em>which</em> elements is a transformation
+  problem (XSLT); encrypting them is a crypto-library problem. Lessons 11–12 build exactly
+  this.</p>
+</div>
+
+<div class="callout callout--key">
+  <p class="h">&#9873; Carry this forward</p>
+  <p>For the rest of the track, watch which half of the job is XSLT's. When you see a
+  cipher written in pure XSLT, it's a <em>lesson</em>. When you see real protection, XSLT
+  is only steering — the cryptography lives in a library that experts maintain.</p>
+</div>
+
+</div>
+<nav class="lessonnav" aria-label="Lesson navigation">
+<a href="l08-versions.html" rel="prev"><span class="dir">&#8592; Previous</span><span class="ttl">1.0 → 2.0 → 3.0: what each version adds</span></a>
+<a class="next" href="l10-teaching-ciphers.html" rel="next"><span class="dir">Next &#8594;</span><span class="ttl">Teaching ciphers in pure XSLT</span></a>
+</nav>
+<footer class="foot">
+The XSLT Course · a hands-on, honestly-scoped introduction. Every example in this
+course is executed, not imagined. Built for learning; ciphers marked “teaching” are
+not for protecting real data.
+</footer>
+</div>
+</main>
+</div>
+<script src="assets/app.js"></script>
+</body>
+</html>

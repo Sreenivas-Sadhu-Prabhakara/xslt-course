@@ -1,0 +1,79 @@
+<p>Copying data across is only half the job. Real transforms <em>reshape</em> it:
+reorder rows, branch on conditions, and compute attribute values on the fly. Folder:
+<code>examples/04-shape-data</code>.</p>
+
+<h2>Sorting with xsl:sort</h2>
+<p>Drop an <code>xsl:sort</code> inside a <code>for-each</code> (or
+<code>apply-templates</code>) and the selected nodes are reordered before processing.</p>
+<div class="panel panel--xsl">
+  <div class="panel__bar"><span class="role xsl">report.xsl · key parts</span><button class="copy" type="button">copy</button></div>
+<pre><code>&lt;xsl:for-each select="book"&gt;
+  &lt;xsl:sort select="price" data-type="number" order="descending"/&gt;
+
+  &lt;tr class="{@category}"&gt;                       &lt;!-- attribute value template --&gt;
+    &lt;td&gt;&lt;xsl:value-of select="title"/&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;xsl:value-of select="concat(price/@currency, ' ', price)"/&gt;&lt;/td&gt;
+    &lt;td&gt;
+      &lt;xsl:choose&gt;
+        &lt;xsl:when test="@inStock='true'"&gt;in stock&lt;/xsl:when&gt;
+        &lt;xsl:otherwise&gt;backorder&lt;/xsl:otherwise&gt;
+      &lt;/xsl:choose&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/xsl:for-each&gt;</code></pre>
+</div>
+<p>Without <code>data-type="number"</code>, <code>xsl:sort</code> compares as text and
+<code>17.99</code> sorts <em>after</em> <code>149.85</code> — a classic bug.</p>
+
+<h2>Branching: if and choose</h2>
+<ul>
+  <li><code>xsl:if</code> — a single yes/no test, no else.</li>
+  <li><code>xsl:choose</code> / <code>xsl:when</code> / <code>xsl:otherwise</code> — multi-way, like switch/case.</li>
+</ul>
+
+<h2>Attribute Value Templates (AVTs)</h2>
+<p>Inside an attribute, curly braces <code>{ }</code> switch on XPath. <code>class="{@category}"</code>
+evaluates <code>@category</code> and drops the result in — so a
+<code>&lt;book category="tech"&gt;</code> becomes <code>&lt;tr class="tech"&gt;</code>.
+AVTs work in <em>any</em> literal attribute.</p>
+
+<div class="run">
+  <div class="run__cmd"><span class="dollar">$ </span>xsltproc 04-shape-data/report.xsl data/catalog.xml</div>
+  <div class="run__out">&lt;table border="1"&gt;
+&lt;tr&gt;&lt;th&gt;Title&lt;/th&gt;&lt;th&gt;Author&lt;/th&gt;&lt;th&gt;Price&lt;/th&gt;&lt;th&gt;Status&lt;/th&gt;&lt;/tr&gt;
+&lt;tr class="tech"&gt;
+  &lt;td&gt;XSLT 2.0 and XPath 2.0&lt;/td&gt;&lt;td&gt;Michael Kay&lt;/td&gt;
+  &lt;td&gt;USD 59.99&lt;/td&gt;&lt;td&gt;backorder&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class="security"&gt;
+  &lt;td&gt;Real-World Cryptography&lt;/td&gt;&lt;td&gt;David Wong&lt;/td&gt;
+  &lt;td&gt;USD 59.99&lt;/td&gt;&lt;td&gt;in stock&lt;/td&gt;
+&lt;/tr&gt;
+&#8230; (rows continue, most-expensive first) &#8230;
+&lt;tr class="fiction"&gt;
+  &lt;td&gt;Cryptonomicon&lt;/td&gt;&lt;td&gt;Neal Stephenson&lt;/td&gt;
+  &lt;td&gt;USD 17.99&lt;/td&gt;&lt;td&gt;backorder&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;</div>
+</div>
+
+<div class="callout callout--use">
+  <p class="h">&#9733; Practical use case — the invoice/report generator</p>
+  <p>This is the everyday XSLT job: turn a data feed into a styled document. Sort line
+  items by amount, colour overdue rows red with an AVT
+  (<code>class="{if(daysLate&gt;0,'late','ok')}"</code> in 2.0), print “PAID” vs “DUE”
+  with a <code>choose</code>. The capstone builds exactly this for a batch of orders.</p>
+</div>
+
+<div class="exercise">
+  <p class="h">Your turn</p>
+  <p>Add a <code>&lt;td&gt;</code> that shows <em>“bargain”</em> when a book costs under
+  $30 and <em>“premium”</em> otherwise.</p>
+  <details><summary>Show a solution</summary>
+  <pre><code>&lt;td&gt;
+  &lt;xsl:choose&gt;
+    &lt;xsl:when test="price &lt; 30"&gt;bargain&lt;/xsl:when&gt;
+    &lt;xsl:otherwise&gt;premium&lt;/xsl:otherwise&gt;
+  &lt;/xsl:choose&gt;
+&lt;/td&gt;</code></pre></details>
+</div>

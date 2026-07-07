@@ -1,0 +1,106 @@
+<p><strong>XSLT</strong> — eXtensible Stylesheet Language Transformations — is a
+language whose only job is to turn one XML document into something else: an HTML
+page, a text file, JSON, or a differently-shaped XML document. You write a
+<em>stylesheet</em> full of rules; a <em>processor</em> applies those rules to your
+<em>source</em> document and produces a <em>result</em>.</p>
+
+<h2>The mental model: two trees and a processor</h2>
+<p>An XML document isn't really text to XSLT — it's a <strong>tree</strong> of nodes
+(elements, attributes, text). XSLT reads the source tree and builds a brand-new
+result tree. Your stylesheet never modifies the source; it <em>describes</em> the
+output.</p>
+
+<div class="xform" aria-label="pipeline: source tree, processor with stylesheet, result tree">
+  <div class="cell in">
+    <span class="tag">Source tree</span>
+<pre>catalog
+ └ book
+    ├ title
+    └ author</pre>
+  </div>
+  <div class="arrow" aria-hidden="true">&#9656;</div>
+  <div class="cell eng">
+    <span class="tag">Processor + stylesheet</span>
+<pre>xsltproc / Saxon / lxml
+applies your rules
+to every node</pre>
+  </div>
+  <div class="arrow" aria-hidden="true">&#9656;</div>
+  <div class="cell out">
+    <span class="tag">Result tree</span>
+<pre>html
+ └ body
+    └ ul
+       └ li ...</pre>
+  </div>
+</div>
+
+<h2>Declarative, not step-by-step</h2>
+<p>Most languages you know are <em>imperative</em>: do this, then this, then that.
+XSLT is mostly <strong>declarative</strong> and rule-based. Instead of writing a loop
+that walks the document, you write rules that say <em>“whenever you see a node that
+looks like this, produce that.”</em> The processor handles the walking.</p>
+
+<div class="panel panel--xsl">
+  <div class="panel__bar"><span class="role xsl">a rule, in plain terms</span></div>
+<pre><code>When you meet a &lt;book&gt;, emit an &lt;li&gt; containing its title.
+(You never say "start at the top and loop" — the processor does that.)</code></pre>
+</div>
+
+<p>That flips how you think. A big part of learning XSLT is trusting the processor
+to visit nodes for you, and just writing good rules — you'll meet these rules
+properly in <a href="l04-templates.html">Lesson 4</a>.</p>
+
+<h2>XSLT and XPath are a pair</h2>
+<p>XSLT leans on a second little language, <strong>XPath</strong>, to point at nodes.
+Every <code>match="book"</code> and <code>select="title"</code> you'll write is XPath.
+Think of it this way:</p>
+<ul>
+  <li><strong>XPath</strong> answers <em>“which nodes?”</em> — it selects and queries.</li>
+  <li><strong>XSLT</strong> answers <em>“now what?”</em> — it produces output for them.</li>
+</ul>
+<p>We give XPath its own lesson (<a href="l03-xpath.html">Lesson 3</a>) because it does
+so much of the work.</p>
+
+<h2>Where XSLT runs</h2>
+<div class="tbl-wrap">
+<table class="data">
+  <tr><th>Setting</th><th>Processor</th><th>Typical use</th></tr>
+  <tr><td>Command line</td><td><code>xsltproc</code> (libxslt), Saxon</td><td>batch conversions, build steps</td></tr>
+  <tr><td>Java / JVM</td><td>Saxon, Xalan</td><td>enterprise back-ends, reporting</td></tr>
+  <tr><td>.NET</td><td><code>XslCompiledTransform</code></td><td>Windows services, document systems</td></tr>
+  <tr><td>Python</td><td><code>lxml</code> (libxslt)</td><td>scripting, data pipelines</td></tr>
+  <tr><td>Integration / API</td><td>Apigee, MuleSoft, BizTalk, camel</td><td>message transformation between systems</td></tr>
+  <tr><td>Browser</td><td>built-in (1.0 only)</td><td>legacy client-side rendering</td></tr>
+</table>
+</div>
+<p>The language is the same everywhere; only the launch command differs. This course
+uses <code>xsltproc</code> for 1.0, <strong>Saxon-HE</strong> for 2.0/3.0, and
+<code>lxml</code> when we need to call out to real crypto.</p>
+
+<div class="callout callout--use">
+  <p class="h">&#9733; Practical use case — one feed, many outputs</p>
+  <p>A publisher stores each article once as XML. One stylesheet renders it as a web
+  page, another as a print-ready document, another as an RSS item, another as the
+  JSON a mobile app expects. Author once, transform many times — nobody re-keys the
+  content, and every channel stays in sync. That “single source, many shapes” pattern
+  is XSLT's home turf.</p>
+</div>
+
+<div class="callout callout--key">
+  <p class="h">&#9873; Keep in mind</p>
+  <p>A stylesheet is itself a well-formed XML document. Everything you write lives
+  inside <code>&lt;xsl:stylesheet&gt;</code>, and every instruction is an element in the
+  <code>xsl:</code> namespace. XSLT is XML that produces XML (or text).</p>
+</div>
+
+<div class="exercise">
+  <p class="h">Warm-up (no code yet)</p>
+  <p>You receive a <code>&lt;weather&gt;</code> feed and must produce (a) an HTML
+  forecast page and (b) a plain-text SMS alert. How many <em>source</em> documents and
+  how many <em>stylesheets</em> do you need?</p>
+  <details><summary>Show answer</summary>
+  <p>One source document, two stylesheets — one per output shape. The weather data is
+  authored once; each stylesheet is a different set of rules producing a different
+  result tree from the same source.</p></details>
+</div>

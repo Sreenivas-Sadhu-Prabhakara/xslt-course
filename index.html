@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The XSLT Course — Learn XSLT Transformation &amp; Encryption (1.0 → 3.0)</title>
+<meta name="description" content="Learn to transform XML with confidence — then see, honestly, what XSLT can and cannot do for encryption.">
+<link rel="canonical" href="https://sreenivas-sadhu-prabhakara.github.io/xslt-course/">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="Sreenivas Sadhu Prabhakara">
+<meta name="theme-color" content="#16191f">
+<meta name="color-scheme" content="light">
+<meta name="keywords" content="XSLT, XSLT tutorial, XML transformation, XPath, XSLT 3.0, Saxon, xsltproc, XML Encryption, encrypt XML, Base64, XOR cipher">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png">
+<link rel="apple-touch-icon" href="assets/icon-180.png">
+<link rel="manifest" href="site.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="The XSLT Course">
+<meta property="og:title" content="The XSLT Course">
+<meta property="og:description" content="Learn to transform XML with confidence — then see, honestly, what XSLT can and cannot do for encryption.">
+<meta property="og:url" content="https://sreenivas-sadhu-prabhakara.github.io/xslt-course/">
+<meta property="og:image" content="https://sreenivas-sadhu-prabhakara.github.io/xslt-course/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The XSLT Course">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The XSLT Course">
+<meta name="twitter:description" content="Learn to transform XML with confidence — then see, honestly, what XSLT can and cannot do for encryption.">
+<meta name="twitter:image" content="https://sreenivas-sadhu-prabhakara.github.io/xslt-course/assets/og-image.png">
+<link rel="sitemap" type="application/xml" href="sitemap.xml">
+<link rel="stylesheet" href="assets/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "name": "The XSLT Course",
+      "url": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/",
+      "inLanguage": "en",
+      "description": "Learn to transform XML with confidence — then see, honestly, what XSLT can and cannot do for encryption.",
+      "publisher": {
+        "@type": "Organization",
+        "name": "The XSLT Course",
+        "url": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/assets/icon-512.png"
+        }
+      }
+    },
+    {
+      "@type": "Course",
+      "name": "The XSLT Course",
+      "description": "Learn to transform XML with confidence — then see, honestly, what XSLT can and cannot do for encryption.",
+      "url": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/",
+      "inLanguage": "en",
+      "provider": {
+        "@type": "Organization",
+        "name": "The XSLT Course",
+        "url": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/assets/icon-512.png"
+        }
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Sreenivas Sadhu Prabhakara"
+      },
+      "isAccessibleForFree": true,
+      "educationalLevel": "Beginner",
+      "about": [
+        "XSLT",
+        "XSLT tutorial",
+        "XML transformation",
+        "XPath",
+        "XSLT 3.0",
+        "Saxon",
+        "xsltproc",
+        "XML Encryption",
+        "encrypt XML",
+        "Base64",
+        "XOR cipher"
+      ],
+      "teaches": [
+        "XSLT transformation",
+        "XPath",
+        "grouping and recursion",
+        "XSLT 1.0 to 3.0",
+        "XML Encryption",
+        "calling crypto from XSLT"
+      ],
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock"
+      },
+      "hasCourseInstance": {
+        "@type": "CourseInstance",
+        "courseMode": "online",
+        "courseWorkload": "PT8H",
+        "instructor": {
+          "@type": "Person",
+          "name": "Sreenivas Sadhu Prabhakara"
+        }
+      },
+      "hasPart": [
+        {
+          "@type": "LearningResource",
+          "name": "What XSLT is & how it runs",
+          "url": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/l01-what-is-xslt.html"
+        },
+        {
+          "@type": "LearningResource",
+          "name": "Your first stylesheet",
+          "url": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/l02-first-stylesheet.html"
+        },
+        {
+          "@type": "LearningResource",
+          "name": "XPath — the addressing language",
+          "url": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/l03-xpath.html"
+        },
+        {
+          "@type": "LearningResource",
+          "name": "Template rules & apply-templates",
+          "url": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/l04-templates.html"
+        },
+        {
+          "@type": "LearningResource",
+          "name": "Shaping data: sort, choose, attributes",
+          "url": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/l05-shape-data.html"
+        },
+        {
+          "@type": "LearningResource",
+          "name": "Keys & grouping",
+          "url": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/l06-keys-grouping.html"
+        },
+        {
+          "@type": "LearningResource",
+          "name": "Named templates, parameters & recursion",
+          "url": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/l07-recursion.html"
+        },
+        {
+          "@type": "LearningResource",
+          "name": "1.0 → 2.0 → 3.0: what each version adds",
+          "url": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/l08-versions.html"
+        },
+        {
+          "@type": "LearningResource",
+          "name": "Encryption with XSLT — the honest framing",
+          "url": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/l09-honest-framing.html"
+        },
+        {
+          "@type": "LearningResource",
+          "name": "Teaching ciphers in pure XSLT",
+          "url": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/l10-teaching-ciphers.html"
+        },
+        {
+          "@type": "LearningResource",
+          "name": "W3C XML Encryption — and XSLT's real role",
+          "url": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/l11-xml-encryption.html"
+        },
+        {
+          "@type": "LearningResource",
+          "name": "Real crypto via extension functions",
+          "url": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/l12-extension-crypto.html"
+        },
+        {
+          "@type": "LearningResource",
+          "name": "Capstone — the Secure Invoice Exchange",
+          "url": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/capstone.html"
+        },
+        {
+          "@type": "LearningResource",
+          "name": "Reference & cheat-sheet",
+          "url": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/reference.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="shell">
+<aside class="sidebar">
+<div class="brand">
+  <a href="index.html" aria-label="The XSLT Course home"><span class="mark">&lt;<span class="in">x</span>&#8202;&#8594;&#8202;<span class="out">/</span>&gt;</span></a>
+  <a href="index.html" class="name">The&nbsp;XSLT&nbsp;Course</a>
+</div>
+<button class="menu-btn" aria-expanded="false" aria-controls="nav">Menu</button>
+<nav class="nav-wrap" id="nav" aria-label="Course syllabus">
+  <p class="nav-track">Transformation</p>
+  <ul class="nav-list">
+    <li><a href="l01-what-is-xslt.html"><span class="n">01</span><span>What XSLT is</span></a></li>
+    <li><a href="l02-first-stylesheet.html"><span class="n">02</span><span>Your first stylesheet</span></a></li>
+    <li><a href="l03-xpath.html"><span class="n">03</span><span>XPath essentials</span></a></li>
+    <li><a href="l04-templates.html"><span class="n">04</span><span>Template rules</span></a></li>
+    <li><a href="l05-shape-data.html"><span class="n">05</span><span>Shaping data</span></a></li>
+    <li><a href="l06-keys-grouping.html"><span class="n">06</span><span>Keys & grouping</span></a></li>
+    <li><a href="l07-recursion.html"><span class="n">07</span><span>Recursion</span></a></li>
+    <li><a href="l08-versions.html"><span class="n">08</span><span>1.0 → 2.0 → 3.0</span></a></li>
+  </ul>
+  <p class="nav-track">Encryption</p>
+  <ul class="nav-list">
+    <li><a href="l09-honest-framing.html"><span class="n">01</span><span>The honest framing</span></a></li>
+    <li><a href="l10-teaching-ciphers.html"><span class="n">02</span><span>Teaching ciphers</span></a></li>
+    <li><a href="l11-xml-encryption.html"><span class="n">03</span><span>W3C XML Encryption</span></a></li>
+    <li><a href="l12-extension-crypto.html"><span class="n">04</span><span>Extension functions</span></a></li>
+  </ul>
+  <p class="nav-track">Practice</p>
+  <ul class="nav-list">
+    <li><a href="capstone.html"><span class="n">01</span><span>Capstone project</span></a></li>
+    <li><a href="reference.html"><span class="n">02</span><span>Reference & cheat-sheet</span></a></li>
+  </ul>
+</nav>
+</aside>
+<main class="main" id="main">
+<div class="wrap">
+<section class="hero" data-hero>
+  <p class="eyebrow">A hands-on course <span class="tick">·</span> XSLT 1.0 → 3.0</p>
+  <h1>Turn one tree<br>into <span class="grad">another</span>.</h1>
+  <p class="lede">XSLT is the language for reshaping XML into anything — HTML, JSON,
+  text, or a different XML. This course teaches transformation from first
+  principles, then tackles the question everyone asks and few answer honestly:
+  <em>can you encrypt with XSLT?</em></p>
+  <div class="cta">
+    <a class="btn btn--primary" href="l01-what-is-xslt.html">Start lesson 1 &#8594;</a>
+    <a class="btn btn--ghost" href="l09-honest-framing.html">Jump to the crypto track</a>
+    <a class="btn btn--ghost" href="capstone.html">See the capstone</a>
+  </div>
+</section>
+
+<h2>The whole language, in one picture</h2>
+<p>Every XSLT program is the same shape: a <strong>source tree</strong> goes in, a
+<strong>stylesheet</strong> of rules is applied, and a <strong>result tree</strong>
+comes out. Hold on to these three colours — you'll see them on every code block in
+the course.</p>
+
+<div class="xform" aria-label="source XML, transformed by a stylesheet, into result HTML">
+  <div class="cell in">
+    <span class="tag">Source · XML</span>
+<pre>&lt;book&gt;
+  &lt;title&gt;Learning XSLT&lt;/title&gt;
+  &lt;author&gt;M. Fitzgerald&lt;/author&gt;
+&lt;/book&gt;</pre>
+  </div>
+  <div class="arrow" aria-hidden="true">&#9656;</div>
+  <div class="cell eng">
+    <span class="tag">Stylesheet · XSL</span>
+<pre>&lt;xsl:template match="book"&gt;
+  &lt;li&gt;
+    &lt;xsl:value-of select="title"/&gt;
+  &lt;/li&gt;
+&lt;/xsl:template&gt;</pre>
+  </div>
+  <div class="arrow" aria-hidden="true">&#9656;</div>
+  <div class="cell out">
+    <span class="tag">Result · HTML</span>
+<pre>&lt;li&gt;Learning XSLT&lt;/li&gt;</pre>
+  </div>
+</div>
+
+<h2>What you'll be able to do</h2>
+<div class="cards">
+  <div class="card2"><div class="k">Transform</div><h3>Reshape any XML</h3>
+    <p>Query with XPath, drive output with template rules, sort, group, and emit HTML, text, or JSON.</p></div>
+  <div class="card2"><div class="k">Judge</div><h3>Pick the right version</h3>
+    <p>Know exactly what 2.0 and 3.0 add, and when the upgrade earns its keep.</p></div>
+  <div class="card2"><div class="k">Protect</div><h3>Encrypt the right way</h3>
+    <p>Understand teaching ciphers, the W3C XML Encryption standard, and calling real crypto from a transform.</p></div>
+  <div class="card2"><div class="k">Ship</div><h3>Build a real pipeline</h3>
+    <p>Combine it all in a capstone that transforms and selectively encrypts a live order feed.</p></div>
+</div>
+
+<h2 id="syllabus">The syllabus</h2>
+<div class="tracklist">
+  <div class="col transform">
+    <span class="badge">Track 1 · Transformation</span>
+    <ol>
+      <li><a href="l01-what-is-xslt.html">What XSLT is &amp; how it runs</a></li>
+      <li><a href="l02-first-stylesheet.html">Your first stylesheet</a></li>
+      <li><a href="l03-xpath.html">XPath essentials</a></li>
+      <li><a href="l04-templates.html">Template rules &amp; apply-templates</a></li>
+      <li><a href="l05-shape-data.html">Shaping data: sort, choose, attributes</a></li>
+      <li><a href="l06-keys-grouping.html">Keys &amp; grouping</a></li>
+      <li><a href="l07-recursion.html">Named templates, params &amp; recursion</a></li>
+      <li><a href="l08-versions.html">1.0 → 2.0 → 3.0</a></li>
+    </ol>
+  </div>
+  <div class="col encryption">
+    <span class="badge">Track 2 · Encryption</span>
+    <ol>
+      <li><a href="l09-honest-framing.html">The honest framing (+ security)</a></li>
+      <li><a href="l10-teaching-ciphers.html">Teaching ciphers in pure XSLT</a></li>
+      <li><a href="l11-xml-encryption.html">W3C XML Encryption</a></li>
+      <li><a href="l12-extension-crypto.html">Real crypto via extension functions</a></li>
+    </ol>
+  </div>
+  <div class="col practice">
+    <span class="badge">Track 3 · Practice</span>
+    <ol>
+      <li><a href="capstone.html">Capstone: Secure Invoice Exchange</a></li>
+      <li><a href="reference.html">Reference &amp; cheat-sheet</a></li>
+    </ol>
+  </div>
+</div>
+
+<h2>Run everything yourself</h2>
+<p>The lessons aren't just to read. A sibling <code>examples/</code> folder holds a
+runnable file for (almost) every lesson, each one executed and verified.</p>
+<div class="panel panel--xsl">
+  <div class="panel__bar"><span class="role xsl">terminal</span><button class="copy" type="button">copy</button></div>
+<pre><code>cd examples
+./fetch-saxon.sh      # once, for the 2.0/3.0 examples (needs Java)
+./run.sh 02           # run any single lesson's example
+./run.sh all          # run them all, printing each command</code></pre>
+</div>
+<p>You need <code>xsltproc</code> (ships with macOS/Linux) for the 1.0 examples,
+Java for Saxon-HE, and <code>python3</code> with <code>lxml</code> + <code>cryptography</code>
+for the two real-crypto lessons.</p>
+
+<div class="callout callout--warn">
+  <p class="h">&#9888; The one rule that matters most</p>
+  <p>XSLT does not do cryptography. Lessons 10's ciphers are for <em>learning</em>,
+  not for protecting anything real. When data must actually be safe, XSLT's job is
+  to decide <strong>what</strong> and <strong>where</strong> — a vetted crypto
+  library does the <strong>how</strong> (lessons 11–12). This course keeps that line bright.</p>
+</div>
+
+
+<footer class="foot">
+The XSLT Course · a hands-on, honestly-scoped introduction. Every example in this
+course is executed, not imagined. Built for learning; ciphers marked “teaching” are
+not for protecting real data.
+</footer>
+</div>
+</main>
+</div>
+<script src="assets/app.js"></script>
+</body>
+</html>

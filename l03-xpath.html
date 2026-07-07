@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>XPath — the addressing language · The XSLT Course</title>
+<meta name="description" content="Before you can transform a node you must point at it. XPath is how.">
+<link rel="canonical" href="https://sreenivas-sadhu-prabhakara.github.io/xslt-course/l03-xpath.html">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="Sreenivas Sadhu Prabhakara">
+<meta name="theme-color" content="#16191f">
+<meta name="color-scheme" content="light">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png">
+<link rel="apple-touch-icon" href="assets/icon-180.png">
+<link rel="manifest" href="site.webmanifest">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="The XSLT Course">
+<meta property="og:title" content="XPath — the addressing language">
+<meta property="og:description" content="Before you can transform a node you must point at it. XPath is how.">
+<meta property="og:url" content="https://sreenivas-sadhu-prabhakara.github.io/xslt-course/l03-xpath.html">
+<meta property="og:image" content="https://sreenivas-sadhu-prabhakara.github.io/xslt-course/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The XSLT Course">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="XPath — the addressing language">
+<meta name="twitter:description" content="Before you can transform a node you must point at it. XPath is how.">
+<meta name="twitter:image" content="https://sreenivas-sadhu-prabhakara.github.io/xslt-course/assets/og-image.png">
+<link rel="sitemap" type="application/xml" href="sitemap.xml">
+<link rel="stylesheet" href="assets/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Transformation",
+          "item": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/#syllabus"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "XPath — the addressing language",
+          "item": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/l03-xpath.html"
+        }
+      ]
+    },
+    {
+      "@type": "LearningResource",
+      "name": "XPath — the addressing language",
+      "description": "Before you can transform a node you must point at it. XPath is how.",
+      "url": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/l03-xpath.html",
+      "inLanguage": "en",
+      "learningResourceType": "lesson",
+      "educationalLevel": "Beginner",
+      "isPartOf": {
+        "@type": "Course",
+        "name": "The XSLT Course",
+        "url": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Sreenivas Sadhu Prabhakara"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "The XSLT Course",
+        "url": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/assets/icon-512.png"
+        }
+      },
+      "isAccessibleForFree": true,
+      "position": 3
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="shell">
+<aside class="sidebar">
+<div class="brand">
+  <a href="index.html" aria-label="The XSLT Course home"><span class="mark">&lt;<span class="in">x</span>&#8202;&#8594;&#8202;<span class="out">/</span>&gt;</span></a>
+  <a href="index.html" class="name">The&nbsp;XSLT&nbsp;Course</a>
+</div>
+<button class="menu-btn" aria-expanded="false" aria-controls="nav">Menu</button>
+<nav class="nav-wrap" id="nav" aria-label="Course syllabus">
+  <p class="nav-track">Transformation</p>
+  <ul class="nav-list">
+    <li><a href="l01-what-is-xslt.html"><span class="n">01</span><span>What XSLT is</span></a></li>
+    <li><a href="l02-first-stylesheet.html"><span class="n">02</span><span>Your first stylesheet</span></a></li>
+    <li><a href="l03-xpath.html" class="active" aria-current="page"><span class="n">03</span><span>XPath essentials</span></a></li>
+    <li><a href="l04-templates.html"><span class="n">04</span><span>Template rules</span></a></li>
+    <li><a href="l05-shape-data.html"><span class="n">05</span><span>Shaping data</span></a></li>
+    <li><a href="l06-keys-grouping.html"><span class="n">06</span><span>Keys & grouping</span></a></li>
+    <li><a href="l07-recursion.html"><span class="n">07</span><span>Recursion</span></a></li>
+    <li><a href="l08-versions.html"><span class="n">08</span><span>1.0 → 2.0 → 3.0</span></a></li>
+  </ul>
+  <p class="nav-track">Encryption</p>
+  <ul class="nav-list">
+    <li><a href="l09-honest-framing.html"><span class="n">01</span><span>The honest framing</span></a></li>
+    <li><a href="l10-teaching-ciphers.html"><span class="n">02</span><span>Teaching ciphers</span></a></li>
+    <li><a href="l11-xml-encryption.html"><span class="n">03</span><span>W3C XML Encryption</span></a></li>
+    <li><a href="l12-extension-crypto.html"><span class="n">04</span><span>Extension functions</span></a></li>
+  </ul>
+  <p class="nav-track">Practice</p>
+  <ul class="nav-list">
+    <li><a href="capstone.html"><span class="n">01</span><span>Capstone project</span></a></li>
+    <li><a href="reference.html"><span class="n">02</span><span>Reference & cheat-sheet</span></a></li>
+  </ul>
+</nav>
+</aside>
+<main class="main" id="main">
+<div class="wrap">
+<header class="pagehead"><p class="eyebrow">TRANSFORMATION <span class="tick">·</span> LESSON 03</p><h1>XPath — the addressing language</h1><p class="lede">Before you can transform a node you must point at it. XPath is how.</p></header>
+<div class="prose">
+<p>XPath is the small query language XSLT uses to <em>point at</em> nodes. You've
+already used it — <code>match="/"</code>, <code>select="title"</code>,
+<code>count(catalog/book)</code> are all XPath. This lesson makes it deliberate.
+Folder: <code>examples/02-xpath</code>.</p>
+
+<h2>Paths select nodes</h2>
+<p>A path is read left to right, each step moving down the tree from a
+<strong>context node</strong>.</p>
+<div class="tbl-wrap">
+<table class="data">
+  <tr><th>Expression</th><th>Selects</th></tr>
+  <tr><td><code>catalog/book</code></td><td>every <code>book</code> child of <code>catalog</code></td></tr>
+  <tr><td><code>catalog/book/title</code></td><td>every title, two levels down</td></tr>
+  <tr><td><code>//title</code></td><td>every <code>title</code> anywhere in the document</td></tr>
+  <tr><td><code>@category</code></td><td>the <code>category</code> <em>attribute</em> of the context node (note the <code>@</code>)</td></tr>
+  <tr><td><code>.</code> / <code>..</code></td><td>the context node itself / its parent</td></tr>
+  <tr><td><code>*</code></td><td>any element child</td></tr>
+</table>
+</div>
+
+<h2>Predicates filter</h2>
+<p>Square brackets keep only the nodes that match a condition.</p>
+<div class="panel panel--xsl">
+  <div class="panel__bar"><span class="role xsl">predicates</span></div>
+<pre><code>book[@inStock='true']            &#8592; books whose inStock attribute is true
+book[price &lt; 55]                 &#8592; books cheaper than 55
+book[@category='security'][price &lt; 55]   &#8592; both conditions
+book[1]         &#8592; the first book       book[last()]   &#8592; the last book</code></pre>
+</div>
+
+<h2>Functions do the arithmetic</h2>
+<p>XPath 1.0 ships a compact standard library: <code>count()</code>, <code>sum()</code>,
+<code>string-length()</code>, <code>substring()</code>, <code>contains()</code>,
+<code>concat()</code>, <code>translate()</code>, <code>position()</code>,
+<code>last()</code>, and more. (2.0 and 3.0 add hundreds — <a href="l08-versions.html">Lesson 8</a>.)</p>
+
+<h2>See them run</h2>
+<p><code>queries.xsl</code> prints the result of several expressions as plain text.</p>
+<div class="run">
+  <div class="run__cmd"><span class="dollar">$ </span>xsltproc 02-xpath/queries.xsl data/catalog.xml</div>
+  <div class="run__out">All titles (child axis):
+  - Learning XSLT
+  - XSLT 2.0 and XPath 2.0
+  - XML in a Nutshell
+  - Serious Cryptography
+  - Real-World Cryptography
+  - Cryptonomicon
+
+Books that are in stock (predicate [@inStock='true']):
+  - Learning XSLT
+  - XML in a Nutshell
+  - Serious Cryptography
+  - Real-World Cryptography
+
+Security books under $55 (compound predicate):
+  - Serious Cryptography ($49.95)
+
+Aggregations:
+  total books   = 6
+  sum of prices = 272.82
+  first author  = Michael Fitzgerald
+  last title    = Cryptonomicon</div>
+</div>
+
+<div class="callout callout--key">
+  <p class="h">&#9873; The gotcha that catches everyone</p>
+  <p>Attributes need the <code>@</code>. <code>book[category='security']</code> looks for
+  a <em>child element</em> named <code>category</code> (there isn't one) and quietly
+  matches nothing. You almost certainly meant <code>book[@category='security']</code>.
+  When a selection is mysteriously empty, check your <code>@</code> signs first.</p>
+</div>
+
+<div class="callout callout--use">
+  <p class="h">&#9733; Practical use case — validation &amp; routing rules</p>
+  <p>XPath expressions <em>are</em> the business rules in a lot of software. An
+  integration layer routes a message with
+  <code>order[total &gt; 10000]</code> to the approvals queue; a schema check asserts
+  <code>count(//lineItem) &gt; 0</code>; a config UI shows a field only when
+  <code>//feature[@name='beta']/@enabled = 'true'</code>. Learn XPath once, reuse it in
+  XSLT, XML schemas, and dozens of tools.</p>
+</div>
+
+<div class="exercise">
+  <p class="h">Your turn</p>
+  <p>Write one XPath that selects the <em>titles</em> of all books published after 2010.</p>
+  <details><summary>Show a solution</summary>
+  <p><code>catalog/book[year &gt; 2010]/title</code> — the predicate filters the books,
+  then a final step steps into each match's <code>title</code>. In the sample data that's
+  <em>Serious Cryptography</em> and <em>Real-World Cryptography</em>.</p></details>
+</div>
+
+</div>
+<nav class="lessonnav" aria-label="Lesson navigation">
+<a href="l02-first-stylesheet.html" rel="prev"><span class="dir">&#8592; Previous</span><span class="ttl">Your first stylesheet</span></a>
+<a class="next" href="l04-templates.html" rel="next"><span class="dir">Next &#8594;</span><span class="ttl">Template rules & apply-templates</span></a>
+</nav>
+<footer class="foot">
+The XSLT Course · a hands-on, honestly-scoped introduction. Every example in this
+course is executed, not imagined. Built for learning; ciphers marked “teaching” are
+not for protecting real data.
+</footer>
+</div>
+</main>
+</div>
+<script src="assets/app.js"></script>
+</body>
+</html>

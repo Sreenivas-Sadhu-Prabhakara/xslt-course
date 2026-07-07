@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reference &amp; cheat-sheet · The XSLT Course</title>
+<meta name="description" content="The instructions, XPath functions, and commands you&#x27;ll reach for most, on one page.">
+<link rel="canonical" href="https://sreenivas-sadhu-prabhakara.github.io/xslt-course/reference.html">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="Sreenivas Sadhu Prabhakara">
+<meta name="theme-color" content="#16191f">
+<meta name="color-scheme" content="light">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png">
+<link rel="apple-touch-icon" href="assets/icon-180.png">
+<link rel="manifest" href="site.webmanifest">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="The XSLT Course">
+<meta property="og:title" content="Reference &amp; cheat-sheet">
+<meta property="og:description" content="The instructions, XPath functions, and commands you&#x27;ll reach for most, on one page.">
+<meta property="og:url" content="https://sreenivas-sadhu-prabhakara.github.io/xslt-course/reference.html">
+<meta property="og:image" content="https://sreenivas-sadhu-prabhakara.github.io/xslt-course/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The XSLT Course">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Reference &amp; cheat-sheet">
+<meta name="twitter:description" content="The instructions, XPath functions, and commands you&#x27;ll reach for most, on one page.">
+<meta name="twitter:image" content="https://sreenivas-sadhu-prabhakara.github.io/xslt-course/assets/og-image.png">
+<link rel="sitemap" type="application/xml" href="sitemap.xml">
+<link rel="stylesheet" href="assets/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Practice",
+          "item": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/#syllabus"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Reference & cheat-sheet",
+          "item": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/reference.html"
+        }
+      ]
+    },
+    {
+      "@type": "LearningResource",
+      "name": "Reference & cheat-sheet",
+      "description": "The instructions, XPath functions, and commands you'll reach for most, on one page.",
+      "url": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/reference.html",
+      "inLanguage": "en",
+      "learningResourceType": "lesson",
+      "educationalLevel": "Beginner",
+      "isPartOf": {
+        "@type": "Course",
+        "name": "The XSLT Course",
+        "url": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Sreenivas Sadhu Prabhakara"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "The XSLT Course",
+        "url": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://sreenivas-sadhu-prabhakara.github.io/xslt-course/assets/icon-512.png"
+        }
+      },
+      "isAccessibleForFree": true,
+      "position": 2
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="shell">
+<aside class="sidebar">
+<div class="brand">
+  <a href="index.html" aria-label="The XSLT Course home"><span class="mark">&lt;<span class="in">x</span>&#8202;&#8594;&#8202;<span class="out">/</span>&gt;</span></a>
+  <a href="index.html" class="name">The&nbsp;XSLT&nbsp;Course</a>
+</div>
+<button class="menu-btn" aria-expanded="false" aria-controls="nav">Menu</button>
+<nav class="nav-wrap" id="nav" aria-label="Course syllabus">
+  <p class="nav-track">Transformation</p>
+  <ul class="nav-list">
+    <li><a href="l01-what-is-xslt.html"><span class="n">01</span><span>What XSLT is</span></a></li>
+    <li><a href="l02-first-stylesheet.html"><span class="n">02</span><span>Your first stylesheet</span></a></li>
+    <li><a href="l03-xpath.html"><span class="n">03</span><span>XPath essentials</span></a></li>
+    <li><a href="l04-templates.html"><span class="n">04</span><span>Template rules</span></a></li>
+    <li><a href="l05-shape-data.html"><span class="n">05</span><span>Shaping data</span></a></li>
+    <li><a href="l06-keys-grouping.html"><span class="n">06</span><span>Keys & grouping</span></a></li>
+    <li><a href="l07-recursion.html"><span class="n">07</span><span>Recursion</span></a></li>
+    <li><a href="l08-versions.html"><span class="n">08</span><span>1.0 → 2.0 → 3.0</span></a></li>
+  </ul>
+  <p class="nav-track">Encryption</p>
+  <ul class="nav-list">
+    <li><a href="l09-honest-framing.html"><span class="n">01</span><span>The honest framing</span></a></li>
+    <li><a href="l10-teaching-ciphers.html"><span class="n">02</span><span>Teaching ciphers</span></a></li>
+    <li><a href="l11-xml-encryption.html"><span class="n">03</span><span>W3C XML Encryption</span></a></li>
+    <li><a href="l12-extension-crypto.html"><span class="n">04</span><span>Extension functions</span></a></li>
+  </ul>
+  <p class="nav-track">Practice</p>
+  <ul class="nav-list">
+    <li><a href="capstone.html"><span class="n">01</span><span>Capstone project</span></a></li>
+    <li><a href="reference.html" class="active" aria-current="page"><span class="n">02</span><span>Reference & cheat-sheet</span></a></li>
+  </ul>
+</nav>
+</aside>
+<main class="main" id="main">
+<div class="wrap">
+<header class="pagehead"><p class="eyebrow">PRACTICE <span class="tick">·</span> LESSON 02</p><h1>Reference & cheat-sheet</h1><p class="lede">The instructions, XPath functions, and commands you'll reach for most, on one page.</p></header>
+<div class="prose">
+<p>The things you'll look up most, on one page. Bookmark it.</p>
+
+<h2>Stylesheet skeleton</h2>
+<div class="panel panel--xsl">
+  <div class="panel__bar"><span class="role xsl">the shape of every stylesheet</span><button class="copy" type="button">copy</button></div>
+<pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;xsl:stylesheet version="1.0"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"&gt;
+  &lt;xsl:output method="html|xml|text" indent="yes"/&gt;
+  &lt;xsl:template match="/"&gt; ... &lt;/xsl:template&gt;
+&lt;/xsl:stylesheet&gt;</code></pre>
+</div>
+
+<h2>Core instructions</h2>
+<div class="tbl-wrap">
+<table class="data">
+  <tr><th>Instruction</th><th>Purpose</th></tr>
+  <tr><td><code>xsl:template match="…"</code></td><td>a rule for matching nodes (push style)</td></tr>
+  <tr><td><code>xsl:apply-templates select="…"</code></td><td>push nodes to their matching rules</td></tr>
+  <tr><td><code>xsl:template name="…"</code> + <code>xsl:call-template</code></td><td>named subroutine (with <code>xsl:param</code> / <code>xsl:with-param</code>)</td></tr>
+  <tr><td><code>xsl:value-of select="…"</code></td><td>insert the text value of an XPath</td></tr>
+  <tr><td><code>xsl:for-each select="…"</code></td><td>loop over selected nodes (pull style)</td></tr>
+  <tr><td><code>xsl:if test="…"</code></td><td>single condition</td></tr>
+  <tr><td><code>xsl:choose / when / otherwise</code></td><td>multi-way branch</td></tr>
+  <tr><td><code>xsl:sort select="…" data-type="number"</code></td><td>reorder before processing</td></tr>
+  <tr><td><code>xsl:variable</code> / <code>xsl:param</code></td><td>bind a value (params take arguments / can be set at run time)</td></tr>
+  <tr><td><code>xsl:copy</code> / <code>xsl:copy-of</code></td><td>shallow copy / deep copy of nodes</td></tr>
+  <tr><td><code>xsl:element</code> / <code>xsl:attribute</code> / <code>xsl:text</code></td><td>build output nodes explicitly</td></tr>
+  <tr><td><code>class="{expr}"</code></td><td>Attribute Value Template — XPath inside an attribute</td></tr>
+  <tr><td><code>xsl:key</code> + <code>key('n', v)</code></td><td>indexed lookup (and 1.0 grouping)</td></tr>
+  <tr><td><code>xsl:for-each-group</code> <span style="color:var(--muted)">(2.0)</span></td><td>group-by / adjacent / starting-with</td></tr>
+  <tr><td><code>xsl:function</code> <span style="color:var(--muted)">(2.0)</span></td><td>your own typed function callable from XPath</td></tr>
+</table>
+</div>
+
+<h2>XPath in one screen</h2>
+<div class="tbl-wrap">
+<table class="data">
+  <tr><th>Syntax</th><th>Means</th></tr>
+  <tr><td><code>a/b</code> · <code>//b</code></td><td>child path · descendant anywhere</td></tr>
+  <tr><td><code>@attr</code> · <code>.</code> · <code>..</code> · <code>*</code></td><td>attribute · self · parent · any element</td></tr>
+  <tr><td><code>a[@x='v']</code> · <code>a[3]</code> · <code>a[last()]</code></td><td>predicates: filter · nth · last</td></tr>
+  <tr><td><code>count() sum() position() last()</code></td><td>node maths</td></tr>
+  <tr><td><code>concat() substring() contains() translate() string-length()</code></td><td>string functions (1.0)</td></tr>
+  <tr><td><code>tokenize() replace() matches()</code> <span style="color:var(--muted)">(2.0)</span></td><td>regex</td></tr>
+  <tr><td><code>upper-case() lower-case() string-to-codepoints()</code> <span style="color:var(--muted)">(2.0)</span></td><td>case &amp; codepoints</td></tr>
+  <tr><td><code>map{…} array{…} parse-json()</code> <span style="color:var(--muted)">(3.0)</span></td><td>maps, arrays, JSON</td></tr>
+</table>
+</div>
+
+<h2>Run a transform</h2>
+<div class="panel panel--in">
+  <div class="panel__bar"><span class="role in">by processor</span><button class="copy" type="button">copy</button></div>
+<pre><code># XSLT 1.0 — xsltproc (ships with macOS/Linux)
+xsltproc style.xsl input.xml
+xsltproc --stringparam name value style.xsl input.xml
+
+# XSLT 2.0 / 3.0 — Saxon-HE (java)
+java -jar Saxon-HE-10.9.jar -xsl:style.xsl -s:input.xml name=value
+
+# XSLT 1.0 — Python / lxml
+python3 -c "from lxml import etree as e; \
+print(e.XSLT(e.parse('style.xsl'))(e.parse('input.xml')))"</code></pre>
+</div>
+
+<h2>Version quick-pick</h2>
+<div class="cards">
+  <div class="card2"><div class="k">1.0</div><h3>Only if forced</h3><p>Browsers, legacy stacks. No functions, no regex.</p></div>
+  <div class="card2"><div class="k">2.0</div><h3>Sane baseline</h3><p>Functions, regex, grouping, types.</p></div>
+  <div class="card2"><div class="k">3.0</div><h3>Modern default</h3><p>Maps, JSON, streaming, higher-order fns.</p></div>
+</div>
+
+<h2>Crypto decision guide</h2>
+<div class="tbl-wrap">
+<table class="data">
+  <tr><th>You want to…</th><th>Use</th><th>Lesson</th></tr>
+  <tr><td>learn how a cipher works</td><td>pure-XSLT teaching cipher <em>(not for real data)</em></td><td><a href="l10-teaching-ciphers.html">L10</a></td></tr>
+  <tr><td>make bytes safe for text transport</td><td>Base64 <em>(encoding, not secrecy)</em></td><td><a href="l10-teaching-ciphers.html">L10</a></td></tr>
+  <tr><td>encrypt fields for another party's toolkit</td><td>W3C XML Encryption + a crypto library</td><td><a href="l11-xml-encryption.html">L11</a></td></tr>
+  <tr><td>encrypt/hash inside your own pipeline</td><td>extension functions → vetted library</td><td><a href="l12-extension-crypto.html">L12</a></td></tr>
+  <tr><td>protect real data with a cipher you wrote</td><td><strong>never — use a vetted library</strong></td><td><a href="l09-honest-framing.html">L9</a></td></tr>
+</table>
+</div>
+
+<h2>Gotchas that cost an afternoon</h2>
+<ul>
+  <li>Selecting an attribute? It needs <code>@</code>. <code>book[category]</code> ≠ <code>book[@category]</code>.</li>
+  <li>Numbers sorting wrong? Add <code>data-type="number"</code> to <code>xsl:sort</code>.</li>
+  <li>Empty output? A built-in template may be swallowing content — add a matching rule.</li>
+  <li>Stray whitespace? Use <code>xsl:text</code> and <code>xsl:strip-space</code>.</li>
+  <li>XML comments can't contain <code>--</code>. Don't paste <code>--flags</code> into a comment.</li>
+  <li>Security: never hard-code keys in a stylesheet; disable DTD/external entities (XXE).</li>
+</ul>
+
+<div class="callout callout--note">
+  <p class="h">&#9432; Keep going</p>
+  <p>Michael Kay's <em>XSLT 2.0 &amp; XPath 2.0</em> is the definitive reference; the
+  <a href="l09-honest-framing.html">honest-framing</a> lesson lists the crypto rules worth
+  memorising. And every example in this course lives in <code>examples/</code> — change
+  them and re-run.</p>
+</div>
+
+</div>
+<nav class="lessonnav" aria-label="Lesson navigation">
+<a href="capstone.html" rel="prev"><span class="dir">&#8592; Previous</span><span class="ttl">Capstone — the Secure Invoice Exchange</span></a>
+</nav>
+<footer class="foot">
+The XSLT Course · a hands-on, honestly-scoped introduction. Every example in this
+course is executed, not imagined. Built for learning; ciphers marked “teaching” are
+not for protecting real data.
+</footer>
+</div>
+</main>
+</div>
+<script src="assets/app.js"></script>
+</body>
+</html>

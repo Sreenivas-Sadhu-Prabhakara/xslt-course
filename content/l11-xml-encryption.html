@@ -1,0 +1,108 @@
+<p>This is real encryption done the standard way. <strong>W3C XML Encryption</strong>
+(the <code>xmlenc</code> standard) lets you encrypt <em>selected parts</em> of an XML
+document while the rest stays plain and routable. XSLT plays its honest role: it decides
+<em>which</em> elements are sensitive and reassembles the result. A vetted crypto library
+does the actual AES. Folder: <code>examples/11-xml-encryption</code>.</p>
+
+<h2>Why element-level, not whole-file</h2>
+<p>Encrypting the entire document would blind the middleware that needs to route it. So
+the standard encrypts individual elements in place: an order id and totals stay readable;
+the card number and CVV become ciphertext.</p>
+
+<h2>What an encrypted element looks like</h2>
+<p>The standard replaces a sensitive element with an <code>&lt;EncryptedData&gt;</code>
+element in the <code>xmlenc</code> namespace:</p>
+<div class="panel panel--out">
+  <div class="panel__bar"><span class="role out">the W3C EncryptedData structure</span></div>
+<pre><code>&lt;xenc:EncryptedData xmlns:xenc="http://www.w3.org/2001/04/xmlenc#"
+                    Type=".../xmlenc#Element"&gt;
+  &lt;xenc:EncryptionMethod Algorithm=".../xmlenc11#aes256-gcm"/&gt;
+  &lt;xenc:CipherData&gt;
+    &lt;xenc:CipherValue&gt;svwBpoESsmsBsHat…Base64(nonce+ciphertext+tag)…&lt;/xenc:CipherValue&gt;
+  &lt;/xenc:CipherData&gt;
+&lt;/xenc:EncryptedData&gt;</code></pre>
+</div>
+<p>In a full deployment the symmetric key is itself wrapped with the recipient's public
+key and travels alongside as an <code>&lt;EncryptedKey&gt;</code> — so only the intended
+reader can unwrap it. Our example uses a shared demo key to keep the focus on structure.</p>
+
+<h2>XSLT's job: declarative policy</h2>
+<p><code>protect-policy.xsl</code> is an <strong>identity transform</strong> (copy
+everything unchanged) with one addition: it flags the sensitive element types. The policy
+is one auditable place that says what counts as sensitive.</p>
+<div class="panel panel--xsl">
+  <div class="panel__bar"><span class="role xsl">protect-policy.xsl</span><button class="copy" type="button">copy</button></div>
+<pre><code>&lt;!-- identity: copy every node and attribute as-is --&gt;
+&lt;xsl:template match="@*|node()"&gt;
+  &lt;xsl:copy&gt;&lt;xsl:apply-templates select="@*|node()"/&gt;&lt;/xsl:copy&gt;
+&lt;/xsl:template&gt;
+
+&lt;!-- policy: these element types hold sensitive data → flag them --&gt;
+&lt;xsl:template match="pan | cvv | email"&gt;
+  &lt;xsl:copy&gt;
+    &lt;xsl:attribute name="sec:protect"&gt;true&lt;/xsl:attribute&gt;
+    &lt;xsl:apply-templates select="@*|node()"/&gt;
+  &lt;/xsl:copy&gt;
+&lt;/xsl:template&gt;</code></pre>
+</div>
+<p>The crypto step (<code>xmlenc.py</code>, using AES-256-GCM from Python's
+<code>cryptography</code>) then acts only on flagged elements — encrypting each one and
+swapping in its <code>EncryptedData</code>.</p>
+
+<h2>The pipeline, end to end</h2>
+<div class="run">
+  <div class="run__cmd"><span class="dollar">$ </span>python3 11-xml-encryption/xmlenc.py encrypt secret-order.xml</div>
+  <div class="run__out">&lt;order id="SO-2026-0042"&gt;
+  &lt;customer&gt;
+    &lt;name&gt;Ada Lovelace&lt;/name&gt;                    <span class="lbl">&#8592; still readable</span>
+    &lt;xenc:EncryptedData …&gt;…&lt;/xenc:EncryptedData&gt;  <span class="lbl">&#8592; was &lt;email&gt;</span>
+  &lt;/customer&gt;
+  &lt;payment&gt;
+    &lt;method&gt;card&lt;/method&gt;                        <span class="lbl">&#8592; still readable</span>
+    &lt;xenc:EncryptedData …&gt;…&lt;/xenc:EncryptedData&gt;  <span class="lbl">&#8592; was &lt;pan&gt;</span>
+    &lt;xenc:EncryptedData …&gt;…&lt;/xenc:EncryptedData&gt;  <span class="lbl">&#8592; was &lt;cvv&gt;</span>
+    &lt;expiry&gt;2029-04&lt;/expiry&gt;
+  &lt;/payment&gt;
+  &lt;total currency="USD"&gt;149.85&lt;/total&gt;           <span class="lbl">&#8592; still readable</span>
+&lt;/order&gt;</div>
+</div>
+<div class="run">
+  <div class="run__cmd"><span class="dollar">$ </span>python3 11-xml-encryption/xmlenc.py decrypt order.enc.xml | diff - secret-order.xml</div>
+  <div class="run__out"><span class="lbl"># (no differences) — decrypt restores the original exactly. ROUND-TRIP OK</span></div>
+</div>
+
+<div class="callout callout--key">
+  <p class="h">&#9873; The division of labour, made concrete</p>
+  <p><strong>XSLT</strong>: identity transform + policy (what/where), and reassembly.
+  <strong>Library</strong>: key handling, nonce generation, AES-GCM, authentication tag.
+  Neither could safely do the other's job — and that's the whole point.</p>
+</div>
+
+<div class="callout callout--warn">
+  <p class="h">&#9888; Production notes</p>
+  <p>Use <code>EncryptedKey</code> with recipient public keys instead of a shared secret;
+  derive/manage keys via a KMS; keep the authenticated-encryption tag (GCM) so tampering
+  is caught; and disable DTD/external-entity loading on your parser to prevent XXE. Libraries
+  like Apache Santuario (Java) and <code>xmlsec</code> implement the full standard including
+  signatures.</p>
+</div>
+
+<div class="callout callout--use">
+  <p class="h">&#9733; Practical use case — partner data exchange &amp; compliance</p>
+  <p>B2B and healthcare/finance exchanges routinely send documents where a few fields are
+  regulated (PCI card data, PII, PHI) but most fields must stay visible for routing,
+  billing, and audit. Element-level XML Encryption is the standard answer, and a policy
+  stylesheet is the cleanest way to keep the “what is sensitive” decision in one reviewable
+  place. The capstone puts this to work on an order feed.</p>
+</div>
+
+<div class="exercise">
+  <p class="h">Your turn</p>
+  <p>The bank now also wants the customer's <code>&lt;name&gt;</code> encrypted. What's the
+  smallest change, and why is it low-risk?</p>
+  <details><summary>Show answer</summary>
+  <p>Add <code>name</code> to the policy's match pattern:
+  <code>match="pan | cvv | email | name"</code>. It's low-risk because the policy is one
+  declarative rule — you change <em>what</em> is protected without touching the crypto code
+  at all.</p></details>
+</div>

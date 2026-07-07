@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.pyc
+
+# OS
+.DS_Store
+
+# Downloaded processor (fetch with examples/fetch-saxon.sh)
+examples/lib/*.jar
+
+# Generated at runtime
+examples/capstone/out/
+examples/**/*.enc.xml
+examples/**/*.dec.xml
