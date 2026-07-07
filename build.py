@@ -94,7 +94,7 @@ def canonical_of(slug):
 
 def seo_title(slug, title):
     if slug == "index":
-        return "The XSLT Course — Learn XSLT Transformation & Encryption (1.0 → 3.0)"
+        return "The XSLT Course — Transformation & Encryption (1.0–3.0)"
     return f"{title} · {SITE_NAME}"
 
 
