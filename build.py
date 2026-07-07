@@ -1,34 +1,21 @@
 #!/usr/bin/env python3
-"""Assemble the static course site from content partials in content/.
+"""Assemble the XSLT course site from content partials in content/.
 
-Single source of truth:
-  - prose for each page lives in  content/<slug>.html  (inner content only)
-  - shared chrome + ALL SEO (meta, Open Graph, Twitter, JSON-LD, sitemap,
-    robots, manifest) lives here, so regenerating never drifts from the source.
-Run  `python3 build.py`  to regenerate the flat HTML pages + SEO files at the root.
+This course is published as a sub-course of the Apigee Courses hub, at
+  https://sreenivas-sadhu-prabhakara.github.io/apigee-courses/xslt-course/
 
->>> If you move the site, change SITE_URL (one line) and re-run. <<<
+The hub owns SEO: its tools/seo_inject.py injects canonical / Open Graph /
+Twitter / JSON-LD and regenerates the sitemap for every page after each sync.
+So build.py emits a deliberately MINIMAL <head> (title + stylesheet); do not add
+SEO tags here or they will duplicate the hub's managed block.
+
+Output goes to docs/ (pages + assets) — the folder the hub's tools/sync.sh pulls.
+Run  `python3 build.py`  to regenerate. Source of truth = content/ + this file.
 """
-import os, json, html
+import os, shutil
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-
-# ------------------------------------------------------------------ site config
-SITE_URL   = "https://sreenivas-sadhu-prabhakara.github.io/xslt-course"  # no trailing slash
-SITE_NAME  = "The XSLT Course"
-AUTHOR     = "Sreenivas Sadhu Prabhakara"
-LOCALE     = "en_US"
-BUILD_DATE = "2026-07-07"          # sitemap <lastmod>; bump when content changes
-OG_IMAGE   = SITE_URL + "/assets/og-image.png"
-LOGO       = SITE_URL + "/assets/icon-512.png"
-
-ORG    = {"@type": "Organization", "name": SITE_NAME, "url": SITE_URL + "/",
-          "logo": {"@type": "ImageObject", "url": LOGO}}
-PERSON = {"@type": "Person", "name": AUTHOR}
-
-# keywords the course legitimately targets (used in home meta + Course.about)
-ABOUT = ["XSLT", "XSLT tutorial", "XML transformation", "XPath", "XSLT 3.0",
-         "Saxon", "xsltproc", "XML Encryption", "encrypt XML", "Base64", "XOR cipher"]
+DOCS = os.path.join(HERE, "docs")
 
 # slug, track, number-in-track, nav title, page title, subtitle/lede, kind
 PAGES = [
@@ -84,106 +71,11 @@ PAGES = [
 SEQUENCE = [p for p in PAGES if p[0] != "index"]   # for prev/next
 TRACKS = ["Transformation", "Encryption", "Practice"]
 
-A = lambda s: html.escape(s, quote=True)    # attribute-safe
-T = lambda s: html.escape(s, quote=False)   # text-safe
 
-
-def canonical_of(slug):
-    return SITE_URL + "/" if slug == "index" else f"{SITE_URL}/{slug}.html"
-
-
-def seo_title(slug, title):
+def title_tag(slug, title):
     if slug == "index":
         return "The XSLT Course — Transformation & Encryption (1.0–3.0)"
-    return f"{title} · {SITE_NAME}"
-
-
-def head_seo(slug, title, desc):
-    """All the per-page <head> SEO tags."""
-    canon = canonical_of(slug)
-    ogtype = "website" if slug == "index" else "article"
-    desc_a = A(desc)
-    kw = A(", ".join(ABOUT)) if slug == "index" else ""
-    lines = [
-        f'<title>{T(seo_title(slug, title))}</title>',
-        f'<meta name="description" content="{desc_a}">',
-        f'<link rel="canonical" href="{canon}">',
-        '<meta name="robots" content="index, follow, max-image-preview:large">',
-        f'<meta name="author" content="{A(AUTHOR)}">',
-        '<meta name="theme-color" content="#16191f">',
-        '<meta name="color-scheme" content="light">',
-    ]
-    if kw:
-        lines.append(f'<meta name="keywords" content="{kw}">')
-    lines += [
-        '<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">',
-        '<link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png">',
-        '<link rel="apple-touch-icon" href="assets/icon-180.png">',
-        '<link rel="manifest" href="site.webmanifest">',
-        # Open Graph
-        f'<meta property="og:type" content="{ogtype}">',
-        f'<meta property="og:site_name" content="{A(SITE_NAME)}">',
-        f'<meta property="og:title" content="{A(title)}">',
-        f'<meta property="og:description" content="{desc_a}">',
-        f'<meta property="og:url" content="{canon}">',
-        f'<meta property="og:image" content="{OG_IMAGE}">',
-        '<meta property="og:image:width" content="1200">',
-        '<meta property="og:image:height" content="630">',
-        f'<meta property="og:image:alt" content="{A(SITE_NAME)}">',
-        f'<meta property="og:locale" content="{LOCALE}">',
-        # Twitter
-        '<meta name="twitter:card" content="summary_large_image">',
-        f'<meta name="twitter:title" content="{A(title)}">',
-        f'<meta name="twitter:description" content="{desc_a}">',
-        f'<meta name="twitter:image" content="{OG_IMAGE}">',
-    ]
-    return "\n".join(lines)
-
-
-def jsonld(slug, track, num, title, desc):
-    """Structured data. Home: WebSite + Course. Lessons: LearningResource + Breadcrumb."""
-    canon = canonical_of(slug)
-    if slug == "index":
-        course = {
-            "@type": "Course", "name": SITE_NAME, "description": desc,
-            "url": SITE_URL + "/", "inLanguage": "en", "provider": ORG,
-            "author": PERSON, "isAccessibleForFree": True,
-            "educationalLevel": "Beginner", "about": ABOUT,
-            "teaches": ["XSLT transformation", "XPath", "grouping and recursion",
-                        "XSLT 1.0 to 3.0", "XML Encryption", "calling crypto from XSLT"],
-            "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD",
-                       "availability": "https://schema.org/InStock"},
-            "hasCourseInstance": {"@type": "CourseInstance", "courseMode": "online",
-                                  "courseWorkload": "PT8H",
-                                  "instructor": PERSON},
-            "hasPart": [{"@type": "LearningResource", "name": p[4],
-                         "url": canonical_of(p[0])}
-                        for p in SEQUENCE],
-        }
-        website = {"@type": "WebSite", "name": SITE_NAME, "url": SITE_URL + "/",
-                   "inLanguage": "en", "description": desc, "publisher": ORG}
-        graph = [website, course]
-    else:
-        crumbs = [{"@type": "ListItem", "position": 1, "name": "Home", "item": SITE_URL + "/"}]
-        if track:
-            crumbs.append({"@type": "ListItem", "position": 2, "name": track,
-                           "item": SITE_URL + "/#syllabus"})
-        crumbs.append({"@type": "ListItem", "position": len(crumbs) + 1,
-                       "name": title, "item": canon})
-        breadcrumb = {"@type": "BreadcrumbList", "itemListElement": crumbs}
-        resource = {
-            "@type": "LearningResource", "name": title, "description": desc,
-            "url": canon, "inLanguage": "en",
-            "learningResourceType": "lesson", "educationalLevel": "Beginner",
-            "isPartOf": {"@type": "Course", "name": SITE_NAME, "url": SITE_URL + "/"},
-            "author": PERSON, "publisher": ORG, "isAccessibleForFree": True,
-        }
-        if num:
-            resource["position"] = num
-        graph = [breadcrumb, resource]
-    payload = {"@context": "https://schema.org", "@graph": graph}
-    blob = json.dumps(payload, ensure_ascii=False, indent=2).replace("</", "<\\/")
-    return f'<script type="application/ld+json">\n{blob}\n</script>'
+    return f"{title} · The XSLT Course"
 
 
 def sidebar(active_slug):
@@ -224,15 +116,14 @@ def lessonnav(slug):
     return "\n".join(parts)
 
 
+# Minimal head — the hub's seo_inject.py adds the managed SEO block before </head>.
 SHELL = """<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-{seo}
-<link rel="sitemap" type="application/xml" href="sitemap.xml">
+<title>{title_tag}</title>
 <link rel="stylesheet" href="assets/style.css">
-{jsonld}
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -246,8 +137,8 @@ SHELL = """<!doctype html>
 {lessonnav}
 <footer class="foot">
 The XSLT Course · a hands-on, honestly-scoped introduction. Every example in this
-course is executed, not imagined. Built for learning; ciphers marked “teaching” are
-not for protecting real data.
+course is executed, not imagined. Ciphers marked “teaching” are not for protecting real data.
+<br><a href="../">↩ Back to the Apigee Courses hub</a>
 </footer>
 </div>
 </main>
@@ -269,62 +160,8 @@ def pagehead(track, num, title, lede):
             f'<h1>{title}</h1><p class="lede">{lede}</p></header>')
 
 
-def write_sitemap():
-    prio = {"index": "1.0"}
-    urls = []
-    for slug, track, num, navtitle, title, lede, kind in PAGES:
-        p = prio.get(slug, "0.8" if kind == "lesson" else "0.7")
-        urls.append(
-            f"  <url>\n    <loc>{canonical_of(slug)}</loc>\n"
-            f"    <lastmod>{BUILD_DATE}</lastmod>\n"
-            f"    <changefreq>monthly</changefreq>\n    <priority>{p}</priority>\n  </url>")
-    xml = ('<?xml version="1.0" encoding="UTF-8"?>\n'
-           '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
-           + "\n".join(urls) + "\n</urlset>\n")
-    with open(os.path.join(HERE, "sitemap.xml"), "w", encoding="utf-8") as f:
-        f.write(xml)
-
-
-def write_robots():
-    txt = ("# The XSLT Course\n"
-           "User-agent: *\n"
-           "Allow: /\n"
-           f"Sitemap: {SITE_URL}/sitemap.xml\n")
-    with open(os.path.join(HERE, "robots.txt"), "w", encoding="utf-8") as f:
-        f.write(txt)
-
-
-def write_manifest():
-    m = {"name": SITE_NAME, "short_name": "XSLT Course", "start_url": "./index.html",
-         "scope": "./", "display": "standalone",
-         "background_color": "#f6f7f4", "theme_color": "#16191f",
-         "description": "A hands-on course on XSLT transformation and honestly-scoped encryption.",
-         "icons": [
-             {"src": "assets/icon-192.png", "sizes": "192x192", "type": "image/png"},
-             {"src": "assets/icon-512.png", "sizes": "512x512", "type": "image/png",
-              "purpose": "any maskable"}]}
-    with open(os.path.join(HERE, "site.webmanifest"), "w", encoding="utf-8") as f:
-        json.dump(m, f, indent=2)
-
-
-def write_404():
-    body = ('<section class="hero">'
-            '<p class="eyebrow">Error 404</p>'
-            '<h1>This page didn\'t transform.</h1>'
-            '<p class="lede">The URL you followed isn\'t part of the course. '
-            'Head back to the start or jump to the syllabus.</p>'
-            '<div class="cta"><a class="btn btn--primary" href="index.html">Go to the home page &#8594;</a> '
-            '<a class="btn btn--ghost" href="reference.html">Open the reference</a></div></section>')
-    html_out = SHELL.format(
-        seo=('<title>Page not found — The XSLT Course</title>'
-             '<meta name="robots" content="noindex, follow">'
-             '<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">'),
-        jsonld="", sidebar=sidebar(""), body=body, lessonnav="")
-    with open(os.path.join(HERE, "404.html"), "w", encoding="utf-8") as f:
-        f.write(html_out)
-
-
 def build():
+    os.makedirs(DOCS, exist_ok=True)
     n = 0
     for slug, track, num, navtitle, title, lede, kind in PAGES:
         with open(os.path.join(HERE, "content", f"{slug}.html"), encoding="utf-8") as f:
@@ -334,20 +171,15 @@ def build():
         else:
             body = pagehead(track, num, title, lede) + '\n<div class="prose">\n' + partial + '\n</div>'
         html_out = SHELL.format(
-            seo=head_seo(slug, title, lede),
-            jsonld=jsonld(slug, track, num, title, lede),
+            title_tag=title_tag(slug, title),
             sidebar=sidebar(slug),
             body=body,
             lessonnav="" if kind == "home" else lessonnav(slug),
         )
-        with open(os.path.join(HERE, f"{slug}.html"), "w", encoding="utf-8") as f:
+        with open(os.path.join(DOCS, f"{slug}.html"), "w", encoding="utf-8") as f:
             f.write(html_out)
         n += 1
-    write_sitemap()
-    write_robots()
-    write_manifest()
-    write_404()
-    print(f"built {n} pages + sitemap.xml, robots.txt, site.webmanifest, 404.html")
+    print(f"built {n} pages into docs/")
 
 
 if __name__ == "__main__":
